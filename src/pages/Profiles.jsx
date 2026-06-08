@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 
 const output = [
   { type: 'text', text: 'Connecting to GitHub...' },
-  { type: 'link', text: '✓ github.com/vetrivel-a [OPEN SOURCE · REPOSITORIES]', url: 'https://github.com' },
+  { type: 'link', text: '✓ github.com/vetrivel-28 [OPEN SOURCE · REPOSITORIES]', url: 'https://github.com/vetrivel-28' },
   { type: 'text', text: '' },
   { type: 'text', text: 'Connecting to LinkedIn...' },
-  { type: 'link', text: '✓ linkedin.com/in/vetrivel-a [PROFESSIONAL · NETWORK]', url: 'https://linkedin.com' },
+  { type: 'link', text: '✓ linkedin.com/in/vetrivel-a [PROFESSIONAL · NETWORK]', url: 'https://linkedin.com/in/vetrivel-a' },
   { type: 'text', text: '' },
   { type: 'text', text: 'Connecting to LeetCode...' },
-  { type: 'link', text: '✓ leetcode.com/vetrivel-a [150+ PROBLEMS · ALGORITHMS]', url: 'https://leetcode.com' },
+  { type: 'link', text: '✓ leetcode.com/vetrivel-a [150+ PROBLEMS · ALGORITHMS]', url: 'https://leetcode.com/vetrivel-a' },
   { type: 'text', text: '' },
   { type: 'text', text: 'Loading Resume...' },
   { type: 'link', text: '✓ resume.pdf [DOWNLOAD · PDF]', url: '/resume.pdf' },

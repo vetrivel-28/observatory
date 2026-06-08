@@ -1,134 +1,201 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Icons } from '../Icons';
 
 export default function Skills({ navigate }) {
   const [mounted, setMounted] = useState(false);
+  const [activeTab, setActiveTab] = useState('All');
+
   useEffect(() => setMounted(true), []);
 
   const skills = [
     {
-      title: "Machine Learning",
+      id: 'ML',
+      domain: "Machine Learning",
       project: "Website Classifier",
-      outcome: "87% Accuracy, 2s Response Time",
-      tags: ["Python", "Scikit-Learn", "NLP", "Random Forests", "TF-IDF"],
+      outcome: "87% Accuracy",
+      tags: ["Python", "Scikit-Learn", "NLP", "Random Forests"],
       icon: Icons.brain,
-      color: "var(--accent-purple)"
+      color: "var(--accent-purple)",
+      bgGradient: "linear-gradient(135deg, #1a0533, #2d1b69)",
+      perf: 87
     },
     {
-      title: "Data Engineering",
+      id: 'Data Eng',
+      domain: "Data Engineering",
       project: "Market Analysis ETL",
-      outcome: "Processed 500+ products in <2 min",
-      tags: ["PostgreSQL", "SQL", "ETL Pipelines", "Selenium", "BeautifulSoup"],
+      outcome: "500+ products <2 min",
+      tags: ["PostgreSQL", "SQL", "Selenium", "BeautifulSoup"],
       icon: Icons.database,
-      color: "var(--accent-cyan)"
+      color: "var(--accent-cyan)",
+      bgGradient: "linear-gradient(135deg, #012a1a, #024d3b)",
+      perf: 95
     },
     {
-      title: "Software Development",
+      id: 'Software',
+      domain: "Software Dev",
       project: "Women Safety SOS",
-      outcome: "<4s Alert Delivery, Multi-channel fallback",
-      tags: ["Python", "Flask", "TypeScript", "React", "REST APIs"],
+      outcome: "<4s Alert Delivery",
+      tags: ["Python", "Flask", "TypeScript", "React"],
       icon: Icons.code,
-      color: "var(--accent-purple)"
+      color: "var(--accent-purple)",
+      bgGradient: "linear-gradient(135deg, #1a1a2e, #16213e)",
+      perf: 78
     },
     {
-      title: "Analytics & Visualization",
+      id: 'Analytics',
+      domain: "Analytics",
       project: "Intelligence Dashboards",
-      outcome: "Discovered 15% pricing margins",
-      tags: ["Pandas", "NumPy", "Matplotlib", "Plotly", "Streamlit"],
+      outcome: "Discovered 15% margins",
+      tags: ["Pandas", "Matplotlib", "Plotly", "Streamlit"],
       icon: Icons.chart,
-      color: "var(--accent-amber)"
+      color: "var(--accent-amber)",
+      bgGradient: "linear-gradient(135deg, #2a1500, #4a2800)",
+      perf: 82
     }
   ];
 
-  // SVG Sparkline component
-  const Sparkline = ({ color }) => (
-    <svg width="60" height="20" viewBox="0 0 60 20" style={{ position: 'absolute', top: '16px', right: '16px', opacity: 0, transition: 'opacity 0.3s' }} className="sparkline">
-      <polyline 
-        points="0,15 10,10 20,18 30,5 40,12 50,2 60,8" 
-        fill="none" 
-        stroke={color} 
-        strokeWidth="2"
-        strokeDasharray="100"
-        strokeDashoffset="100"
-      />
-    </svg>
-  );
+  const visibleSkills = activeTab === 'All' ? skills : skills.filter(s => s.id === activeTab);
+
+  // Radar Animation
+  const [radarProgress, setRadarProgress] = useState(0);
+  useEffect(() => {
+    let start = null;
+    const duration = 1500;
+    const animate = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      // easeOutCubic
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      setRadarProgress(easeProgress);
+      if (progress < 1) window.requestAnimationFrame(animate);
+    };
+    window.requestAnimationFrame(animate);
+  }, []);
 
   return (
-    <div className="fade-in" style={{ padding: '40px 20px', maxWidth: '1000px', margin: '0 auto' }}>
+    <div className="fade-in" style={{ padding: '40px 20px', maxWidth: '900px', margin: '0 auto' }}>
       <button 
+        className="clickable"
         onClick={() => navigate('Observatory')}
         style={{
           background: 'transparent',
           border: 'none',
           color: 'var(--text-muted)',
           fontSize: '1rem',
-          cursor: 'none',
           marginBottom: '20px'
         }}
       >
         ← Back to Observatory
       </button>
 
-      <h1 style={{ fontSize: '2.5rem', color: 'white', marginBottom: '10px' }}>Applied Skills</h1>
-      <p style={{ color: 'var(--text-muted)', marginBottom: '40px' }}>Bridging the gap between theoretical knowledge and real-world impact.</p>
+      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <h1 style={{ fontSize: '2.5rem', color: 'white', marginBottom: '20px' }}>Applied Skills</h1>
+        
+        {/* Switcher Pills */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+          {['All', 'ML', 'Data Eng', 'Software', 'Analytics'].map(tab => (
+            <button
+              key={tab}
+              className="clickable"
+              onClick={() => setActiveTab(tab)}
+              style={{
+                padding: '8px 16px',
+                background: activeTab === tab ? 'var(--accent-cyan)' : 'var(--card-bg)',
+                color: activeTab === tab ? 'black' : 'white',
+                border: '1px solid var(--border)',
+                borderRadius: '20px',
+                fontSize: '0.9rem',
+                fontFamily: 'Space Mono, monospace',
+                fontWeight: activeTab === tab ? 'bold' : 'normal',
+                transition: 'all 0.3s'
+              }}
+            >
+              {tab === 'All' ? 'All' : `[${tab}]`}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-        gap: '20px',
-        marginBottom: '60px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', 
+        gap: '24px',
+        marginBottom: '60px',
+        justifyContent: 'center'
       }}>
-        {skills.map((skill, i) => (
+        {visibleSkills.map((skill) => (
           <div 
-            key={i} 
-            className="skill-card"
+            key={skill.id}
             style={{
               background: 'var(--card-bg)',
               border: '1px solid var(--border)',
-              borderLeft: `4px solid ${skill.color}50`,
               borderRadius: '8px',
-              padding: '24px',
+              minHeight: '300px',
               position: 'relative',
-              transition: 'all 0.3s ease',
-              cursor: 'none'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.borderLeftColor = skill.color;
-              const spark = e.currentTarget.querySelector('.sparkline');
-              if (spark) {
-                spark.style.opacity = 1;
-                const polyline = spark.querySelector('polyline');
-                if (polyline) polyline.style.animation = 'drawSpark 1s forwards';
-              }
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.borderLeftColor = `${skill.color}50`;
-              const spark = e.currentTarget.querySelector('.sparkline');
-              if (spark) {
-                spark.style.opacity = 0;
-                const polyline = spark.querySelector('polyline');
-                if (polyline) polyline.style.animation = 'none';
-              }
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
             }}
           >
-            <Sparkline color={skill.color} />
-            <div style={{ color: skill.color, marginBottom: '16px' }}>{skill.icon}</div>
-            <h2 style={{ fontSize: '1.2rem', color: 'white', marginBottom: '8px' }}>{skill.title}</h2>
-            <div style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '16px' }}>Project: {skill.project}</div>
-            <div style={{ fontSize: '0.9rem', color: skill.color, fontWeight: 'bold', marginBottom: '16px' }}>{skill.outcome}</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {/* Right edge performance bar */}
+            <div style={{ position: 'absolute', right: 0, top: 0, width: '4px', height: '100%', background: 'rgba(255,255,255,0.05)' }}>
+              <div style={{ 
+                position: 'absolute', 
+                bottom: 0, 
+                width: '100%', 
+                height: mounted ? `${skill.perf}%` : '0%', 
+                background: skill.color,
+                transition: 'height 1s ease-out 0.2s'
+              }} />
+            </div>
+
+            {/* Top Section */}
+            <div style={{
+              height: '30%',
+              background: skill.bgGradient,
+              padding: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              position: 'relative'
+            }}>
+              {skill.id === 'ML' && (
+                <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.08, pointerEvents: 'none' }}>
+                  <pattern id="circuit" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M0 10h5M15 10h5M10 0v5M10 15v5" stroke="white" strokeWidth="1"/>
+                    <circle cx="10" cy="10" r="2" fill="white"/>
+                  </pattern>
+                  <rect width="100%" height="100%" fill="url(#circuit)"/>
+                </svg>
+              )}
+              <div style={{ color: 'white', width: '32px', height: '32px', zIndex: 2 }}>{skill.icon}</div>
+              <div style={{ color: 'white', fontFamily: 'Space Mono, monospace', fontWeight: 'bold', fontSize: '1.2rem', zIndex: 2 }}>{skill.domain}</div>
+            </div>
+
+            {/* Middle Section */}
+            <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline', marginBottom: '12px' }}>
+                <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Project:</span>
+                <span style={{ color: 'white', fontWeight: '500' }}>{skill.project}</span>
+              </div>
+              <div style={{ color: skill.color, fontSize: '1.5rem', fontWeight: 'bold' }}>
+                {skill.outcome}
+              </div>
+            </div>
+
+            {/* Bottom Section */}
+            <div style={{ padding: '20px', borderTop: '1px solid var(--border)', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
               {skill.tags.map(tag => (
                 <span key={tag} style={{ 
-                  background: 'rgba(255,255,255,0.05)', 
+                  background: 'rgba(255,255,255,0.03)', 
+                  border: '1px solid var(--border)',
                   padding: '4px 8px', 
                   borderRadius: '4px', 
-                  fontSize: '0.8rem',
+                  fontSize: '11px',
+                  fontFamily: 'Space Mono, monospace',
                   color: 'var(--text-muted)'
                 }}>
-                  {tag}
+                  `{tag}`
                 </span>
               ))}
             </div>
@@ -137,49 +204,79 @@ export default function Skills({ navigate }) {
       </div>
 
       <div style={{ textAlign: 'center' }}>
-        <h3 style={{ color: 'white', marginBottom: '20px' }}>Tech Stack Radar</h3>
-        <svg width="300" height="300" viewBox="0 0 100 100" style={{ overflow: 'visible', margin: '0 auto' }}>
-          {/* Radar background */}
-          {[20, 40, 60, 80, 100].map(r => (
-            <polygon 
-              key={r}
-              points={`50,${50-r} ${50+r*0.866},${50-r*0.5} ${50+r*0.866},${50+r*0.5} 50,${50+r} ${50-r*0.866},${50+r*0.5} ${50-r*0.866},${50-r*0.5}`}
-              fill="none" 
-              stroke="var(--border)" 
-              strokeWidth="1"
-            />
-          ))}
-          {/* Axes */}
-          <line x1="50" y1="50" x2="50" y2="0" stroke="var(--border)" />
-          <line x1="50" y1="50" x2="93.3" y2="25" stroke="var(--border)" />
-          <line x1="50" y1="50" x2="93.3" y2="75" stroke="var(--border)" />
-          <line x1="50" y1="50" x2="50" y2="100" stroke="var(--border)" />
-          <line x1="50" y1="50" x2="6.7" y2="75" stroke="var(--border)" />
-          <line x1="50" y1="50" x2="6.7" y2="25" stroke="var(--border)" />
-          
-          {/* Data fill */}
-          {/* Python 90, SQL 80, ML 85, Viz 75, Web 70, DataEng 80 */}
-          {/* Scaled to r=50 max */}
-          <polygon 
-            points={
-              mounted ? 
-              `50,${50-45} ${50+40*0.866},${50-40*0.5} ${50+42.5*0.866},${50+42.5*0.5} 50,${50+37.5} ${50-35*0.866},${50+35*0.5} ${50-40*0.866},${50-40*0.5}`
-              : `50,50 50,50 50,50 50,50 50,50 50,50`
-            }
-            fill="var(--accent-purple)" 
-            fillOpacity="0.3"
-            stroke="var(--accent-purple)" 
-            strokeWidth="2"
-            style={{ transition: 'all 1s cubic-bezier(0.4, 0, 0.2, 1)' }}
-          />
-        </svg>
-      </div>
+        <h3 style={{ color: 'white', marginBottom: '40px', fontFamily: 'Space Mono, monospace' }}>Tech Stack Radar</h3>
+        <div style={{ position: 'relative', width: '360px', height: '360px', margin: '0 auto' }}>
+          <svg width="360" height="360" viewBox="0 0 100 100" style={{ overflow: 'visible' }}>
+            {/* Radar background */}
+            {[20, 40, 60, 80, 100].map(r => {
+              const scaledR = r * 0.4; // max radius 40
+              return (
+                <polygon 
+                  key={r}
+                  points={`50,${50-scaledR} ${50+scaledR*0.866},${50-scaledR*0.5} ${50+scaledR*0.866},${50+scaledR*0.5} 50,${50+scaledR} ${50-scaledR*0.866},${50+scaledR*0.5} ${50-scaledR*0.866},${50-scaledR*0.5}`}
+                  fill="none" 
+                  stroke="var(--border)" 
+                  strokeWidth="0.5"
+                />
+              );
+            })}
+            
+            {/* Axes */}
+            {[
+              { x2: 50, y2: 10 },
+              { x2: 84.6, y2: 30 },
+              { x2: 84.6, y2: 70 },
+              { x2: 50, y2: 90 },
+              { x2: 15.4, y2: 70 },
+              { x2: 15.4, y2: 30 }
+            ].map((p, i) => (
+              <line key={i} x1="50" y1="50" x2={p.x2} y2={p.y2} stroke="var(--border)" strokeWidth="0.5" />
+            ))}
+            
+            {/* Labels */}
+            <text x="50" y="5" fill="white" fontSize="4" textAnchor="middle">Python</text>
+            <text x="92" y="29" fill="white" fontSize="4" textAnchor="start">SQL</text>
+            <text x="92" y="73" fill="white" fontSize="4" textAnchor="start">ML</text>
+            <text x="50" y="96" fill="white" fontSize="4" textAnchor="middle">DataEng</text>
+            <text x="8" y="73" fill="white" fontSize="4" textAnchor="end">WebDev</text>
+            <text x="8" y="29" fill="white" fontSize="4" textAnchor="end">Visualization</text>
 
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes drawSpark {
-          to { stroke-dashoffset: 0; }
-        }
-      `}} />
+            {/* Data points (scaled out of 40 max radius) */}
+            {/* Python 90%, SQL 80%, ML 85%, DataEng 75%, WebDev 60%, Viz 70% */}
+            {(() => {
+              const pts = [
+                { r: 40 * 0.90, angle: -Math.PI/2 },            // Python (Top)
+                { r: 40 * 0.80, angle: -Math.PI/6 },            // SQL
+                { r: 40 * 0.85, angle: Math.PI/6 },             // ML
+                { r: 40 * 0.75, angle: Math.PI/2 },             // DataEng (Bottom)
+                { r: 40 * 0.60, angle: 5*Math.PI/6 },           // WebDev
+                { r: 40 * 0.70, angle: -5*Math.PI/6 }           // Viz
+              ];
+              
+              const currentPts = pts.map(p => ({
+                x: 50 + p.r * radarProgress * Math.cos(p.angle),
+                y: 50 + p.r * radarProgress * Math.sin(p.angle)
+              }));
+
+              const polyPoints = currentPts.map(p => `${p.x},${p.y}`).join(' ');
+
+              return (
+                <>
+                  <polygon 
+                    points={polyPoints}
+                    fill="rgba(6, 182, 212, 0.2)" 
+                    stroke="var(--accent-cyan)" 
+                    strokeWidth="1"
+                  />
+                  {currentPts.map((p, i) => (
+                    <circle key={i} cx={p.x} cy={p.y} r={1.5 * radarProgress} fill="var(--accent-cyan)" />
+                  ))}
+                </>
+              );
+            })()}
+          </svg>
+        </div>
+      </div>
     </div>
   );
 }

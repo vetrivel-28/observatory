@@ -10,13 +10,70 @@ import Experience from './pages/Experience';
 
 // --- Custom Cursor ---
 function CustomCursor() {
-  const [pos, setPos] = useState({ x: -100, y: -100 });
+  const [dotPos, setDotPos] = useState({ x: -100, y: -100 });
+  const [ringPos, setRingPos] = useState({ x: -100, y: -100 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [ping, setPing] = useState(false);
+
+  const requestRef = useRef();
+  const targetPos = useRef({ x: -100, y: -100 });
+  const currentRingPos = useRef({ x: -100, y: -100 });
+
   useEffect(() => {
-    const move = (e) => setPos({ x: e.clientX, y: e.clientY });
-    window.addEventListener('mousemove', move);
-    return () => window.removeEventListener('mousemove', move);
+    const onMouseMove = (e) => {
+      setDotPos({ x: e.clientX, y: e.clientY });
+      targetPos.current = { x: e.clientX, y: e.clientY };
+    };
+
+    const onMouseOver = (e) => {
+      const isClickable = e.target.closest('button, a, .clickable, [onclick]');
+      setIsHovering(!!isClickable);
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseover', onMouseOver);
+
+    const lerp = (start, end, factor) => start + (end - start) * factor;
+
+    const animate = () => {
+      currentRingPos.current.x = lerp(currentRingPos.current.x, targetPos.current.x, 0.2); // ~80ms lag approximation
+      currentRingPos.current.y = lerp(currentRingPos.current.y, targetPos.current.y, 0.2);
+      setRingPos({ x: currentRingPos.current.x, y: currentRingPos.current.y });
+      requestRef.current = requestAnimationFrame(animate);
+    };
+    requestRef.current = requestAnimationFrame(animate);
+
+    const pingInterval = setInterval(() => {
+      setPing(true);
+      setTimeout(() => setPing(false), 800);
+    }, 3000);
+
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseover', onMouseOver);
+      cancelAnimationFrame(requestRef.current);
+      clearInterval(pingInterval);
+    };
   }, []);
-  return <div className="custom-cursor" style={{ left: pos.x, top: pos.y }} />;
+
+  return (
+    <>
+      <div 
+        className={`cursor-ring ${isHovering ? 'hover' : ''}`}
+        style={{ left: ringPos.x, top: ringPos.y }}
+      />
+      <div 
+        className={`cursor-dot ${isHovering ? 'hover' : ''}`}
+        style={{ left: dotPos.x, top: dotPos.y }}
+      />
+      {ping && !isHovering && (
+        <div 
+          className="cursor-ping"
+          style={{ left: ringPos.x, top: ringPos.y }}
+        />
+      )}
+    </>
+  );
 }
 
 // --- Star Field Canvas ---
@@ -80,13 +137,20 @@ function DatabaseTransition({ isActive, targetName }) {
     if (isActive) {
       setQueryText("");
       setProgress(0);
-      const query = `SELECT * FROM ${targetName.toLowerCase()} WHERE active = true;`;
+      
+      let query = `SELECT * FROM system WHERE status = 'online';`;
+      if (targetName === 'Skills') query = "SELECT skills, proficiency FROM vetrivel WHERE domain = 'data_science';";
+      else if (targetName === 'Profiles') query = "SELECT platform, url FROM profiles WHERE status = 'connected';";
+      else if (targetName === 'Achievements') query = "SELECT title, award FROM hackathons ORDER BY year DESC;";
+      else if (targetName === 'Experience') query = "SELECT role, impact FROM experience WHERE type = 'internship';";
+      else if (targetName === 'Projects') query = "SELECT name, accuracy FROM projects WHERE deployed = true;";
+
       let i = 0;
       const typeInterval = setInterval(() => {
         setQueryText(query.substring(0, i));
         i++;
         if (i > query.length) clearInterval(typeInterval);
-      }, 30);
+      }, 15);
       
       const progInterval = setInterval(() => {
         setProgress(p => (p < 100 ? p + Math.random() * 15 : 100));
