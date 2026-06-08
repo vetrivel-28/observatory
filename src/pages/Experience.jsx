@@ -75,6 +75,7 @@ export default function Experience({ navigate }) {
           <div style={{
             background: 'var(--card-bg)',
             border: '1px solid var(--border)',
+            borderLeft: '4px solid #7c3aed',
             borderRadius: '8px',
             overflow: 'hidden',
             marginBottom: '32px',
@@ -112,8 +113,20 @@ export default function Experience({ navigate }) {
               </div>
               <div><span style={{ color: 'white' }}>]</span></div>
               <br/>
-              <div>
-                <span style={{ color: 'white' }}>tech_stack</span> <span style={{ color: 'var(--accent-purple)' }}>=</span> <span style={{ color: 'white' }}>[Python, SQL, Pandas, Scikit-Learn, Git]</span>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '16px', alignItems: 'center' }}>
+                <span style={{ color: 'white' }}>tech_stack</span> <span style={{ color: 'var(--accent-purple)' }}>=</span> <span style={{ color: 'white' }}>[</span>
+                {['Python', 'SQL', 'Pandas', 'Scikit-Learn', 'Git'].map(tag => (
+                  <span key={tag} style={{
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid var(--border)',
+                    padding: '2px 8px',
+                    borderRadius: '4px',
+                    color: 'var(--text-muted)',
+                  }}>
+                    {tag}
+                  </span>
+                ))}
+                <span style={{ color: 'white' }}>]</span>
               </div>
               <br/>
               <div style={{ color: 'var(--text-muted)' }}># Key Learning:</div>
@@ -148,7 +161,12 @@ export default function Experience({ navigate }) {
                 </tr>
                 <tr>
                   <td style={{ border: '1px solid var(--border)', padding: '12px', color: 'var(--text-muted)' }}>status</td>
-                  <td style={{ border: '1px solid var(--border)', padding: '12px', color: 'var(--accent-cyan)' }}>ONGOING ●</td>
+                  <td style={{ border: '1px solid var(--border)', padding: '12px', color: 'var(--accent-cyan)' }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(6,182,212,0.1)', padding: '4px 8px', borderRadius: '4px', border: '1px solid rgba(6,182,212,0.3)' }}>
+                      <span className="pulse-purple" style={{ width: '8px', height: '8px', background: 'var(--accent-cyan)', borderRadius: '50%' }} />
+                      ONGOING
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <td style={{ border: '1px solid var(--border)', padding: '12px', color: 'var(--text-muted)' }}>focus</td>

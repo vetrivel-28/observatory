@@ -7,46 +7,42 @@ export default function Achievements({ navigate }) {
 
   const achievements = [
     {
-      year: "2025",
-      dateLabel: "MAY 2025",
-      title: "University Capstone Project Showcase",
-      badge: "EXCELLENCE AWARD WINNER",
-      role: "Lead Machine Learning Engineer",
-      description: "AI-driven accessibility tool translating sign language to audio using edge-deployed computer vision.",
-      tags: ["Python", "TensorFlow Lite", "MediaPipe", "React Native"],
-      learning: "Optimizing ML models for edge devices requires heavy quantization and pruning. Real-time inference on mobile devices is heavily bottlenecked by thermal throttling.",
-      icon: Icons.trophy,
-      color: "var(--accent-purple)",
-      side: "right"
+      title: 'University Capstone Project Showcase',
+      date: 'MAY 2025',
+      badge: 'EXCELLENCE AWARD WINNER',
+      role: 'Lead Machine Learning Engineer',
+      description: 'AI-driven accessibility tool translating sign language to audio using edge-deployed computer vision. Selected as top project out of 50+ engineering teams.',
+      technologies: ['Python', 'TensorFlow Lite', 'MediaPipe', 'React Native'],
+      keyLearning: 'Optimizing ML models for edge devices requires heavy quantization and pruning. Real-time inference on mobile devices is heavily bottlenecked by thermal throttling.',
+      icon: '🏆',
+      accent: '#7c3aed',
     },
     {
-      year: "2024",
-      dateLabel: "AUG 2024",
-      title: "Kaggle Tabular Playground Series",
-      badge: "TOP 5% FINISH",
-      role: "Data Analyst & Modeler",
-      description: "Analyzed complex, anonymized dataset to predict multi-class probabilities. Engineered custom interaction features to boost LightGBM performance against 1,000+ competitors.",
-      tags: ["Pandas", "Scikit-Learn", "LightGBM", "Optuna"],
-      icon: Icons.database,
-      color: "var(--accent-cyan)",
-      side: "left"
+      title: 'Kaggle Tabular Playground Series',
+      date: 'AUG 2024',
+      badge: 'TOP 5% FINISH',
+      role: 'Data Analyst & Modeler',
+      description: 'Analyzed complex anonymized dataset to predict multi-class probabilities. Engineered custom interaction features to boost LightGBM performance against 1,000+ competitors.',
+      technologies: ['Pandas', 'Scikit-Learn', 'LightGBM', 'Optuna'],
+      keyLearning: 'Feature engineering often provides more lift than complex model ensembles. Cross-validation strategies must meticulously mirror the test set distribution.',
+      icon: '🥈',
+      accent: '#06b6d4',
     },
     {
-      year: "2023",
-      dateLabel: "MAR 2023",
-      title: "ACM Student Chapter Hackathon",
-      badge: "BEST UI/UX AWARD",
-      role: "Full-Stack Developer",
-      description: "Built a peer-to-peer tutoring marketplace platform focusing on a zero-friction onboarding flow and algorithmic matching based on subject competency.",
-      tags: ["Next.js", "Tailwind CSS", "Firebase", "TypeScript"],
-      icon: Icons.grid,
-      color: "var(--accent-amber)",
-      side: "right"
-    }
+      title: 'ACM Student Chapter Hackathon',
+      date: 'MAR 2023',
+      badge: 'BEST UI/UX AWARD',
+      role: 'Full-Stack Developer',
+      description: 'Built a peer-to-peer tutoring marketplace platform focusing on zero-friction onboarding flow and algorithmic matching based on subject competency.',
+      technologies: ['Next.js', 'Tailwind CSS', 'Firebase', 'TypeScript'],
+      keyLearning: 'Aesthetic design directly correlates with user trust. Minimizing clicks to the core value proposition drastically improved our user retention metrics.',
+      icon: '⭐',
+      accent: '#f59e0b',
+    },
   ];
 
   return (
-    <div className="fade-in" style={{ padding: '40px 20px', maxWidth: '1000px', margin: '0 auto', overflowX: 'hidden' }}>
+    <div className="fade-in" style={{ padding: '40px 20px', maxWidth: '900px', margin: '0 auto', overflowX: 'hidden' }}>
       <button 
         className="clickable"
         onClick={() => navigate('Observatory')}
@@ -74,14 +70,14 @@ export default function Achievements({ navigate }) {
           left: '50%',
           top: 0,
           bottom: 0,
-          width: '3px',
-          background: 'linear-gradient(to bottom, var(--accent-amber), var(--accent-cyan), var(--accent-purple))',
+          width: '2px',
+          background: 'linear-gradient(to bottom, var(--accent-purple), var(--accent-amber))',
           transform: 'translateX(-50%)',
           borderRadius: '2px'
         }} />
 
         {achievements.map((item, i) => {
-          const isLeft = item.side === 'left';
+          const isLeft = i % 2 !== 0; // index 1 is left, 0 and 2 are right
           return (
             <div key={i} style={{
               display: 'flex',
@@ -102,20 +98,21 @@ export default function Achievements({ navigate }) {
                 alignItems: 'center',
                 zIndex: 2,
               }}>
-                <div style={{ color: item.color, fontSize: '0.7rem', fontFamily: 'Space Mono, monospace', fontWeight: 'bold', marginBottom: '8px', letterSpacing: '0.1em' }}>
-                  {item.dateLabel}
+                <div style={{ color: item.accent, fontSize: '11px', fontFamily: 'Space Mono, monospace', fontWeight: 'bold', marginBottom: '8px', letterSpacing: '0.1em' }}>
+                  {item.date}
                 </div>
                 <div style={{
                   width: '44px',
                   height: '44px',
                   borderRadius: '50%',
                   background: 'var(--bg-base)',
-                  border: `2px solid ${item.color}`,
+                  border: `2px solid ${item.accent}`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: item.color,
-                  boxShadow: `0 0 20px ${item.color}50`
+                  color: item.accent,
+                  fontSize: '20px',
+                  boxShadow: `0 0 20px ${item.accent}50`
                 }}>
                   {item.icon}
                 </div>
@@ -144,8 +141,8 @@ export default function Achievements({ navigate }) {
                     position: 'relative'
                   }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.boxShadow = `0 10px 30px ${item.color}20`;
-                    e.currentTarget.style.borderColor = item.color;
+                    e.currentTarget.style.boxShadow = `0 10px 30px ${item.accent}20`;
+                    e.currentTarget.style.borderColor = item.accent;
                     e.currentTarget.style.transform = 'translateY(-4px)';
                   }}
                   onMouseLeave={e => {
@@ -161,9 +158,9 @@ export default function Achievements({ navigate }) {
                   <div style={{
                     display: 'inline-block',
                     padding: '4px 8px',
-                    background: `${item.color}15`,
-                    color: item.color,
-                    border: `1px solid ${item.color}30`,
+                    background: `${item.accent}15`,
+                    color: item.accent,
+                    border: `1px solid ${item.accent}30`,
                     borderRadius: '4px',
                     fontSize: '0.7rem',
                     fontWeight: 'bold',
@@ -183,7 +180,7 @@ export default function Achievements({ navigate }) {
                   </p>
 
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-                    {item.tags.map(tag => (
+                    {item.technologies.map(tag => (
                       <span key={tag} style={{
                         background: 'rgba(255,255,255,0.03)',
                         border: '1px solid var(--border)',
@@ -198,10 +195,10 @@ export default function Achievements({ navigate }) {
                     ))}
                   </div>
 
-                  <div style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '8px', borderLeft: `2px solid ${item.color}` }}>
-                    <div style={{ color: item.color, fontSize: '0.8rem', marginBottom: '8px', fontFamily: 'Space Mono, monospace', fontWeight: 'bold' }}>KEY LEARNING</div>
+                  <div style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '8px', borderLeft: `2px solid ${item.accent}` }}>
+                    <div style={{ color: item.accent, fontSize: '0.8rem', marginBottom: '8px', fontFamily: 'Space Mono, monospace', fontWeight: 'bold' }}>KEY LEARNING</div>
                     <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: 0, lineHeight: '1.5' }}>
-                      {item.learning}
+                      {item.keyLearning}
                     </p>
                   </div>
 

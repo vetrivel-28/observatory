@@ -22,7 +22,7 @@ body {
   background-color: var(--bg-base);
   color: var(--text-primary);
   overflow-x: hidden;
-  cursor: none; /* Custom cursor used */
+  cursor: none !important;
 }
 
 h1, h2, h3, h4, h5, h6, .space-mono {
@@ -34,63 +34,6 @@ a {
   text-decoration: none;
 }
 
-button {
-  cursor: none;
-  font-family: inherit;
-}
-
-/* Custom Cursor Elements */
-.cursor-ring {
-  position: fixed;
-  top: 0; left: 0;
-  width: 28px; height: 28px;
-  border: 1.5px solid var(--accent-cyan);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10000;
-  opacity: 0.6;
-  transform: translate(-50%, -50%);
-  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.cursor-dot {
-  position: fixed;
-  top: 0; left: 0;
-  width: 4px; height: 4px;
-  background-color: var(--accent-cyan);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10000;
-  transform: translate(-50%, -50%);
-  transition: background-color 0.2s ease;
-}
-
-.cursor-ring.hover {
-  transform: translate(-50%, -50%) scale(2);
-  background-color: rgba(124, 58, 237, 0.15);
-  border-color: var(--accent-purple);
-}
-
-.cursor-dot.hover {
-  background-color: var(--accent-purple);
-}
-
-.cursor-ping {
-  position: fixed;
-  top: 0; left: 0;
-  width: 28px; height: 28px;
-  border: 1.5px solid var(--accent-cyan);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  animation: radarPing 0.8s ease-out forwards;
-}
-
-@keyframes radarPing {
-  from { width: 28px; height: 28px; opacity: 0.6; }
-  to { width: 60px; height: 60px; opacity: 0; }
-}
 
 /* Canvas Background */
 #star-canvas {
@@ -223,4 +166,29 @@ button {
   .responsive-grid {
     grid-template-columns: 1fr !important;
   }
+}
+
+@keyframes transitionFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes schemaFadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rowSlide {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes drawLine {
+  from { stroke-dashoffset: 40; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }

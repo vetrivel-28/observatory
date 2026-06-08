@@ -1,59 +1,77 @@
 import React, { useState, useEffect } from 'react';
 
 const output = [
-  { type: 'text', text: 'Connecting to GitHub...' },
-  { type: 'link', text: '✓ github.com/vetrivel-28 [OPEN SOURCE · REPOSITORIES]', url: 'https://github.com/vetrivel-28' },
-  { type: 'text', text: '' },
-  { type: 'text', text: 'Connecting to LinkedIn...' },
-  { type: 'link', text: '✓ linkedin.com/in/vetrivel-a [PROFESSIONAL · NETWORK]', url: 'https://linkedin.com/in/vetrivel-a' },
-  { type: 'text', text: '' },
-  { type: 'text', text: 'Connecting to LeetCode...' },
-  { type: 'link', text: '✓ leetcode.com/vetrivel-a [150+ PROBLEMS · ALGORITHMS]', url: 'https://leetcode.com/vetrivel-a' },
-  { type: 'text', text: '' },
-  { type: 'text', text: 'Loading Resume...' },
-  { type: 'link', text: '✓ resume.pdf [DOWNLOAD · PDF]', url: '/resume.pdf' },
-  { type: 'text', text: '' },
-  { type: 'final', text: 'All systems connected.' }
+  { type: 'text', text: 'Connecting to GitHub...', delay: 200 },
+  { type: 'link', text: '✓ github.com/vetrivel-28 [OPEN SOURCE · REPOSITORIES]', url: 'https://github.com/vetrivel-28', delay: 300 },
+  { type: 'text', text: '', delay: 0 },
+  { type: 'text', text: 'Connecting to LinkedIn...', delay: 200 },
+  { type: 'link', text: '✓ linkedin.com/in/vetrivel-a [PROFESSIONAL · NETWORK]', url: 'https://linkedin.com/in/vetrivel-a', delay: 300 },
+  { type: 'text', text: '', delay: 0 },
+  { type: 'text', text: 'Connecting to LeetCode...', delay: 200 },
+  { type: 'link', text: '✓ leetcode.com/vetrivel-a [150+ PROBLEMS · ALGORITHMS]', url: 'https://leetcode.com/vetrivel-a', delay: 300 },
+  { type: 'text', text: '', delay: 0 },
+  { type: 'text', text: 'Loading Resume...', delay: 200 },
+  { type: 'link', text: '✓ resume.pdf [DOWNLOAD · PDF]', url: '/resume.pdf', delay: 300 },
+  { type: 'text', text: '', delay: 0 },
+  { type: 'final', text: 'All systems connected.', delay: 200 }
 ];
 
 export default function Profiles({ navigate }) {
   const [lines, setLines] = useState([]);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     let currentLine = 0;
-    const interval = setInterval(() => {
+    let timeoutId;
+    
+    const processNext = () => {
       if (currentLine < output.length) {
-        setLines(prev => {
-          if (prev.length >= output.length) return prev;
-          return [...prev, output[currentLine]];
-        });
-        currentLine++;
-      } else {
-        clearInterval(interval);
+        const line = output[currentLine];
+        timeoutId = setTimeout(() => {
+          setLines(prev => [...prev, line]);
+          currentLine++;
+          processNext();
+        }, line.delay);
       }
-    }, 200);
+    };
+    
+    processNext();
 
-    return () => clearInterval(interval);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
-    <div className="fade-in" style={{ padding: '40px 20px', maxWidth: '800px', margin: '0 auto' }}>
+    <div className="fade-in" style={{ 
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      padding: '80px 40px',
+      maxWidth: '720px', 
+      margin: '0 auto' 
+    }}>
       <button 
+        className="clickable"
         onClick={() => navigate('Observatory')}
         style={{
           background: 'transparent',
           border: 'none',
           color: 'var(--text-muted)',
           fontSize: '1rem',
-          cursor: 'none',
-          marginBottom: '20px'
+          marginBottom: '24px',
+          alignSelf: 'flex-start',
+          display: 'block',
+          textAlign: 'left'
         }}
       >
         ← Back to Observatory
       </button>
 
-      <h1 style={{ fontSize: '2.5rem', color: 'white', marginBottom: '10px' }}>Profiles</h1>
-      <p style={{ color: 'var(--text-muted)', marginBottom: '40px' }}>Connect across the ecosystem.</p>
+      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <h1 style={{ fontSize: '2.5rem', color: 'white', marginBottom: '10px' }}>Profiles</h1>
+        <p style={{ color: 'var(--text-muted)' }}>Connect across the ecosystem.</p>
+      </div>
 
       {/* Terminal Window */}
       <div style={{
@@ -88,24 +106,26 @@ export default function Profiles({ navigate }) {
             return (
               <div key={i} style={{ marginBottom: line.text === '' ? '12px' : '8px' }}>
                 {line.type === 'link' ? (
-                  <a 
-                    href={line.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <span 
+                    className="clickable profile-link"
+                    onClick={() => window.open(line.url, "_blank")}
                     style={{
-                      color: 'white',
-                      textDecoration: 'none',
+                      color: 'var(--accent-cyan)',
+                      fontWeight: 'bold',
+                      cursor: 'pointer',
                       display: 'inline-block',
-                      transition: 'color 0.2s',
-                      cursor: 'none'
+                      transition: 'all 0.2s',
+                      padding: '4px 8px',
+                      marginLeft: '-8px'
                     }}
-                    onMouseEnter={e => e.target.style.color = 'var(--accent-cyan)'}
-                    onMouseLeave={e => e.target.style.color = 'white'}
                   >
                     {line.text}
-                  </a>
+                  </span>
                 ) : (
-                  <span style={{ color: line.type === 'final' ? 'var(--accent-cyan)' : 'var(--text-muted)' }}>
+                  <span style={{ 
+                    color: line.type === 'final' ? 'var(--accent-cyan)' : 'var(--text-muted)',
+                    fontStyle: line.type === 'final' ? 'italic' : 'normal'
+                  }}>
                     {line.text}
                   </span>
                 )}
@@ -113,6 +133,32 @@ export default function Profiles({ navigate }) {
             );
           })}
           <div className="cursor-blink" style={{ display: 'inline-block', width: '10px', height: '1.2em', background: 'var(--text-muted)', verticalAlign: 'bottom', marginLeft: '4px' }} />
+          
+          <div style={{
+            marginTop:'20px',
+            paddingTop:'12px',
+            borderTop:'1px solid rgba(255,255,255,0.07)',
+            display:'flex',
+            justifyContent:'space-between',
+            alignItems:'center'
+          }}>
+            <span style={{color:'#64748b', fontSize:'10px', fontFamily:'Space Mono'}}>
+              4/4 connections active
+            </span>
+            <span style={{
+              color:'#22c55e', fontSize:'10px',
+              fontFamily:'Space Mono',
+              display:'flex', alignItems:'center', gap:'6px'
+            }}>
+              <span style={{
+                width:'6px', height:'6px',
+                background:'#22c55e', borderRadius:'50%',
+                display:'inline-block',
+                animation:'pulse 2s ease-in-out infinite'
+              }}/>
+              SECURE
+            </span>
+          </div>
         </div>
       </div>
 
@@ -121,8 +167,16 @@ export default function Profiles({ navigate }) {
           0%, 100% { opacity: 1; }
           50% { opacity: 0; }
         }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.3; }
+        }
         .cursor-blink {
           animation: blink 1s step-end infinite;
+        }
+        .profile-link:hover {
+          background: rgba(6,182,212,0.1);
+          border-radius: 4px;
         }
       `}} />
     </div>

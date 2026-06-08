@@ -89,46 +89,106 @@ export default function Observatory({ navigate }) {
         </div>
       ))}
 
-      {/* Left Panel: System Status */}
-      <div style={{ position: 'absolute', left: '2%', top: '20%', width: '180px', background: 'var(--card-bg)', border: '1px solid var(--border)', borderRadius: '8px', padding: '16px', zIndex: 5, fontFamily: 'Space Mono, monospace' }}>
-        <div style={{ color: 'var(--accent-cyan)', fontSize: '10px', textTransform: 'uppercase', marginBottom: '12px', letterSpacing: '0.1em' }}>SYSTEM STATUS</div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-primary)', fontSize: '0.8rem', marginBottom: '8px' }}>
-          <span><span className="blink-dot"></span> Models Active</span>
-          <span>{sysStats.models}/3</span>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-primary)', fontSize: '0.8rem', marginBottom: '8px' }}>
-          <span><span className="blink-dot"></span> Data Pipelines</span>
-          <span>{sysStats.pipelines}/2</span>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-primary)', fontSize: '0.8rem' }}>
-          <span><span className="blink-dot"></span> APIs Connected</span>
-          <span>{sysStats.apis}/4</span>
+      {/* LEFT: Live Activity Feed */}
+      <div style={{
+        position:'absolute', left:'20px', top:'50%',
+        transform:'translateY(-50%)', width:'200px',
+        background:'rgba(10,18,35,0.92)',
+        border:'1px solid rgba(6,182,212,0.35)',
+        borderRadius:'12px', padding:'16px',
+        overflow:'hidden', zIndex:10,
+        backdropFilter:'blur(8px)'
+      }}>
+        <div style={{
+          color:'#06b6d4', fontSize:'11px',
+          letterSpacing:'0.15em', fontFamily:'Space Mono',
+          marginBottom:'12px'
+        }}>● ACTIVITY LOG</div>
+        
+        {/* Scrolling activity items container */}
+        <div style={{
+          overflow:'hidden', height:'160px',
+          maskImage:'linear-gradient(transparent, black 15%, black 85%, transparent)'
+        }}>
+          <div style={{
+            animation:'scrollUp 10s linear infinite',
+            display:'flex', flexDirection:'column', gap:'8px'
+          }}>
+            {[
+              '[02:14] model.fit() done',
+              '[01:58] ETL: 500 rows OK',
+              '[01:45] accuracy: 87.3%',
+              '[01:32] query: 0.3s',
+              '[01:19] git push ✓',
+              '[01:07] dashboard OK',
+              '[00:54] dropna() → 492',
+              '[00:41] churn: 18.2%',
+              '[02:14] model.fit() done',
+              '[01:58] ETL: 500 rows OK',
+            ].map((item, i) => (
+              <div key={i} style={{fontSize:'10px', fontFamily:'Space Mono', color:'#94a3b8', whiteSpace:'nowrap'}}>
+                <span style={{color:'#06b6d4'}}>{item.slice(0,7)}</span>{item.slice(7)}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Right Panel: Skill Matrix */}
-      <div style={{ position: 'absolute', right: '2%', top: '20%', width: '200px', background: 'var(--card-bg)', border: '1px solid var(--border)', borderRadius: '8px', padding: '16px', zIndex: 5, fontFamily: 'Space Mono, monospace' }}>
-        <div style={{ color: 'var(--accent-cyan)', fontSize: '10px', textTransform: 'uppercase', marginBottom: '12px', letterSpacing: '0.1em' }}>SKILL MATRIX</div>
+      {/* RIGHT: Model Metrics */}
+      <div style={{
+        position:'absolute', right:'20px', top:'50%',
+        transform:'translateY(-50%)', width:'200px',
+        background:'rgba(15,25,41,0.85)',
+        border:'1px solid rgba(245,158,11,0.2)',
+        borderRadius:'12px', padding:'16px', zIndex:10
+      }}>
+        <div style={{
+          color:'#f59e0b', fontSize:'10px',
+          letterSpacing:'0.15em', fontFamily:'Space Mono',
+          marginBottom:'12px'
+        }}>◈ MODEL METRICS</div>
+
         {[
-          { label: 'Python', p: 85 },
-          { label: 'SQL', p: 70 },
-          { label: 'ML', p: 82 },
-          { label: 'React', p: 55 },
-          { label: 'DataEng', p: 72 }
-        ].map(s => (
-          <div key={s.label} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px', fontSize: '0.75rem', color: 'var(--text-primary)' }}>
-            <span style={{ width: '60px' }}>{s.label}</span>
-            <div style={{ flex: 1, height: '6px', background: 'rgba(255,255,255,0.1)', margin: '0 8px', borderRadius: '3px', overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: mounted ? `${s.p}%` : '0%', background: 'var(--accent-cyan)', transition: 'width 1s ease-out' }} />
-            </div>
-            <span style={{ width: '25px', textAlign: 'right' }}>{s.p}%</span>
+          {label:'ACCURACY', value:'87.3%', trend:'↑', up:true},
+          {label:'PRECISION', value:'84.1%', trend:'↑', up:true},
+          {label:'RECALL', value:'89.2%', trend:'→', up:null},
+          {label:'F1-SCORE', value:'86.6%', trend:'↑', up:true},
+        ].map((m,i) => (
+          <div key={i} style={{
+            display:'flex', justifyContent:'space-between',
+            alignItems:'center', marginBottom:'10px'
+          }}>
+            <span style={{color:'#64748b', fontSize:'9px', fontFamily:'Space Mono'}}>{m.label}</span>
+            <span style={{
+              color:'white', fontSize:'13px',
+              fontFamily:'Space Mono', fontWeight:'bold'
+            }}>
+              {m.value}
+              <span style={{
+                color: m.up===true ? '#22c55e' : m.up===null ? '#06b6d4' : '#ef4444',
+                marginLeft:'4px', fontSize:'11px'
+              }}>{m.trend}</span>
+            </span>
           </div>
         ))}
+
+        {/* Sparkline SVG */}
+        <svg width="100%" height="30" style={{marginTop:'8px'}}>
+          <polyline
+            points="0,25 15,20 30,22 45,14 60,17 75,9 90,11 168,4"
+            fill="none" stroke="#f59e0b" strokeWidth="1.5"
+            strokeLinejoin="round" strokeLinecap="round"
+          />
+        </svg>
+        <div style={{
+          color:'#64748b', fontSize:'9px',
+          fontFamily:'Space Mono', textAlign:'center', marginTop:'4px'
+        }}>Training Loss</div>
       </div>
 
       {/* Main Node Graph */}
-      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '900px', height: '600px' }}>
-        <svg width="900" height="600" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}>
+      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '700px', height: '500px' }}>
+        <svg width="700" height="500" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}>
           {nodes.map(node => {
             const pathId = `path-${node.id}`;
             const pathD = `M ${node.x} ${node.y} L ${cx} ${cy}`;
@@ -137,10 +197,12 @@ export default function Observatory({ navigate }) {
                 <path 
                   id={pathId}
                   d={pathD}
-                  stroke={node.color} 
+                  stroke={node.color}
+                  strokeOpacity="0.6"
                   strokeWidth="1.5"
-                  strokeDasharray="4 8"
+                  strokeDasharray="6 4"
                   className="data-flow-line"
+                  style={{ animation: 'dashFlow 2s linear infinite' }}
                 />
                 {/* Data Packet */}
                 <circle r="3" fill="var(--accent-cyan)" style={{ filter: 'drop-shadow(0 0 4px var(--accent-cyan))' }}>
@@ -223,16 +285,17 @@ export default function Observatory({ navigate }) {
               {isHovered && (
                 <div style={{
                   position: 'absolute',
-                  bottom: '100%',
+                  top: node.id === 'Projects' ? 'calc(100% + 8px)' : 'auto',
+                  bottom: node.id === 'Projects' ? 'auto' : '100%',
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  marginBottom: '16px',
+                  marginBottom: node.id === 'Projects' ? '0' : '16px',
                   background: 'var(--card-bg)',
                   border: `1px solid ${node.color}`,
                   borderRadius: '8px',
                   padding: '12px',
                   minWidth: '220px',
-                  zIndex: 20,
+                  zIndex: 50,
                   boxShadow: '0 10px 30px rgba(0,0,0,0.8)',
                   textAlign: 'center'
                 }}>
@@ -250,12 +313,25 @@ export default function Observatory({ navigate }) {
                       </div>
                     ))
                   ) : (
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-primary)', lineHeight: '1.4' }}>
+                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.65)', letterSpacing: '0.05em', lineHeight: '1.4' }}>
                       {node.tooltipText}
                     </div>
                   )}
                   {/* Tooltip arrow */}
-                  <div style={{ position: 'absolute', bottom: '-6px', left: '50%', transform: 'translateX(-50%) rotate(45deg)', width: '10px', height: '10px', background: 'var(--card-bg)', borderBottom: `1px solid ${node.color}`, borderRight: `1px solid ${node.color}` }} />
+                  <div style={{ 
+                    position: 'absolute', 
+                    bottom: node.id === 'Projects' ? 'auto' : '-6px', 
+                    top: node.id === 'Projects' ? '-6px' : 'auto', 
+                    left: '50%', 
+                    transform: 'translateX(-50%) rotate(45deg)', 
+                    width: '10px', 
+                    height: '10px', 
+                    background: 'var(--card-bg)', 
+                    borderBottom: node.id === 'Projects' ? 'none' : `1px solid ${node.color}`, 
+                    borderRight: node.id === 'Projects' ? 'none' : `1px solid ${node.color}`,
+                    borderTop: node.id === 'Projects' ? `1px solid ${node.color}` : 'none',
+                    borderLeft: node.id === 'Projects' ? `1px solid ${node.color}` : 'none'
+                  }} />
                 </div>
               )}
             </div>
@@ -263,8 +339,19 @@ export default function Observatory({ navigate }) {
         })}
 
         <style dangerouslySetInnerHTML={{__html: `
+          @keyframes dashFlow {
+            from { stroke-dashoffset: 20; }
+            to { stroke-dashoffset: 0; }
+          }
           @keyframes flowDash {
             to { stroke-dashoffset: -24; }
+          }
+          @keyframes scrollUp {
+            from { transform: translateY(0); }
+            to { transform: translateY(-50%); }
+          }
+          .activity-scroll {
+            animation: scrollUp 8s linear infinite;
           }
           .data-flow-line {
             animation: flowDash 1s linear infinite;

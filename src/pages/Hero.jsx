@@ -93,7 +93,8 @@ export default function Hero({ navigate }) {
         
         <div style={{ 
           color: 'var(--accent-purple)', 
-          fontSize: '2.4rem', 
+          fontSize: '2.2rem', 
+          fontWeight: '600',
           minHeight: '3rem',
           fontFamily: 'Space Mono, monospace'
         }}>
@@ -124,15 +125,28 @@ export default function Hero({ navigate }) {
           <button 
             className="clickable"
             style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
               padding: '12px 24px',
-              border: 'none',
+              border: '1px solid rgba(255,255,255,0.25)',
+              borderRadius: '8px',
+              color: '#f1f5f9',
               background: 'transparent',
-              color: 'var(--text-muted)',
-              fontSize: '1rem',
-              transition: 'color 0.3s',
+              fontSize: '14px',
+              cursor: 'pointer',
+              transition: 'all 0.25s ease',
+              textDecoration: 'none',
+              fontFamily: 'Space Mono, monospace',
             }}
-            onMouseEnter={(e) => e.target.style.color = 'white'}
-            onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.6)';
+              e.currentTarget.style.background = 'rgba(255,255,255,0.07)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+              e.currentTarget.style.background = 'transparent';
+            }}
           >
             📄 Resume
           </button>
@@ -143,12 +157,13 @@ export default function Hero({ navigate }) {
       <div style={{ 
         display: 'flex', 
         justifyContent: 'center', 
+        alignItems: 'center',
         gap: '80px', 
-        flexWrap: 'wrap',
-        margin: '20px 0 60px 0'
+        margin: '48px auto 0',
+        maxWidth: '700px',
       }}>
         {/* LeetCode */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', borderRadius: '12px', boxShadow: '0 0 20px rgba(124,58,237,0.15)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '120px', padding: '10px', borderRadius: '12px', boxShadow: '0 0 20px rgba(124,58,237,0.15)' }}>
           <div style={{ fontSize: '2rem', fontWeight: 'bold', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
             {leetCodeCount}+
             <div style={{ display: 'flex', gap: '2px', height: '24px', alignItems: 'flex-end' }}>
@@ -166,7 +181,7 @@ export default function Hero({ navigate }) {
         </div>
 
         {/* CGPA */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', borderRadius: '12px', boxShadow: '0 0 20px rgba(124,58,237,0.15)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '120px', padding: '10px', borderRadius: '12px', boxShadow: '0 0 20px rgba(124,58,237,0.15)' }}>
           <div style={{ position: 'relative', width: '64px', height: '64px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <svg width="64" height="64" style={{ position: 'absolute', transform: 'rotate(-90deg)' }}>
               <circle cx="32" cy="32" r="28" fill="none" stroke="var(--border)" strokeWidth="4" />
@@ -181,7 +196,7 @@ export default function Hero({ navigate }) {
         </div>
 
         {/* Projects */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', borderRadius: '12px', boxShadow: '0 0 20px rgba(124,58,237,0.15)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: '120px', padding: '10px', borderRadius: '12px', boxShadow: '0 0 20px rgba(124,58,237,0.15)' }}>
           <div style={{ fontSize: '2rem', fontWeight: 'bold', color: 'white', display: 'flex', alignItems: 'center', gap: '8px', height: '64px' }}>
             {projectsCount}
             <div style={{ display: 'flex', gap: '4px', marginLeft: '10px' }}>
@@ -203,6 +218,11 @@ export default function Hero({ navigate }) {
 
       {/* Footer CTA */}
       <div style={{ paddingBottom: '20px' }}>
+        <div style={{
+          width: '60px', height: '1px',
+          background: 'linear-gradient(90deg, transparent, rgba(124,58,237,0.5), transparent)',
+          margin: '40px auto',
+        }} />
         <h3 style={{ fontSize: '1.5rem', color: 'white', marginBottom: '10px' }}>Let's build something exceptional.</h3>
         <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>Open to opportunities in Data Science, Machine Learning, and Engineering.</p>
         <button className="clickable" style={{
@@ -217,19 +237,73 @@ export default function Hero({ navigate }) {
           ✉ Get in Touch
         </button>
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', color: 'var(--text-muted)' }}>
-          <a href="#" className="clickable" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>{Icons.github} GitHub</a>
-          <a href="#" className="clickable" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>{Icons.linkedin} LinkedIn</a>
-          <a href="#" className="clickable" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>{Icons.leetcode} LeetCode</a>
-          <a href="#" className="clickable" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>{Icons.resume} Resume</a>
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '24px' }}>
+          {/* BOX 1 - WhatsApp */}
+          <div onClick={() => window.open("https://wa.me/919876543210","_blank")}
+            style={{
+              display:'flex', alignItems:'center', gap:'12px',
+              padding:'0 20px', width:'200px', minWidth:'200px', maxWidth:'200px', height:'64px',
+              background:'rgba(37,211,102,0.1)',
+              border:'1px solid rgba(37,211,102,0.3)',
+              borderRadius:'12px', cursor:'pointer',
+              transition:'all 0.25s ease'
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background='rgba(37,211,102,0.2)';
+              e.currentTarget.style.borderColor='rgba(37,211,102,0.6)';
+              e.currentTarget.style.transform='translateY(-2px)';
+              e.currentTarget.style.boxShadow='0 8px 20px rgba(37,211,102,0.15)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background='rgba(37,211,102,0.1)';
+              e.currentTarget.style.borderColor='rgba(37,211,102,0.3)';
+              e.currentTarget.style.transform='translateY(0)';
+              e.currentTarget.style.boxShadow='none';
+            }}
+          >
+            {/* WhatsApp SVG icon in #25D166, 22px */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg viewBox="0 0 24 24" width="22" height="22"><path fill="#25D166" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path fill="#25D166" d="M12 0C5.373 0 0 5.373 0 12c0 2.136.561 4.14 1.535 5.874L.057 23.857l6.158-1.453A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.659-.5-5.191-1.375l-.371-.22-3.857.91.972-3.751-.242-.386A9.937 9.937 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <div style={{color:'white',fontWeight:'bold',fontSize:'14px'}}>WhatsApp</div>
+              <div style={{color:'#64748b',fontSize:'11px'}}>Chat directly</div>
+            </div>
+          </div>
+
+          {/* BOX 2 - LinkedIn */}
+          <div onClick={() => window.open("https://linkedin.com/in/vetrivel-a","_blank")}
+            style={{
+              display:'flex', alignItems:'center', gap:'12px',
+              padding:'0 20px', width:'200px', minWidth:'200px', maxWidth:'200px', height:'64px',
+              background:'rgba(10,102,194,0.1)',
+              border:'1px solid rgba(10,102,194,0.3)',
+              borderRadius:'12px', cursor:'pointer',
+              transition:'all 0.25s ease'
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background='rgba(10,102,194,0.2)';
+              e.currentTarget.style.borderColor='rgba(10,102,194,0.6)';
+              e.currentTarget.style.transform='translateY(-2px)';
+              e.currentTarget.style.boxShadow='0 8px 20px rgba(10,102,194,0.15)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background='rgba(10,102,194,0.1)';
+              e.currentTarget.style.borderColor='rgba(10,102,194,0.3)';
+              e.currentTarget.style.transform='translateY(0)';
+              e.currentTarget.style.boxShadow='none';
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0A66C2' }}>
+              {Icons.linkedin}
+            </div>
+            <div style={{ textAlign: 'left' }}>
+              <div style={{color:'white',fontWeight:'bold',fontSize:'14px'}}>LinkedIn</div>
+              <div style={{color:'#64748b',fontSize:'11px'}}>Let's connect</div>
+            </div>
+          </div>
         </div>
         
-        {/* Scroll Indicator */}
-        <div style={{ marginTop: '40px', animation: 'bounce 2s infinite' }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="2">
-            <path d="M12 5v14M19 12l-7 7-7-7"/>
-          </svg>
-        </div>
         
         <style dangerouslySetInnerHTML={{__html: `
           @keyframes bounce {

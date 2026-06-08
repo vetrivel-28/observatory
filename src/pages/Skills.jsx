@@ -100,9 +100,9 @@ export default function Skills({ navigate }) {
               onClick={() => setActiveTab(tab)}
               style={{
                 padding: '8px 16px',
-                background: activeTab === tab ? 'var(--accent-cyan)' : 'var(--card-bg)',
-                color: activeTab === tab ? 'black' : 'white',
-                border: '1px solid var(--border)',
+                background: activeTab === tab ? 'rgba(6,182,212,0.15)' : 'var(--card-bg)',
+                color: activeTab === tab ? '#06b6d4' : 'white',
+                border: activeTab === tab ? '1px solid #06b6d4' : '1px solid var(--border)',
                 borderRadius: '20px',
                 fontSize: '0.9rem',
                 fontFamily: 'Space Mono, monospace',
@@ -134,7 +134,16 @@ export default function Skills({ navigate }) {
               position: 'relative',
               overflow: 'hidden',
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.boxShadow = `0 10px 30px ${skill.color}20`;
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
             }}
           >
             {/* Right edge performance bar */}
@@ -234,12 +243,25 @@ export default function Skills({ navigate }) {
             ))}
             
             {/* Labels */}
-            <text x="50" y="5" fill="white" fontSize="4" textAnchor="middle">Python</text>
-            <text x="92" y="29" fill="white" fontSize="4" textAnchor="start">SQL</text>
-            <text x="92" y="73" fill="white" fontSize="4" textAnchor="start">ML</text>
-            <text x="50" y="96" fill="white" fontSize="4" textAnchor="middle">DataEng</text>
-            <text x="8" y="73" fill="white" fontSize="4" textAnchor="end">WebDev</text>
-            <text x="8" y="29" fill="white" fontSize="4" textAnchor="end">Visualization</text>
+            {[
+              { label: 'Python', x: '50%', y: '5%' },
+              { label: 'SQL', x: '92%', y: '28%' },
+              { label: 'DataEng', x: '85%', y: '78%' },
+              { label: 'Visualization', x: '50%', y: '98%' },
+              { label: 'WebDev', x: '8%', y: '78%' },
+              { label: 'ML', x: '8%', y: '28%' },
+            ].map(({ label, x, y }) => (
+              <text
+                key={label}
+                x={x} y={y}
+                textAnchor="middle"
+                fill="#94a3b8"
+                fontSize="4.5"
+                fontFamily="Space Mono, monospace"
+              >
+                {label}
+              </text>
+            ))}
 
             {/* Data points (scaled out of 40 max radius) */}
             {/* Python 90%, SQL 80%, ML 85%, DataEng 75%, WebDev 60%, Viz 70% */}
@@ -275,6 +297,9 @@ export default function Skills({ navigate }) {
               );
             })()}
           </svg>
+        </div>
+        <div style={{ marginTop: '20px', color: 'var(--text-muted)', fontSize: '0.8rem', fontFamily: 'Space Mono, monospace', animation: 'pulse 2s infinite' }}>
+          ↓ SCROLL FOR TECH STACK RADAR
         </div>
       </div>
     </div>
