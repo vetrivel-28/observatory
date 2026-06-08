@@ -1,210 +1,293 @@
-import React, { useEffect, useState } from 'react';
-import { Icons } from '../Icons';
+import { useState } from 'react';
+
+const achievements = [
+  {
+    title: 'University Capstone Project Showcase',
+    date: 'MAY 2025',
+    badge: 'EXCELLENCE AWARD WINNER',
+    badgeColor: '#7c3aed',
+    role: 'Lead Machine Learning Engineer',
+    description: 'AI-driven accessibility tool translating sign language to audio using edge-deployed computer vision. Selected as top project out of 50+ engineering teams.',
+    technologies: ['Python', 'TensorFlow Lite', 'MediaPipe', 'React Native'],
+    keyLearning: 'Optimizing ML models for edge devices requires heavy quantization and pruning. Real-time inference on mobile devices is heavily bottlenecked by thermal throttling.',
+    icon: '🏆',
+  },
+  {
+    title: 'Kaggle Tabular Playground Series',
+    date: 'AUG 2024',
+    badge: 'TOP 5% FINISH',
+    badgeColor: '#06b6d4',
+    role: 'Data Analyst & Modeler',
+    description: 'Analyzed complex anonymized dataset to predict multi-class probabilities. Engineered custom interaction features to boost LightGBM performance against 1,000+ competitors.',
+    technologies: ['Pandas', 'Scikit-Learn', 'LightGBM', 'Optuna'],
+    keyLearning: 'Feature engineering often provides more lift than complex model ensembles. Cross-validation strategies must meticulously mirror the test set distribution.',
+    icon: '🥈',
+  },
+  {
+    title: 'ACM Student Chapter Hackathon',
+    date: 'MAR 2023',
+    badge: 'BEST UI/UX AWARD',
+    badgeColor: '#f59e0b',
+    role: 'Full-Stack Developer',
+    description: 'Built a peer-to-peer tutoring marketplace platform focusing on zero-friction onboarding flow and algorithmic matching based on subject competency.',
+    technologies: ['Next.js', 'Tailwind CSS', 'Firebase', 'TypeScript'],
+    keyLearning: 'Aesthetic design directly correlates with user trust. Minimizing clicks to the core value proposition drastically improved user retention metrics.',
+    icon: '⭐',
+  },
+];
 
 export default function Achievements({ navigate }) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  const achievements = [
-    {
-      title: 'University Capstone Project Showcase',
-      date: 'MAY 2025',
-      badge: 'EXCELLENCE AWARD WINNER',
-      role: 'Lead Machine Learning Engineer',
-      description: 'AI-driven accessibility tool translating sign language to audio using edge-deployed computer vision. Selected as top project out of 50+ engineering teams.',
-      technologies: ['Python', 'TensorFlow Lite', 'MediaPipe', 'React Native'],
-      keyLearning: 'Optimizing ML models for edge devices requires heavy quantization and pruning. Real-time inference on mobile devices is heavily bottlenecked by thermal throttling.',
-      icon: '🏆',
-      accent: '#7c3aed',
-    },
-    {
-      title: 'Kaggle Tabular Playground Series',
-      date: 'AUG 2024',
-      badge: 'TOP 5% FINISH',
-      role: 'Data Analyst & Modeler',
-      description: 'Analyzed complex anonymized dataset to predict multi-class probabilities. Engineered custom interaction features to boost LightGBM performance against 1,000+ competitors.',
-      technologies: ['Pandas', 'Scikit-Learn', 'LightGBM', 'Optuna'],
-      keyLearning: 'Feature engineering often provides more lift than complex model ensembles. Cross-validation strategies must meticulously mirror the test set distribution.',
-      icon: '🥈',
-      accent: '#06b6d4',
-    },
-    {
-      title: 'ACM Student Chapter Hackathon',
-      date: 'MAR 2023',
-      badge: 'BEST UI/UX AWARD',
-      role: 'Full-Stack Developer',
-      description: 'Built a peer-to-peer tutoring marketplace platform focusing on zero-friction onboarding flow and algorithmic matching based on subject competency.',
-      technologies: ['Next.js', 'Tailwind CSS', 'Firebase', 'TypeScript'],
-      keyLearning: 'Aesthetic design directly correlates with user trust. Minimizing clicks to the core value proposition drastically improved our user retention metrics.',
-      icon: '⭐',
-      accent: '#f59e0b',
-    },
-  ];
+  const [expanded, setExpanded] = useState(null);
 
   return (
-    <div className="fade-in" style={{ padding: '40px 20px', maxWidth: '900px', margin: '0 auto', overflowX: 'hidden' }}>
-      <button 
-        className="clickable"
-        onClick={() => navigate('Observatory')}
+    <div style={{
+      minHeight: '100vh',
+      background: '#080c14',
+      padding: '60px 24px 80px',
+      fontFamily: 'DM Sans, sans-serif',
+    }}>
+      {/* Back button - top left */}
+      <button
+        onClick={() => navigate('observatory')}
         style={{
-          background: 'transparent',
+          background: 'none',
           border: 'none',
-          color: 'var(--text-muted)',
-          fontSize: '1rem',
-          marginBottom: '20px'
+          color: '#94a3b8',
+          fontSize: '14px',
+          cursor: 'pointer',
+          fontFamily: 'Space Mono, monospace',
+          marginBottom: '40px',
+          display: 'block',
+          padding: 0,
         }}
       >
         ← Back to Observatory
       </button>
 
-      <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-        <h1 style={{ fontSize: '2.5rem', color: 'white', marginBottom: '10px' }}>Hackathons & Awards</h1>
-        <p style={{ color: 'var(--text-muted)' }}>A timeline of competitive programming, hackathons, and industry challenges.</p>
-      </div>
+      {/* Page title */}
+      <h1 style={{
+        fontFamily: 'Space Mono, monospace',
+        fontSize: '2.5rem',
+        color: '#f1f5f9',
+        textAlign: 'center',
+        marginBottom: '8px',
+      }}>
+        Hackathons & Awards
+      </h1>
+      <p style={{
+        color: '#64748b',
+        textAlign: 'center',
+        fontSize: '15px',
+        marginBottom: '64px',
+      }}>
+        A timeline of competitive programming, hackathons, and industry challenges.
+      </p>
 
-      {/* Timeline Container */}
-      <div style={{ position: 'relative', width: '100%', padding: '40px 0' }}>
-        {/* Center Line */}
+      {/* Timeline container */}
+      <div style={{
+        position: 'relative',
+        maxWidth: '900px',
+        margin: '0 auto',
+      }}>
+
+        {/* Center vertical line */}
         <div style={{
           position: 'absolute',
           left: '50%',
           top: 0,
           bottom: 0,
           width: '2px',
-          background: 'linear-gradient(to bottom, var(--accent-purple), var(--accent-amber))',
+          background: 'linear-gradient(180deg, #7c3aed 0%, #06b6d4 50%, #f59e0b 100%)',
           transform: 'translateX(-50%)',
-          borderRadius: '2px'
+          zIndex: 1,
         }} />
 
-        {achievements.map((item, i) => {
-          const isLeft = i % 2 !== 0; // index 1 is left, 0 and 2 are right
+        {achievements.map((item, index) => {
+          const isRight = index % 2 === 0; // 0→right, 1→left, 2→right
+          const isExpanded = expanded === index;
+
           return (
-            <div key={i} style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: '80px',
-              position: 'relative',
-              width: '100%'
-            }}>
-              
-              {/* Center Node Block */}
+            <div
+              key={index}
+              style={{
+                position: 'relative',
+                display: 'flex',
+                justifyContent: isRight ? 'flex-end' : 'flex-start',
+                marginBottom: '72px',
+                paddingLeft: isRight ? 0 : 0,
+              }}
+            >
+              {/* ── Timeline node (sits exactly on center line) ── */}
               <div style={{
                 position: 'absolute',
                 left: '50%',
+                top: '16px',
                 transform: 'translateX(-50%)',
+                zIndex: 10,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                zIndex: 2,
+                gap: '4px',
               }}>
-                <div style={{ color: item.accent, fontSize: '11px', fontFamily: 'Space Mono, monospace', fontWeight: 'bold', marginBottom: '8px', letterSpacing: '0.1em' }}>
+                {/* Date ABOVE icon */}
+                <div style={{
+                  fontFamily: 'Space Mono, monospace',
+                  fontSize: '10px',
+                  fontWeight: '700',
+                  color: item.badgeColor,
+                  letterSpacing: '0.12em',
+                  whiteSpace: 'nowrap',
+                  textAlign: 'center',
+                  marginBottom: '4px',
+                }}>
                   {item.date}
                 </div>
+
+                {/* Icon circle */}
                 <div style={{
-                  width: '44px',
-                  height: '44px',
+                  width: '42px',
+                  height: '42px',
                   borderRadius: '50%',
-                  background: 'var(--bg-base)',
-                  border: `2px solid ${item.accent}`,
+                  background: item.badgeColor,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: item.accent,
-                  fontSize: '20px',
-                  boxShadow: `0 0 20px ${item.accent}50`
+                  fontSize: '18px',
+                  boxShadow: `0 0 20px ${item.badgeColor}60, 0 0 40px ${item.badgeColor}20`,
+                  flexShrink: 0,
                 }}>
                   {item.icon}
                 </div>
               </div>
 
-              {/* Card Container (Left or Right) */}
-              <div style={{
-                width: '50%',
-                display: 'flex',
-                justifyContent: isLeft ? 'flex-end' : 'flex-start',
-                paddingRight: isLeft ? '60px' : '0',
-                paddingLeft: isLeft ? '0' : '60px',
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateX(0)' : `translateX(${isLeft ? '-60px' : '60px'})`,
-                transition: `all 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${i * 0.2}s`
-              }}>
-                <div 
+              {/* ── Card ── */}
+              <div
+                style={{
+                  width: 'calc(50% - 72px)',
+                  background: 'rgba(15, 25, 41, 0.95)',
+                  border: `1px solid ${item.badgeColor}30`,
+                  borderLeft: isRight
+                    ? `1px solid ${item.badgeColor}30`
+                    : `4px solid ${item.badgeColor}`,
+                  borderRight: isRight
+                    ? `4px solid ${item.badgeColor}`
+                    : `1px solid ${item.badgeColor}30`,
+                  borderRadius: '12px',
+                  padding: '24px',
+                  cursor: 'pointer',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+                  marginTop: '8px',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = `0 12px 32px rgba(0,0,0,0.4)`;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                {/* Title */}
+                <h3 style={{
+                  fontFamily: 'Space Mono, monospace',
+                  fontSize: '1rem',
+                  fontWeight: '700',
+                  color: '#f1f5f9',
+                  marginBottom: '10px',
+                  lineHeight: '1.4',
+                }}>
+                  {item.title}
+                </h3>
+
+                {/* Badge */}
+                <div style={{
+                  display: 'inline-block',
+                  padding: '3px 10px',
+                  background: `${item.badgeColor}20`,
+                  border: `1px solid ${item.badgeColor}50`,
+                  borderRadius: '4px',
+                  color: item.badgeColor,
+                  fontSize: '10px',
+                  fontFamily: 'Space Mono, monospace',
+                  letterSpacing: '0.1em',
+                  marginBottom: '10px',
+                }}>
+                  {item.badge}
+                </div>
+
+                {/* Role */}
+                <div style={{
+                  color: '#94a3b8',
+                  fontSize: '13px',
+                  fontFamily: 'Space Mono, monospace',
+                  marginBottom: '12px',
+                }}>
+                  {item.role}
+                </div>
+
+                {/* Description — NO date here */}
+                <p style={{
+                  color: '#cbd5e1',
+                  fontSize: '14px',
+                  lineHeight: '1.65',
+                  marginBottom: '16px',
+                }}>
+                  {item.description}
+                </p>
+
+                {/* Tech tags */}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '6px',
+                  marginBottom: '14px',
+                }}>
+                  {item.technologies.map(tech => (
+                    <span key={tech} style={{
+                      padding: '3px 8px',
+                      background: `${item.badgeColor}15`,
+                      border: `1px solid ${item.badgeColor}30`,
+                      borderRadius: '4px',
+                      color: '#e2e8f0',
+                      fontSize: '11px',
+                      fontFamily: 'Space Mono, monospace',
+                    }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Key Learning expandable */}
+                <button
+                  onClick={() => setExpanded(isExpanded ? null : index)}
                   style={{
-                    background: 'var(--card-bg)',
-                    border: '1px solid var(--border)',
-                    borderRadius: '12px',
-                    padding: '24px',
-                    transition: 'all 0.3s ease',
-                    width: '100%',
-                    maxWidth: '380px',
-                    position: 'relative'
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.boxShadow = `0 10px 30px ${item.accent}20`;
-                    e.currentTarget.style.borderColor = item.accent;
-                    e.currentTarget.style.transform = 'translateY(-4px)';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.boxShadow = 'none';
-                    e.currentTarget.style.borderColor = 'var(--border)';
-                    e.currentTarget.style.transform = 'translateY(0)';
+                    background: 'none',
+                    border: 'none',
+                    color: item.badgeColor,
+                    fontSize: '11px',
+                    fontFamily: 'Space Mono, monospace',
+                    cursor: 'pointer',
+                    letterSpacing: '0.1em',
+                    padding: 0,
+                    marginBottom: isExpanded ? '10px' : 0,
                   }}
                 >
-                  <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'white', marginBottom: '12px', lineHeight: '1.3' }}>
-                    {item.title}
-                  </div>
-                  
-                  <div style={{
-                    display: 'inline-block',
-                    padding: '4px 8px',
-                    background: `${item.accent}15`,
-                    color: item.accent,
-                    border: `1px solid ${item.accent}30`,
-                    borderRadius: '4px',
-                    fontSize: '0.7rem',
-                    fontWeight: 'bold',
-                    letterSpacing: '0.05em',
-                    marginBottom: '12px',
-                    fontFamily: 'Space Mono, monospace'
+                  {isExpanded ? '▼' : '▶'} KEY LEARNING
+                </button>
+
+                {isExpanded && (
+                  <p style={{
+                    color: '#94a3b8',
+                    fontSize: '13px',
+                    lineHeight: '1.6',
+                    paddingLeft: '12px',
+                    borderLeft: `2px solid ${item.badgeColor}50`,
+                    marginTop: '6px',
                   }}>
-                    {item.badge}
-                  </div>
-
-                  <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '16px', fontFamily: 'Space Mono, monospace' }}>
-                    {item.role}
-                  </div>
-
-                  <p style={{ color: 'var(--text-primary)', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '20px' }}>
-                    {item.description}
+                    {item.keyLearning}
                   </p>
-
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-                    {item.technologies.map(tag => (
-                      <span key={tag} style={{
-                        background: 'rgba(255,255,255,0.03)',
-                        border: '1px solid var(--border)',
-                        padding: '4px 8px',
-                        borderRadius: '4px',
-                        fontSize: '0.75rem',
-                        color: 'var(--text-muted)',
-                        fontFamily: 'Space Mono, monospace'
-                      }}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '8px', borderLeft: `2px solid ${item.accent}` }}>
-                    <div style={{ color: item.accent, fontSize: '0.8rem', marginBottom: '8px', fontFamily: 'Space Mono, monospace', fontWeight: 'bold' }}>KEY LEARNING</div>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: 0, lineHeight: '1.5' }}>
-                      {item.keyLearning}
-                    </p>
-                  </div>
-
-                </div>
+                )}
               </div>
-
             </div>
           );
         })}
