@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { NavigationContext } from '../App';
 
 const achievements = [
   {

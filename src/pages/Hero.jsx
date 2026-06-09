@@ -132,6 +132,7 @@ export default function Hero() {
           → Explore Observatory
         </button>
         <button
+          onClick={() => navigate('/resume')}
           style={{
             padding: '12px 28px',
             background: 'transparent',
@@ -267,22 +268,23 @@ export default function Hero() {
           fontFamily: 'Space Mono', fontSize: '1.2rem',
           fontWeight: '700', color: '#e8eef5', marginBottom: '8px',
         }}>
-          Let's build something exceptional.
+          Available for Internships and Data Science Opportunities
         </div>
         <div style={{
           fontFamily: 'DM Sans, sans-serif', fontSize: '14px',
           color: '#8892a4', marginBottom: '20px',
         }}>
-          Open to opportunities in Data Science, Machine Learning, and Engineering.
+          Actively seeking roles where I can build scalable ML models and data pipelines.
         </div>
         <button
-          onClick={() => navigate('/observatory/contact')}
+          onClick={() => navigate('/resume')}
           style={{
             padding: '11px 28px',
-            background: 'rgba(168,85,247,0.15)',
-            border: '1px solid #a855f7',
+            background: 'var(--accent-cyan)',
+            border: 'none',
             borderRadius: '6px',
-            color: '#a855f7',
+            color: '#000',
+            fontWeight: 'bold',
             fontFamily: 'Space Mono, monospace',
             fontSize: '13px',
             cursor: 'pointer',
@@ -290,16 +292,9 @@ export default function Hero() {
             marginBottom: '20px',
             width: '100%',
           }}
-          onMouseEnter={e => {
-            e.currentTarget.style.background = 'rgba(168,85,247,0.25)';
-            e.currentTarget.style.boxShadow = '0 0 20px rgba(168,85,247,0.3)';
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.background = 'rgba(168,85,247,0.15)';
-            e.currentTarget.style.boxShadow = 'none';
-          }}
+          className="hover-lift"
         >
-          ✉ Get in Touch
+          📄 View / Download Resume
         </button>
         {/* Contact boxes */}
         <div className="hero-contact-boxes" style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>

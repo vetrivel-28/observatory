@@ -1,20 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './index.css';
 
-import Hero from './pages/Hero';
-import Observatory from './pages/Observatory';
-import Skills from './pages/Skills';
-import Profiles from './pages/Profiles';
-import Achievements from './pages/Achievements';
-import Experience from './pages/Experience';
-import Projects from './pages/Projects';
-import Contact from './pages/Contact';
+import ErrorBoundary from './components/ErrorBoundary';
+import NotFound from './components/NotFound';
 import TransitionOverlay from './components/Transitions';
 import useScrollAnimation from './hooks/useScrollAnimation';
 import ObservatoryLayout from './layouts/ObservatoryLayout';
-import ProjectDetail from './pages/ProjectDetail';
-import SkillDetail from './pages/SkillDetail';
+
+// Lazy loaded routes for performance
+const Hero = React.lazy(() => import('./pages/Hero'));
+const Observatory = React.lazy(() => import('./pages/Observatory'));
+const Skills = React.lazy(() => import('./pages/Skills'));
+const Profiles = React.lazy(() => import('./pages/Profiles'));
+const Achievements = React.lazy(() => import('./pages/Achievements'));
+const Experience = React.lazy(() => import('./pages/Experience'));
+const Projects = React.lazy(() => import('./pages/Projects'));
+const Contact = React.lazy(() => import('./pages/Contact'));
+const ProjectDetail = React.lazy(() => import('./pages/ProjectDetail'));
+const SkillDetail = React.lazy(() => import('./pages/SkillDetail'));
+const Resume = React.lazy(() => import('./pages/Resume'));
+
+import CommandPalette from './components/CommandPalette';
 
 // --- Custom Cursor ---
 function CustomCursor() {
@@ -228,27 +235,40 @@ export default function App() {
     <NavigationContext.Provider value={{ navigate: handleNavigate }}>
       <CustomCursor />
       <StarCanvas />
+      <CommandPalette />
       
       <TransitionOverlay
         isVisible={isTransitioning}
         targetPage={transitionTarget}
       />
       
-      <Routes>
-        <Route path="/" element={<Hero />} />
-        
-        <Route path="/observatory" element={<ObservatoryLayout />}>
-          <Route index element={<Observatory />} />
-          <Route path="skills" element={<Skills />} />
-          <Route path="skills/:slug" element={<SkillDetail />} />
-          <Route path="profiles" element={<Profiles />} />
-          <Route path="achievements" element={<Achievements />} />
-          <Route path="experience" element={<Experience />} />
-          <Route path="projects" element={<Projects />} />
-          <Route path="projects/:slug" element={<ProjectDetail />} />
-          <Route path="contact" element={<Contact />} />
-        </Route>
-      </Routes>
+      <ErrorBoundary>
+        <Suspense fallback={
+          <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)' }}>
+            <div style={{ width: '40px', height: '40px', border: '3px solid rgba(0,212,255,0.2)', borderTop: '3px solid var(--accent-cyan)', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+          </div>
+        }>
+          <Routes>
+            <Route path="/" element={<Hero />} />
+            <Route path="/resume" element={<Resume />} />
+            
+            <Route path="/observatory" element={<ObservatoryLayout />}>
+              <Route index element={<Observatory />} />
+              <Route path="skills" element={<Skills />} />
+              <Route path="skills/:slug" element={<SkillDetail />} />
+              <Route path="profiles" element={<Profiles />} />
+              <Route path="achievements" element={<Achievements />} />
+              <Route path="experience" element={<Experience />} />
+              <Route path="projects" element={<Projects />} />
+              <Route path="projects/:slug" element={<ProjectDetail />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
     </NavigationContext.Provider>
   );
 }
