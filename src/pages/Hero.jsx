@@ -52,7 +52,7 @@ export default function Hero({ navigate }) {
 
       {/* Name — big terminal style */}
       <h1 style={{
-        fontSize: 'clamp(3rem, 7vw, 5.5rem)',
+        fontSize: 'clamp(2.2rem, 6vw, 5rem)',
         fontWeight: '700',
         color: '#e8eef5',
         letterSpacing: '0.04em',
@@ -65,7 +65,7 @@ export default function Hero({ navigate }) {
 
       {/* Typewriter role */}
       <div style={{
-        fontSize: '1.6rem',
+        fontSize: 'clamp(1.1rem, 3vw, 1.6rem)',
         color: '#a855f7',
         marginBottom: '16px',
         minHeight: '2.2rem',
@@ -89,7 +89,8 @@ export default function Hero({ navigate }) {
 
       {/* Bio */}
       <p style={{
-        maxWidth: '580px',
+        maxWidth: '100%',
+        padding: '0 8px',
         textAlign: 'center',
         color: '#8892a4',
         fontSize: '14px',
@@ -102,7 +103,7 @@ export default function Hero({ navigate }) {
       </p>
 
       {/* CTA Buttons */}
-      <div style={{ display: 'flex', gap: '16px', marginBottom: '52px', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div className="hero-cta-buttons" style={{ display: 'flex', gap: '16px', marginBottom: '52px', flexWrap: 'wrap', justifyContent: 'center' }}>
         <button
           onClick={() => navigate('Observatory')}
           style={{
@@ -154,7 +155,7 @@ export default function Hero({ navigate }) {
       </div>
 
       {/* Stats bar — terminal cards */}
-      <div style={{
+      <div className="hero-stats" style={{
         display: 'flex', gap: '20px',
         justifyContent: 'center', marginBottom: '52px',
         flexWrap: 'wrap'
@@ -252,7 +253,7 @@ export default function Hero({ navigate }) {
       </div>
 
       {/* Bottom CTA — terminal theme */}
-      <div style={{
+      <div className="hero-cta-card" style={{
         textAlign: 'center',
         background: '#0a1628',
         border: '1px solid rgba(0,212,255,0.1)',
@@ -299,7 +300,7 @@ export default function Hero({ navigate }) {
           ✉ Get in Touch
         </button>
         {/* Contact boxes */}
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div className="hero-contact-boxes" style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <div
             onClick={() => window.open('https://wa.me/91XXXXXXXXXX', '_blank')}
             style={{

@@ -40,7 +40,7 @@ export default function Achievements({ navigate }) {
   const [expanded, setExpanded] = useState(null);
 
   return (
-    <div style={{
+    <div className="page-content" style={{
       minHeight: '100vh',
       background: '#050911',
       padding: '60px 24px 80px',
@@ -48,6 +48,7 @@ export default function Achievements({ navigate }) {
     }}>
       {/* Back button - top left */}
       <button
+        className="back-btn"
         onClick={() => navigate('observatory')}
         style={{
           background: 'none',
@@ -65,7 +66,7 @@ export default function Achievements({ navigate }) {
       </button>
 
       {/* Page title */}
-      <h1 style={{
+      <h1 className="page-title" style={{
         fontFamily: 'Space Mono, monospace',
         fontSize: '2.5rem',
         color: '#e8eef5',
@@ -84,7 +85,7 @@ export default function Achievements({ navigate }) {
       </p>
 
       {/* Timeline container */}
-      <div style={{
+      <div className="timeline-container" style={{
         position: 'relative',
         maxWidth: '900px',
         margin: '0 auto',
@@ -108,6 +109,7 @@ export default function Achievements({ navigate }) {
 
           return (
             <div
+              className="timeline-entry"
               key={index}
               style={{
                 position: 'relative',
@@ -162,6 +164,7 @@ export default function Achievements({ navigate }) {
 
               {/* ── Card ── */}
               <div
+                className="achievement-card"
                 style={{
                   width: 'calc(50% - 72px)',
                   background: 'rgba(15, 25, 41, 0.95)',

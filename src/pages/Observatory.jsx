@@ -1,415 +1,473 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+
+const SECTIONS = [
+  {
+    key: 'projects',
+    icon: '⬡',
+    cmd: 'ls ~/projects/',
+    output: '3 production systems deployed',
+    chips: ['ML Classifier', 'ETL Pipeline', 'Safety App'],
+    footerLabel: '3 projects  ·  Python · SQL · React',
+    accent: '#00d4ff',
+    tag: '[dataset]',
+    filename: 'projects.py',
+  },
+  {
+    key: 'skills',
+    icon: '◈',
+    cmd: 'cat skills.json | grep proficiency',
+    output: 'ML 87%  ·  DataEng 92%  ·  Software 76%',
+    chips: ['Python', 'SQL', 'Scikit-Learn', 'TensorFlow', 'React'],
+    footerLabel: '4 domains  ·  radar chart inside',
+    accent: '#00d4ff',
+    tag: '[model]',
+    filename: 'skills.model',
+  },
+  {
+    key: 'achievements',
+    icon: '◆',
+    cmd: 'SELECT * FROM hackathons ORDER BY year DESC',
+    output: 'Excellence Award  ·  Top 5%  ·  Best UI/UX',
+    chips: ['2025', '2024', '2023'],
+    footerLabel: '3 awards  ·  timeline view',
+    accent: '#fbbf24',
+    tag: '[output]',
+    filename: 'hackathons.json',
+  },
+  {
+    key: 'experience',
+    icon: '▣',
+    cmd: 'git log --oneline ~/career',
+    output: 'Data Science Intern @ Tech Solutions',
+    chips: ['Summer 2025', 'ETL', '82% accuracy', 'CS B.S.'],
+    footerLabel: '1 internship  ·  1 degree ongoing',
+    accent: '#fbbf24',
+    tag: '[input]',
+    filename: 'experience.db',
+  },
+  {
+    key: 'profiles',
+    icon: '⟁',
+    cmd: 'ssh --list-connections',
+    output: '4/4 profiles connected & verified',
+    chips: ['GitHub', 'LinkedIn', 'LeetCode', 'Resume'],
+    footerLabel: '150+ problems  ·  all links live',
+    accent: '#a855f7',
+    tag: '[api]',
+    filename: 'profiles.api',
+  },
+  {
+    key: 'contact',
+    icon: '⌘',
+    cmd: 'curl -X POST /api/contact',
+    output: 'Ready to receive transmissions',
+    chips: ['WhatsApp', 'LinkedIn', 'Email'],
+    footerLabel: 'Open to opportunities',
+    accent: '#00ff88',
+    tag: '[ssh]',
+    filename: 'contact.sh',
+  },
+];
 
 export default function Observatory({ navigate }) {
-  const [mounted, setMounted] = useState(false);
+  const navigateTo = navigate; // map prop
+  const [hoveredKey, setHoveredKey] = useState(null);
+  const [bootLines, setBootLines] = useState([]);
+  const [booted, setBooted] = useState(false);
 
+  // Boot sequence animation
   useEffect(() => {
-    setMounted(true);
+    const lines = [
+      '> Initializing data_observatory.exe...',
+      '> Loading portfolio modules [██████████] 100%',
+      '> Establishing SSH tunnels...',
+      '> All systems nominal. Portfolio ready.',
+    ];
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < lines.length) {
+        setBootLines(prev => [...prev, lines[i]]);
+        i++;
+      } else {
+        clearInterval(interval);
+        setTimeout(() => setBooted(true), 400);
+      }
+    }, 350);
+    return () => clearInterval(interval);
   }, []);
 
-  const nodes = [
-    { 
-      page: 'Projects', title: 'PROJECTS', icon: '⬡', 
-      accent: '#00d4ff', filename: 'projects.py',
-      tag: '[dataset]',
-      position: { left: '50%', top: '8%', transform: 'translateX(-50%)' }
-    },
-    { 
-      page: 'Profiles', title: 'PROFILES', icon: '⟁', 
-      accent: '#a855f7', filename: 'profiles.api',
-      tag: '[api]',
-      position: { left: '6%', top: '50%', transform: 'translateY(-50%)' }
-    },
-    { 
-      page: 'Skills', title: 'SKILLS', icon: '◈', 
-      accent: '#00d4ff', filename: 'skills.model',
-      tag: '[model]',
-      position: { right: '6%', top: '50%', transform: 'translateY(-50%)' }
-    },
-    { 
-      page: 'Achievements', title: 'ACHIEVEMENTS', icon: '◆', 
-      accent: '#fbbf24', filename: 'hackathons.json',
-      tag: '[output]',
-      position: { left: '18%', bottom: '8%' }
-    },
-    { 
-      page: 'Experience', title: 'EXPERIENCE', icon: '▣', 
-      accent: '#fbbf24', filename: 'experience.db',
-      tag: '[input]',
-      position: { right: '18%', bottom: '8%' }
-    },
-    { 
-      page: 'Contact', title: 'CONTACT', icon: '⌘', 
-      accent: '#00ff88', filename: 'contact.sh',
-      tag: '[ssh]',
-      position: { left: '50%', bottom: '8%', transform: 'translateX(-50%)' }
-    },
-  ];
-
   return (
-    <div className="fade-in" style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', background: '#050911', fontFamily: 'Space Mono, monospace' }}>
-      
-      {/* SVG Lines - Absolutely behind nodes */}
-      <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none' }}>
-        {nodes.map((node, i) => {
-          let x2 = '50%';
-          let y2 = '50%';
-          if (node.position.left && node.position.top) {
-            x2 = node.position.left; y2 = node.position.top;
-          } else if (node.position.right && node.position.top) {
-            x2 = `calc(100% - ${node.position.right})`; y2 = node.position.top;
-          } else if (node.position.left && node.position.bottom) {
-            x2 = node.position.left; y2 = `calc(100% - ${node.position.bottom})`;
-          } else if (node.position.right && node.position.bottom) {
-            x2 = `calc(100% - ${node.position.right})`; y2 = `calc(100% - ${node.position.bottom})`;
-          }
-          
-          return (
-            <line
-              key={i}
-              x1="50%" y1="50%"
-              x2={x2} y2={y2}
-              stroke="rgba(0,212,255,0.25)"
-              strokeWidth="1"
-              strokeDasharray="5 4"
-              style={{ animation: 'dashFlow 3s linear infinite' }}
-            />
-          );
-        })}
-      </svg>
+    <div className="page-content" style={{
+      width: '100%',
+      minHeight: '100vh',
+      background: '#050911',
+      fontFamily: 'Space Mono, monospace',
+      padding: '0',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
 
-      {/* Center Node */}
-      <div style={{
-        position: 'absolute',
-        left: '50%', top: '50%',
-        transform: 'translate(-50%, -50%)',
-        zIndex: 20,
-        textAlign: 'center',
+      {/* ── Top bar — like an OS menubar ── */}
+      <div className="obs-top-bar" style={{
+        background: '#0a1628',
+        borderBottom: '1px solid rgba(0,212,255,0.12)',
+        padding: '10px 24px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexShrink: 0,
       }}>
-        {/* Outer glow ring — NOT rotating */}
-        <div style={{
-          position: 'absolute',
-          inset: '-20px',
-          borderRadius: '50%',
-          border: '1px solid rgba(0,212,255,0.2)',
-          pointerEvents: 'none',
-        }} />
-        {/* Inner ring */}
-        <div style={{
-          position: 'absolute',
-          inset: '-8px',
-          borderRadius: '50%',
-          border: '1px solid rgba(168,85,247,0.3)',
-          pointerEvents: 'none',
-        }} />
-        {/* Content pill */}
-        <div style={{
-          background: '#0a1628',
-          border: '1px solid rgba(0,212,255,0.4)',
-          borderRadius: '12px',
-          padding: '16px 32px',
-          boxShadow: '0 0 40px rgba(0,212,255,0.15), 0 0 80px rgba(168,85,247,0.1)',
-        }}>
-          <div style={{
-            fontFamily: 'Space Mono, monospace',
-            fontSize: '1.4rem',
-            fontWeight: '700',
-            color: '#e8eef5',
-            letterSpacing: '0.05em',
-            marginBottom: '4px',
-          }}>
-            Vetrivel A
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', gap: '6px' }}>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f57' }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#febc2e' }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#28c840' }} />
           </div>
-          <div style={{
-            fontFamily: 'Space Mono, monospace',
-            fontSize: '10px',
-            color: '#00d4ff',
-            letterSpacing: '0.2em',
-          }}>
-            DATA SCIENCE
-          </div>
+          <span style={{ fontSize: '11px', color: '#4a5568', letterSpacing: '0.08em' }}>
+            vetrivel@portfolio:~/observatory$
+          </span>
         </div>
-      </div>
-
-      {/* Nodes */}
-      {nodes.map((node, i) => (
-        <div
-          key={i}
-          onClick={() => navigate(node.page)}
+        <button
+          onClick={() => navigateTo('Home')}
           style={{
-            position: 'absolute',
-            ...node.position,
-            width: '140px',
-            background: '#0a1628',
-            border: '1px solid rgba(0,212,255,0.2)',
-            borderRadius: '8px',
-            overflow: 'hidden',
-            cursor: 'pointer',
-            transition: 'all 0.25s ease',
-            zIndex: 10,
-            opacity: mounted ? 1 : 0,
+            background: 'none', border: 'none',
+            color: '#4a5568', fontFamily: 'Space Mono',
+            fontSize: '12px', cursor: 'pointer',
+            transition: 'color 0.2s', letterSpacing: '0.05em',
           }}
-          onMouseEnter={e => {
-            e.currentTarget.style.borderColor = node.accent;
-            e.currentTarget.style.boxShadow = `0 0 24px ${node.accent}40`;
-            const currTransform = node.position.transform || '';
-            e.currentTarget.style.transform = `${currTransform} scale(1.05)`;
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.borderColor = 'rgba(0,212,255,0.2)';
-            e.currentTarget.style.boxShadow = 'none';
-            e.currentTarget.style.transform = node.position.transform || 'none';
-          }}
+          onMouseEnter={e => e.currentTarget.style.color = '#00d4ff'}
+          onMouseLeave={e => e.currentTarget.style.color = '#4a5568'}
         >
-          {/* Terminal title bar */}
-          <div style={{
-            background: '#1a2332',
-            borderBottom: `1px solid ${node.accent}30`,
-            padding: '5px 8px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px',
-          }}>
-            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ff5f57' }} />
-            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#febc2e' }} />
-            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#28c840' }} />
-            <span style={{
-              fontFamily: 'Space Mono, monospace',
-              fontSize: '8px',
-              color: '#4a5568',
-              marginLeft: '4px',
-              letterSpacing: '0.05em',
-            }}>
-              {node.filename}
-            </span>
-          </div>
-          {/* Node content */}
-          <div style={{ padding: '10px 12px' }}>
-            <div style={{ fontSize: '18px', marginBottom: '4px' }}>{node.icon}</div>
-            <div style={{
-              fontFamily: 'Space Mono, monospace',
-              fontSize: '11px',
-              fontWeight: '700',
-              color: node.accent,
-              letterSpacing: '0.08em',
-              marginBottom: '4px',
-            }}>
-              {node.title}
-            </div>
-            <div style={{
-              fontFamily: 'Space Mono, monospace',
-              fontSize: '9px',
-              color: '#4a5568',
-              letterSpacing: '0.05em',
-            }}>
-              {node.tag}
-            </div>
-          </div>
-        </div>
-      ))}
-
-      {/* Left Panel — Pipeline Status */}
-      <div style={{
-        position: 'absolute',
-        left: '16px', top: '50%',
-        transform: 'translateY(-50%)',
-        width: '185px',
-        background: '#0a1628',
-        border: '1px solid rgba(0,212,255,0.15)',
-        borderRadius: '8px',
-        overflow: 'hidden',
-        zIndex: 5,
-      }}>
-        <div style={{
-          background: '#1a2332',
-          borderBottom: '1px solid rgba(0,212,255,0.1)',
-          padding: '6px 10px',
-          display: 'flex', alignItems: 'center', gap: '4px',
-        }}>
-          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ff5f57' }} />
-          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#febc2e' }} />
-          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#28c840' }} />
-          <span style={{ fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568', marginLeft: '6px' }}>
-            pipeline.log
-          </span>
-        </div>
-        <div style={{ padding: '12px' }}>
-          <div style={{
-            fontFamily: 'Space Mono', fontSize: '9px',
-            color: '#00d4ff', letterSpacing: '0.15em', marginBottom: '10px',
-          }}>
-            ● PIPELINE STATUS
-          </div>
-          {[
-            { label: 'Data Ingestion', status: 'RUNNING', color: '#00ff88' },
-            { label: 'Model Training', status: 'COMPLETE', color: '#00d4ff' },
-            { label: 'ETL Pipeline', status: 'ACTIVE', color: '#00ff88' },
-            { label: 'API Endpoints', status: 'ONLINE', color: '#00ff88' },
-            { label: 'Dashboard', status: 'LIVE', color: '#fbbf24' },
-          ].map((item, i) => (
-            <div key={i} style={{
-              display: 'flex', justifyContent: 'space-between',
-              alignItems: 'center', marginBottom: '8px',
-            }}>
-              <span style={{ fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568' }}>
-                {item.label}
-              </span>
-              <span style={{
-                fontFamily: 'Space Mono', fontSize: '8px',
-                color: item.color, letterSpacing: '0.08em',
-                display: 'flex', alignItems: 'center', gap: '3px',
-              }}>
-                <span style={{
-                  width: '5px', height: '5px', borderRadius: '50%',
-                  background: item.color,
-                  animation: 'pulse 2s ease-in-out infinite',
-                }} />
-                {item.status}
-              </span>
-            </div>
-          ))}
-          <div style={{
-            marginTop: '10px', paddingTop: '10px',
-            borderTop: '1px solid rgba(255,255,255,0.05)',
-            fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568',
-          }}>
-            <div style={{ color: '#00d4ff', marginBottom: '6px', letterSpacing: '0.1em' }}>
-              LIVE_OUTPUT
-            </div>
-            <div style={{ overflow: 'hidden', height: '70px',
-              maskImage: 'linear-gradient(transparent, black 20%, black 80%, transparent)',
-              WebkitMaskImage: 'linear-gradient(transparent, black 20%, black 80%, transparent)',
-            }}>
-              <div style={{ animation: 'scrollUp 8s linear infinite' }}>
-                {[
-                  '> model.fit() ✓',
-                  '> accuracy: 87.3%',
-                  '> ETL: 500 rows',
-                  '> query: 0.3s',
-                  '> git push ✓',
-                  '> df.dropna() ✓',
-                  '> model.fit() ✓',
-                  '> accuracy: 87.3%',
-                ].map((line, i) => (
-                  <div key={i} style={{
-                    fontFamily: 'Space Mono', fontSize: '9px',
-                    color: i % 2 === 0 ? '#00ff88' : '#4a5568',
-                    marginBottom: '5px', whiteSpace: 'nowrap',
-                  }}>
-                    {line}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+          ← home
+        </button>
       </div>
 
-      {/* Right Panel — Model Registry */}
+      {/* ── Main content ── */}
       <div style={{
-        position: 'absolute',
-        right: '16px', top: '50%',
-        transform: 'translateY(-50%)',
-        width: '185px',
-        background: '#0a1628',
-        border: '1px solid rgba(0,212,255,0.15)',
-        borderRadius: '8px',
-        overflow: 'hidden',
-        zIndex: 5,
+        flex: 1,
+        maxWidth: '960px',
+        width: '100%',
+        margin: '0 auto',
+        padding: '24px 20px',
+        display: 'flex',
+        flexDirection: 'column',
+        paddingBottom: '24px',
       }}>
-        <div style={{
-          background: '#1a2332',
-          borderBottom: '1px solid rgba(0,212,255,0.1)',
-          padding: '6px 10px',
-          display: 'flex', alignItems: 'center', gap: '4px',
-        }}>
-          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ff5f57' }} />
-          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#febc2e' }} />
-          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#28c840' }} />
-          <span style={{ fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568', marginLeft: '6px' }}>
-            model_registry.json
-          </span>
-        </div>
-        <div style={{ padding: '12px' }}>
+
+        {/* Boot sequence OR header after boot */}
+        {!booted ? (
           <div style={{
-            fontFamily: 'Space Mono', fontSize: '9px',
-            color: '#fbbf24', letterSpacing: '0.15em', marginBottom: '10px',
+            padding: '24px',
+            background: '#0a1628',
+            border: '1px solid rgba(0,212,255,0.1)',
+            borderRadius: '8px',
+            marginBottom: '24px',
+            minHeight: '120px',
           }}>
-            ◈ MODEL REGISTRY
-          </div>
-          <div style={{
-            border: '1px solid rgba(0,212,255,0.15)',
-            borderRadius: '4px', overflow: 'hidden', marginBottom: '10px',
-          }}>
-            <div style={{
-              background: '#1a2332', padding: '4px 8px',
-              fontFamily: 'Space Mono', fontSize: '8px', color: '#00d4ff',
-              letterSpacing: '0.1em',
-            }}>
-              models_deployed
-            </div>
-            {[
-              { name: 'classifier_v2', acc: '87%' },
-              { name: 'churn_rf_v1', acc: '82%' },
-              { name: 'etl_pipeline', acc: '99%' },
-            ].map((m, i) => (
+            {bootLines.map((line, i) => (
               <div key={i} style={{
-                display: 'flex', justifyContent: 'space-between',
-                padding: '4px 8px',
-                borderTop: '1px solid rgba(255,255,255,0.04)',
-                fontFamily: 'Space Mono', fontSize: '8px',
+                fontSize: '12px',
+                color: i === bootLines.length - 1 ? '#00d4ff' : '#4a5568',
+                marginBottom: '6px',
+                animation: 'fadeIn 0.3s ease forwards',
               }}>
-                <span style={{ color: '#8892a4' }}>{m.name}</span>
-                <span style={{ color: '#00ff88' }}>{m.acc}</span>
+                {line}
               </div>
             ))}
+            <span style={{
+              display: 'inline-block', width: '8px', height: '14px',
+              background: '#00d4ff',
+              animation: 'blink 0.7s step-end infinite',
+              verticalAlign: 'middle',
+            }} />
           </div>
-          {[
-            { label: 'ACCURACY', value: '87.3%', trend: '↑' },
-            { label: 'PRECISION', value: '84.1%', trend: '↑' },
-            { label: 'RECALL', value: '89.2%', trend: '→' },
-            { label: 'F1', value: '86.6%', trend: '↑' },
-          ].map((m, i) => (
-            <div key={i} style={{
-              display: 'flex', justifyContent: 'space-between',
-              marginBottom: '7px',
-            }}>
-              <span style={{ fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568' }}>
-                {m.label}
-              </span>
-              <span style={{ fontFamily: 'Space Mono', fontSize: '10px', color: '#e8eef5', fontWeight: '700' }}>
-                {m.value}
-                <span style={{ color: m.trend === '↑' ? '#00ff88' : '#00d4ff', marginLeft: '3px' }}>
-                  {m.trend}
-                </span>
-              </span>
-            </div>
-          ))}
-          <svg width="100%" height="28" style={{ marginTop: '8px' }}>
-            <polyline
-              points="0,22 20,18 40,19 60,12 80,14 110,7 140,9 161,4"
-              fill="none" stroke="#fbbf24" strokeWidth="1.5"
-              strokeLinejoin="round"
-            />
-            <polyline
-              points="0,22 20,18 40,19 60,12 80,14 110,7 140,9 161,4"
-              fill="url(#sparkGrad)"
-              opacity="0.15"
-            />
-            <defs>
-              <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#fbbf24" />
-                <stop offset="100%" stopColor="transparent" />
-              </linearGradient>
-            </defs>
-          </svg>
+        ) : (
           <div style={{
-            fontFamily: 'Space Mono', fontSize: '8px',
-            color: '#4a5568', textAlign: 'center', marginTop: '2px',
+            padding: '16px 24px',
+            background: '#0a1628',
+            border: '1px solid rgba(0,212,255,0.1)',
+            borderRadius: '8px',
+            marginBottom: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '12px',
           }}>
-            training_loss.epoch[]
+            <div>
+              <div style={{ fontSize: '11px', color: '#4a5568', marginBottom: '4px' }}>
+                {'> whoami'}
+              </div>
+              <div style={{ fontSize: '18px', fontWeight: '700', color: '#e8eef5' }}>
+                Vetrivel A
+              </div>
+              <div style={{ fontSize: '11px', color: '#00d4ff', letterSpacing: '0.15em', marginTop: '2px' }}>
+                DATA SCIENTIST & ML ENGINEER
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+              {[
+                { val: '150+', label: 'LeetCode Solved', color: '#00d4ff', icon: '</>' },
+                { val: '8.5', label: 'CGPA / 10.0', color: '#fbbf24', icon: '★' },
+                { val: '3', label: 'Projects Built', color: '#a855f7', icon: '⬡' },
+              ].map(s => (
+                <div key={s.label} style={{
+                  display: 'flex', alignItems: 'center', gap: '8px',
+                  background: 'rgba(255,255,255,0.03)',
+                  border: `1px solid ${s.color}20`,
+                  padding: '6px 14px', borderRadius: '6px',
+                }}>
+                  <span style={{ color: s.color, fontSize: '13px' }}>{s.icon}</span>
+                  <div>
+                    <div style={{
+                      fontFamily: 'Space Mono', fontSize: '16px',
+                      fontWeight: '700', color: s.color, lineHeight: 1,
+                    }}>
+                      {s.val}
+                    </div>
+                    <div style={{
+                      fontFamily: 'Space Mono', fontSize: '8px',
+                      color: '#4a5568', letterSpacing: '0.1em',
+                      marginTop: '2px',
+                    }}>
+                      {s.label.toUpperCase()}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* ── Section cards — responsive grid ── */}
+        {booted && (
+          <div className="obs-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '20px',
+            marginBottom: '20px',
+          }}>
+            {SECTIONS.map((section) => {
+              const isHovered = hoveredKey === section.key;
+              return (
+                <div
+                  key={section.key}
+                  onClick={() => navigateTo(section.key.charAt(0).toUpperCase() + section.key.slice(1))}
+                  onMouseEnter={() => setHoveredKey(section.key)}
+                  onMouseLeave={() => setHoveredKey(null)}
+                  style={{
+                    position: 'relative',
+                    background: '#0a1628',
+                    border: `1px solid ${isHovered ? section.accent : 'rgba(255,255,255,0.07)'}`,
+                    borderTop: `3px solid ${section.accent}`,  // TOP accent line = instant color ID
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    cursor: 'pointer',
+                    transition: 'all 0.22s ease',
+                    transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
+                    boxShadow: isHovered ? `0 12px 40px ${section.accent}20` : 'none',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    minHeight: '180px',
+                  }}
+                >
+
+                  {/* Hover tooltip preview */}
+                  {isHovered && (
+                    <div style={{
+                      position: 'absolute',
+                      bottom: 'calc(100% + 8px)',
+                      right: '18px',
+                      background: '#1a2332',
+                      border: `1px solid ${section.accent}40`,
+                      borderRadius: '6px',
+                      padding: '8px 12px',
+                      fontFamily: 'Space Mono',
+                      fontSize: '10px',
+                      color: '#8892a4',
+                      whiteSpace: 'nowrap',
+                      zIndex: 100,
+                      pointerEvents: 'none',
+                      boxShadow: `0 4px 20px rgba(0,0,0,0.5)`,
+                      animation: 'fadeIn 0.15s ease forwards',
+                    }}>
+                      <span style={{ color: section.accent }}>click</span>
+                      {' → opens '}{section.key}
+                    </div>
+                  )}
+
+                  {/* ── TITLE BAR ── */}
+                  <div style={{
+                    background: '#111d2e',
+                    borderBottom: `1px solid rgba(255,255,255,0.05)`,
+                    padding: '8px 14px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                    {/* Traffic lights + filename */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <div style={{ display: 'flex', gap: '4px' }}>
+                        <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#ff5f57' }} />
+                        <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#febc2e' }} />
+                        <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#28c840' }} />
+                      </div>
+                      <span style={{
+                        fontFamily: 'Space Mono', fontSize: '9px',
+                        color: '#4a5568', marginLeft: '4px',
+                      }}>
+                        {section.filename}
+                      </span>
+                    </div>
+                    {/* Tag badge */}
+                    <span style={{
+                      fontFamily: 'Space Mono', fontSize: '9px',
+                      color: section.accent,
+                      background: `${section.accent}15`,
+                      border: `1px solid ${section.accent}35`,
+                      padding: '2px 7px', borderRadius: '3px',
+                      letterSpacing: '0.08em',
+                    }}>
+                      {section.tag}
+                    </span>
+                  </div>
+
+                  {/* ── CARD BODY ── */}
+                  <div style={{ padding: '16px 18px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+
+                    {/* SECTION NAME — BIG AND FIRST */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      marginBottom: '12px',
+                    }}>
+                      <span style={{ fontSize: '20px', color: section.accent }}>{section.icon}</span>
+                      <span style={{
+                        fontFamily: 'Space Mono',
+                        fontSize: '15px',
+                        fontWeight: '700',
+                        color: section.accent,
+                        letterSpacing: '0.08em',
+                      }}>
+                        {section.key.toUpperCase()}
+                      </span>
+                    </div>
+
+                    {/* COMMAND LINE */}
+                    <div style={{
+                      fontFamily: 'Space Mono', fontSize: '10px',
+                      color: '#2d3748', marginBottom: '8px',
+                      whiteSpace: 'nowrap', overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}>
+                      <span style={{ color: isHovered ? section.accent + '80' : '#2d3748' }}>$ </span>
+                      {section.cmd}
+                    </div>
+
+                    {/* OUTPUT — key info line */}
+                    <div style={{
+                      fontFamily: 'Space Mono', fontSize: '12px',
+                      fontWeight: '700',
+                      color: isHovered ? '#e8eef5' : '#8892a4',
+                      marginBottom: '8px',
+                      lineHeight: '1.5',
+                      transition: 'color 0.22s',
+                      flex: 1,
+                    }}>
+                      {section.output}
+                    </div>
+
+                    {/* DETAIL TAGS — small pills */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '4px',
+                      marginBottom: '12px',
+                    }}>
+                      {section.chips.map(chip => (
+                        <span key={chip} style={{
+                          fontFamily: 'Space Mono', fontSize: '9px',
+                          color: '#4a5568',
+                          background: 'rgba(255,255,255,0.04)',
+                          border: '1px solid rgba(255,255,255,0.06)',
+                          padding: '2px 6px', borderRadius: '3px',
+                        }}>
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* FOOTER CTA */}
+                    <div style={{
+                      paddingTop: '10px',
+                      borderTop: '1px solid rgba(255,255,255,0.04)',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}>
+                      <span style={{
+                        fontFamily: 'Space Mono', fontSize: '9px',
+                        color: '#4a5568', letterSpacing: '0.1em',
+                      }}>
+                        {section.footerLabel}
+                      </span>
+                      <span style={{
+                        fontFamily: 'Space Mono', fontSize: '11px',
+                        color: isHovered ? section.accent : '#2d3748',
+                        transition: 'color 0.22s',
+                        fontWeight: '700',
+                      }}>
+                        {isHovered ? 'OPEN →' : '→'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* ── Bottom status bar ── */}
+        {booted && (
+          <div style={{
+            marginTop: 'auto', // Pushes status bar to bottom if there's extra space
+            padding: '10px 20px',
+            background: '#0a1628',
+            border: '1px solid rgba(255,255,255,0.05)',
+            borderRadius: '6px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '8px',
+          }}>
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+              {[
+                { dot: '#00ff88', text: 'portfolio: ONLINE' },
+                { dot: '#00d4ff', text: 'models: 3 deployed' },
+                { dot: '#fbbf24', text: 'uptime: 99.9%' },
+              ].map((item, i) => (
+                <div key={i} style={{
+                  display: 'flex', alignItems: 'center', gap: '6px',
+                  fontFamily: 'Space Mono', fontSize: '10px', color: '#4a5568',
+                }}>
+                  <div style={{
+                    width: '6px', height: '6px', borderRadius: '50%',
+                    background: item.dot,
+                    animation: 'pulse 2s ease-in-out infinite',
+                  }} />
+                  {item.text}
+                </div>
+              ))}
+            </div>
+            <div style={{
+              fontFamily: 'Space Mono', fontSize: '10px', color: '#4a5568',
+            }}>
+              6 modules loaded
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

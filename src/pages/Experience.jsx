@@ -4,9 +4,9 @@ import { Icons } from '../Icons';
 export default function Experience({ navigate }) {
   
   return (
-    <div className="fade-in" style={{ padding: '40px 20px', maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column' }}>
+    <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column' }}>
       <button 
-        className="clickable"
+        className="clickable back-btn"
         onClick={() => navigate('Observatory')}
         style={{
           background: 'transparent',
@@ -20,10 +20,10 @@ export default function Experience({ navigate }) {
         ← Back to Observatory
       </button>
 
-      <div style={{ display: 'flex', gap: '40px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+      <div className="experience-layout" style={{ display: 'flex', gap: '40px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
         
         {/* LEFT SIDEBAR */}
-        <div style={{ flex: '1 1 300px', maxWidth: '35%', position: 'sticky', top: '40px' }}>
+        <div className="experience-sidebar" style={{ flex: '1 1 300px', maxWidth: '35%', position: 'sticky', top: '40px' }}>
           <h2 style={{ color: 'var(--accent-cyan)', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '24px' }}>
             Career Timeline
           </h2>
@@ -69,7 +69,7 @@ export default function Experience({ navigate }) {
         </div>
 
         {/* RIGHT MAIN PANEL */}
-        <div style={{ flex: '1 1 500px' }}>
+        <div className="experience-main" style={{ flex: '1 1 500px' }}>
           
           {/* IDE Card - Internship */}
           <div style={{

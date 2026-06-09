@@ -42,7 +42,7 @@ export default function Profiles({ navigate }) {
   }, []);
 
   return (
-    <div className="fade-in" style={{ 
+    <div className="page-content fade-in" style={{ 
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
@@ -52,7 +52,7 @@ export default function Profiles({ navigate }) {
       margin: '0 auto' 
     }}>
       <button 
-        className="clickable"
+        className="clickable back-btn"
         onClick={() => navigate('Observatory')}
         style={{
           background: 'transparent',
@@ -69,12 +69,12 @@ export default function Profiles({ navigate }) {
       </button>
 
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 style={{ fontSize: '2.5rem', color: 'white', marginBottom: '10px' }}>Profiles</h1>
+        <h1 className="page-title" style={{ fontSize: '2.5rem', color: 'white', marginBottom: '10px' }}>Profiles</h1>
         <p style={{ color: 'var(--text-muted)' }}>Connect across the ecosystem.</p>
       </div>
 
       {/* Terminal Window */}
-      <div style={{
+      <div className="profiles-terminal" style={{
         background: 'var(--card-bg)',
         border: '1px solid var(--border)',
         borderRadius: '8px',

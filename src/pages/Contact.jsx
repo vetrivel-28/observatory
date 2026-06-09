@@ -16,7 +16,7 @@ export default function Contact({ navigate }) {
   };
 
   return (
-    <div style={{
+    <div className="page-content fade-in" style={{
       minHeight: '100vh',
       background: '#050911',
       display: 'flex',
@@ -27,6 +27,7 @@ export default function Contact({ navigate }) {
       fontFamily: 'Space Mono, monospace',
     }}>
       <button
+        className="clickable back-btn"
         onClick={() => navigate('Observatory')}
         style={{
           position: 'absolute', top: '24px', left: '24px',
@@ -47,7 +48,7 @@ export default function Contact({ navigate }) {
         INITIATE TRANSMISSION
       </div>
 
-      <h1 style={{
+      <h1 className="page-title" style={{
         fontFamily: 'Space Mono', fontSize: '2.4rem',
         fontWeight: '700', color: '#e8eef5',
         marginBottom: '8px', textAlign: 'center',
@@ -64,7 +65,7 @@ export default function Contact({ navigate }) {
       </p>
 
       {/* Terminal form window */}
-      <div style={{
+      <div className="contact-form" style={{
         width: '100%', maxWidth: '640px',
         background: '#0a1628',
         border: '1px solid rgba(0,212,255,0.2)',
@@ -189,7 +190,7 @@ export default function Contact({ navigate }) {
       </div>
 
       {/* SSH quick-links panel */}
-      <div style={{
+      <div className="contact-form" style={{
         width: '100%', maxWidth: '640px',
         background: '#0a1628',
         border: '1px solid rgba(255,255,255,0.06)',

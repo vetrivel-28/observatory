@@ -73,9 +73,9 @@ export default function Skills({ navigate }) {
   }, []);
 
   return (
-    <div className="fade-in" style={{ padding: '40px 20px', maxWidth: '900px', margin: '0 auto' }}>
+    <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '900px', margin: '0 auto' }}>
       <button 
-        className="clickable"
+        className="clickable back-btn"
         onClick={() => navigate('Observatory')}
         style={{
           background: 'transparent',
@@ -89,7 +89,7 @@ export default function Skills({ navigate }) {
       </button>
 
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 style={{ fontSize: '2.5rem', color: 'white', marginBottom: '20px' }}>Applied Skills</h1>
+        <h1 className="page-title" style={{ fontSize: '2.5rem', color: 'white', marginBottom: '20px' }}>Applied Skills</h1>
         
         {/* Switcher Pills */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
@@ -116,7 +116,7 @@ export default function Skills({ navigate }) {
         </div>
       </div>
 
-      <div style={{ 
+      <div className="skills-grid" style={{ 
         display: 'grid', 
         gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', 
         gap: '24px',

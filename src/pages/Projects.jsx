@@ -41,9 +41,9 @@ export default function Projects({ navigate }) {
   ];
 
   return (
-    <div className="fade-in" style={{ padding: '40px 20px', maxWidth: '840px', margin: '0 auto', fontFamily: 'DM Sans, sans-serif' }}>
+    <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '840px', margin: '0 auto', fontFamily: 'DM Sans, sans-serif' }}>
       <button 
-        className="clickable"
+        className="clickable back-btn"
         onClick={() => navigate('Observatory')}
         style={{
           background: 'transparent',
@@ -57,11 +57,11 @@ export default function Projects({ navigate }) {
       </button>
 
       <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-        <h1 style={{ fontSize: '2.5rem', color: 'white', marginBottom: '10px', fontFamily: 'Space Mono, monospace' }}>Projects</h1>
+        <h1 className="page-title" style={{ fontSize: '2.5rem', color: 'white', marginBottom: '10px', fontFamily: 'Space Mono, monospace' }}>Projects</h1>
         <p style={{ color: 'var(--text-muted)' }}>3 production-grade systems built from concept to deployment.</p>
       </div>
 
-      <div style={{ maxWidth: '820px', margin: '40px auto 0', padding: '0 24px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
+      <div className="projects-container" style={{ maxWidth: '820px', margin: '40px auto 0', padding: '0 24px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
         {projects.map((p, i) => (
           <div 
             key={i} 
