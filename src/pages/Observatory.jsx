@@ -1,384 +1,415 @@
 import React, { useState, useEffect } from 'react';
-import { Icons } from '../Icons';
 
 export default function Observatory({ navigate }) {
-  const [hoveredNode, setHoveredNode] = useState(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Center node coords
-  const cx = 450;
-  const cy = 300;
-
   const nodes = [
-    { id: 'Projects', label: 'PROJECTS', icon: Icons.grid, color: 'var(--accent-cyan)', x: 450, y: 100, typeBadge: '[dataset]', tooltipLinks: [
-      { text: 'Website Classifier', url: 'Projects' },
-      { text: 'Market Analysis ETL', url: 'Projects' },
-      { text: 'Women Safety SOS', url: 'Projects' }
-    ]},
-    { id: 'Profiles', label: 'PROFILES', icon: Icons.link, color: 'var(--accent-purple)', x: 150, y: 300, typeBadge: '[api]', tooltipText: 'GitHub · LinkedIn · LeetCode · Resume' },
-    { id: 'Skills', label: 'SKILLS', icon: Icons.brain, color: 'var(--accent-cyan)', x: 750, y: 300, typeBadge: '[model]', tooltipText: 'ML · Data Eng · Software Dev · Analytics' },
-    { id: 'Achievements', label: 'ACHIEVEMENTS', icon: Icons.trophy, color: 'var(--accent-amber)', x: 250, y: 500, typeBadge: '[output]', tooltipText: '2025 Excellence · 2024 Top 5% · 2023 Best UI/UX' },
-    { id: 'Experience', label: 'EXPERIENCE', icon: Icons.briefcase, color: 'var(--accent-amber)', x: 650, y: 500, typeBadge: '[input]', tooltipText: 'Data Science Intern (2025) · CS B.S. Ongoing' },
-  ];
-
-  // System Status counters
-  const [sysStats, setSysStats] = useState({ models: 0, pipelines: 0, apis: 0 });
-  useEffect(() => {
-    let current = 0;
-    const int = setInterval(() => {
-      current += 1;
-      setSysStats({
-        models: Math.min(current, 3),
-        pipelines: Math.min(current, 2),
-        apis: Math.min(current, 4)
-      });
-      if (current >= 4) clearInterval(int);
-    }, 300);
-    return () => clearInterval(int);
-  }, []);
-
-  // Floating data fragments
-  const fragments = [
-    { text: "df.groupby()", left: "10%", top: "15%", delay: "0s" },
-    { text: "model.fit(X,y)", left: "80%", top: "80%", delay: "2s" },
-    { text: "SELECT * FROM", left: "85%", top: "25%", delay: "1s" },
-    { text: "import numpy", left: "15%", top: "75%", delay: "3s" },
+    { 
+      page: 'Projects', title: 'PROJECTS', icon: '⬡', 
+      accent: '#00d4ff', filename: 'projects.py',
+      tag: '[dataset]',
+      position: { left: '50%', top: '8%', transform: 'translateX(-50%)' }
+    },
+    { 
+      page: 'Profiles', title: 'PROFILES', icon: '⟁', 
+      accent: '#a855f7', filename: 'profiles.api',
+      tag: '[api]',
+      position: { left: '6%', top: '50%', transform: 'translateY(-50%)' }
+    },
+    { 
+      page: 'Skills', title: 'SKILLS', icon: '◈', 
+      accent: '#00d4ff', filename: 'skills.model',
+      tag: '[model]',
+      position: { right: '6%', top: '50%', transform: 'translateY(-50%)' }
+    },
+    { 
+      page: 'Achievements', title: 'ACHIEVEMENTS', icon: '◆', 
+      accent: '#fbbf24', filename: 'hackathons.json',
+      tag: '[output]',
+      position: { left: '18%', bottom: '8%' }
+    },
+    { 
+      page: 'Experience', title: 'EXPERIENCE', icon: '▣', 
+      accent: '#fbbf24', filename: 'experience.db',
+      tag: '[input]',
+      position: { right: '18%', bottom: '8%' }
+    },
+    { 
+      page: 'Contact', title: 'CONTACT', icon: '⌘', 
+      accent: '#00ff88', filename: 'contact.sh',
+      tag: '[ssh]',
+      position: { left: '50%', bottom: '8%', transform: 'translateX(-50%)' }
+    },
   ];
 
   return (
-    <div className="fade-in" style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
-      <button 
-        className="clickable"
-        onClick={() => navigate('Home')}
-        style={{
-          position: 'absolute',
-          top: '30px',
-          left: '30px',
-          background: 'transparent',
-          border: 'none',
-          color: 'var(--text-muted)',
-          fontSize: '1rem',
-          zIndex: 10
-        }}
-      >
-        ← Back to Home
-      </button>
+    <div className="fade-in" style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden', background: '#050911', fontFamily: 'Space Mono, monospace' }}>
+      
+      {/* SVG Lines - Absolutely behind nodes */}
+      <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none' }}>
+        {nodes.map((node, i) => {
+          let x2 = '50%';
+          let y2 = '50%';
+          if (node.position.left && node.position.top) {
+            x2 = node.position.left; y2 = node.position.top;
+          } else if (node.position.right && node.position.top) {
+            x2 = `calc(100% - ${node.position.right})`; y2 = node.position.top;
+          } else if (node.position.left && node.position.bottom) {
+            x2 = node.position.left; y2 = `calc(100% - ${node.position.bottom})`;
+          } else if (node.position.right && node.position.bottom) {
+            x2 = `calc(100% - ${node.position.right})`; y2 = `calc(100% - ${node.position.bottom})`;
+          }
+          
+          return (
+            <line
+              key={i}
+              x1="50%" y1="50%"
+              x2={x2} y2={y2}
+              stroke="rgba(0,212,255,0.25)"
+              strokeWidth="1"
+              strokeDasharray="5 4"
+              style={{ animation: 'dashFlow 3s linear infinite' }}
+            />
+          );
+        })}
+      </svg>
 
-      <h1 style={{ position: 'absolute', top: '30px', width: '100%', textAlign: 'center', color: 'white', margin: 0, zIndex: 10 }}>
-        Data Observatory
-      </h1>
-
-      {/* Floating Fragments */}
-      {fragments.map((frag, i) => (
-        <div key={i} style={{
+      {/* Center Node */}
+      <div style={{
+        position: 'absolute',
+        left: '50%', top: '50%',
+        transform: 'translate(-50%, -50%)',
+        zIndex: 20,
+        textAlign: 'center',
+      }}>
+        {/* Outer glow ring — NOT rotating */}
+        <div style={{
           position: 'absolute',
-          left: frag.left,
-          top: frag.top,
-          color: 'white',
-          opacity: 0.05,
-          fontFamily: 'Space Mono, monospace',
-          fontSize: '0.9rem',
-          filter: 'blur(1px)',
-          animation: `driftUp 20s linear infinite ${frag.delay}`
+          inset: '-20px',
+          borderRadius: '50%',
+          border: '1px solid rgba(0,212,255,0.2)',
+          pointerEvents: 'none',
+        }} />
+        {/* Inner ring */}
+        <div style={{
+          position: 'absolute',
+          inset: '-8px',
+          borderRadius: '50%',
+          border: '1px solid rgba(168,85,247,0.3)',
+          pointerEvents: 'none',
+        }} />
+        {/* Content pill */}
+        <div style={{
+          background: '#0a1628',
+          border: '1px solid rgba(0,212,255,0.4)',
+          borderRadius: '12px',
+          padding: '16px 32px',
+          boxShadow: '0 0 40px rgba(0,212,255,0.15), 0 0 80px rgba(168,85,247,0.1)',
         }}>
-          {frag.text}
+          <div style={{
+            fontFamily: 'Space Mono, monospace',
+            fontSize: '1.4rem',
+            fontWeight: '700',
+            color: '#e8eef5',
+            letterSpacing: '0.05em',
+            marginBottom: '4px',
+          }}>
+            Vetrivel A
+          </div>
+          <div style={{
+            fontFamily: 'Space Mono, monospace',
+            fontSize: '10px',
+            color: '#00d4ff',
+            letterSpacing: '0.2em',
+          }}>
+            DATA SCIENCE
+          </div>
+        </div>
+      </div>
+
+      {/* Nodes */}
+      {nodes.map((node, i) => (
+        <div
+          key={i}
+          onClick={() => navigate(node.page)}
+          style={{
+            position: 'absolute',
+            ...node.position,
+            width: '140px',
+            background: '#0a1628',
+            border: '1px solid rgba(0,212,255,0.2)',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            cursor: 'pointer',
+            transition: 'all 0.25s ease',
+            zIndex: 10,
+            opacity: mounted ? 1 : 0,
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.borderColor = node.accent;
+            e.currentTarget.style.boxShadow = `0 0 24px ${node.accent}40`;
+            const currTransform = node.position.transform || '';
+            e.currentTarget.style.transform = `${currTransform} scale(1.05)`;
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.borderColor = 'rgba(0,212,255,0.2)';
+            e.currentTarget.style.boxShadow = 'none';
+            e.currentTarget.style.transform = node.position.transform || 'none';
+          }}
+        >
+          {/* Terminal title bar */}
+          <div style={{
+            background: '#1a2332',
+            borderBottom: `1px solid ${node.accent}30`,
+            padding: '5px 8px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+          }}>
+            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ff5f57' }} />
+            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#febc2e' }} />
+            <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#28c840' }} />
+            <span style={{
+              fontFamily: 'Space Mono, monospace',
+              fontSize: '8px',
+              color: '#4a5568',
+              marginLeft: '4px',
+              letterSpacing: '0.05em',
+            }}>
+              {node.filename}
+            </span>
+          </div>
+          {/* Node content */}
+          <div style={{ padding: '10px 12px' }}>
+            <div style={{ fontSize: '18px', marginBottom: '4px' }}>{node.icon}</div>
+            <div style={{
+              fontFamily: 'Space Mono, monospace',
+              fontSize: '11px',
+              fontWeight: '700',
+              color: node.accent,
+              letterSpacing: '0.08em',
+              marginBottom: '4px',
+            }}>
+              {node.title}
+            </div>
+            <div style={{
+              fontFamily: 'Space Mono, monospace',
+              fontSize: '9px',
+              color: '#4a5568',
+              letterSpacing: '0.05em',
+            }}>
+              {node.tag}
+            </div>
+          </div>
         </div>
       ))}
 
-      {/* LEFT: Live Activity Feed */}
+      {/* Left Panel — Pipeline Status */}
       <div style={{
-        position:'absolute', left:'20px', top:'50%',
-        transform:'translateY(-50%)', width:'200px',
-        background:'rgba(10,18,35,0.92)',
-        border:'1px solid rgba(6,182,212,0.35)',
-        borderRadius:'12px', padding:'16px',
-        overflow:'hidden', zIndex:10,
-        backdropFilter:'blur(8px)'
+        position: 'absolute',
+        left: '16px', top: '50%',
+        transform: 'translateY(-50%)',
+        width: '185px',
+        background: '#0a1628',
+        border: '1px solid rgba(0,212,255,0.15)',
+        borderRadius: '8px',
+        overflow: 'hidden',
+        zIndex: 5,
       }}>
         <div style={{
-          color:'#06b6d4', fontSize:'11px',
-          letterSpacing:'0.15em', fontFamily:'Space Mono',
-          marginBottom:'12px'
-        }}>● ACTIVITY LOG</div>
-        
-        {/* Scrolling activity items container */}
-        <div style={{
-          overflow:'hidden', height:'160px',
-          maskImage:'linear-gradient(transparent, black 15%, black 85%, transparent)'
+          background: '#1a2332',
+          borderBottom: '1px solid rgba(0,212,255,0.1)',
+          padding: '6px 10px',
+          display: 'flex', alignItems: 'center', gap: '4px',
         }}>
+          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ff5f57' }} />
+          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#febc2e' }} />
+          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#28c840' }} />
+          <span style={{ fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568', marginLeft: '6px' }}>
+            pipeline.log
+          </span>
+        </div>
+        <div style={{ padding: '12px' }}>
           <div style={{
-            animation:'scrollUp 10s linear infinite',
-            display:'flex', flexDirection:'column', gap:'8px'
+            fontFamily: 'Space Mono', fontSize: '9px',
+            color: '#00d4ff', letterSpacing: '0.15em', marginBottom: '10px',
           }}>
+            ● PIPELINE STATUS
+          </div>
+          {[
+            { label: 'Data Ingestion', status: 'RUNNING', color: '#00ff88' },
+            { label: 'Model Training', status: 'COMPLETE', color: '#00d4ff' },
+            { label: 'ETL Pipeline', status: 'ACTIVE', color: '#00ff88' },
+            { label: 'API Endpoints', status: 'ONLINE', color: '#00ff88' },
+            { label: 'Dashboard', status: 'LIVE', color: '#fbbf24' },
+          ].map((item, i) => (
+            <div key={i} style={{
+              display: 'flex', justifyContent: 'space-between',
+              alignItems: 'center', marginBottom: '8px',
+            }}>
+              <span style={{ fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568' }}>
+                {item.label}
+              </span>
+              <span style={{
+                fontFamily: 'Space Mono', fontSize: '8px',
+                color: item.color, letterSpacing: '0.08em',
+                display: 'flex', alignItems: 'center', gap: '3px',
+              }}>
+                <span style={{
+                  width: '5px', height: '5px', borderRadius: '50%',
+                  background: item.color,
+                  animation: 'pulse 2s ease-in-out infinite',
+                }} />
+                {item.status}
+              </span>
+            </div>
+          ))}
+          <div style={{
+            marginTop: '10px', paddingTop: '10px',
+            borderTop: '1px solid rgba(255,255,255,0.05)',
+            fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568',
+          }}>
+            <div style={{ color: '#00d4ff', marginBottom: '6px', letterSpacing: '0.1em' }}>
+              LIVE_OUTPUT
+            </div>
+            <div style={{ overflow: 'hidden', height: '70px',
+              maskImage: 'linear-gradient(transparent, black 20%, black 80%, transparent)',
+              WebkitMaskImage: 'linear-gradient(transparent, black 20%, black 80%, transparent)',
+            }}>
+              <div style={{ animation: 'scrollUp 8s linear infinite' }}>
+                {[
+                  '> model.fit() ✓',
+                  '> accuracy: 87.3%',
+                  '> ETL: 500 rows',
+                  '> query: 0.3s',
+                  '> git push ✓',
+                  '> df.dropna() ✓',
+                  '> model.fit() ✓',
+                  '> accuracy: 87.3%',
+                ].map((line, i) => (
+                  <div key={i} style={{
+                    fontFamily: 'Space Mono', fontSize: '9px',
+                    color: i % 2 === 0 ? '#00ff88' : '#4a5568',
+                    marginBottom: '5px', whiteSpace: 'nowrap',
+                  }}>
+                    {line}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Panel — Model Registry */}
+      <div style={{
+        position: 'absolute',
+        right: '16px', top: '50%',
+        transform: 'translateY(-50%)',
+        width: '185px',
+        background: '#0a1628',
+        border: '1px solid rgba(0,212,255,0.15)',
+        borderRadius: '8px',
+        overflow: 'hidden',
+        zIndex: 5,
+      }}>
+        <div style={{
+          background: '#1a2332',
+          borderBottom: '1px solid rgba(0,212,255,0.1)',
+          padding: '6px 10px',
+          display: 'flex', alignItems: 'center', gap: '4px',
+        }}>
+          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ff5f57' }} />
+          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#febc2e' }} />
+          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#28c840' }} />
+          <span style={{ fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568', marginLeft: '6px' }}>
+            model_registry.json
+          </span>
+        </div>
+        <div style={{ padding: '12px' }}>
+          <div style={{
+            fontFamily: 'Space Mono', fontSize: '9px',
+            color: '#fbbf24', letterSpacing: '0.15em', marginBottom: '10px',
+          }}>
+            ◈ MODEL REGISTRY
+          </div>
+          <div style={{
+            border: '1px solid rgba(0,212,255,0.15)',
+            borderRadius: '4px', overflow: 'hidden', marginBottom: '10px',
+          }}>
+            <div style={{
+              background: '#1a2332', padding: '4px 8px',
+              fontFamily: 'Space Mono', fontSize: '8px', color: '#00d4ff',
+              letterSpacing: '0.1em',
+            }}>
+              models_deployed
+            </div>
             {[
-              '[02:14] model.fit() done',
-              '[01:58] ETL: 500 rows OK',
-              '[01:45] accuracy: 87.3%',
-              '[01:32] query: 0.3s',
-              '[01:19] git push ✓',
-              '[01:07] dashboard OK',
-              '[00:54] dropna() → 492',
-              '[00:41] churn: 18.2%',
-              '[02:14] model.fit() done',
-              '[01:58] ETL: 500 rows OK',
-            ].map((item, i) => (
-              <div key={i} style={{fontSize:'10px', fontFamily:'Space Mono', color:'#94a3b8', whiteSpace:'nowrap'}}>
-                <span style={{color:'#06b6d4'}}>{item.slice(0,7)}</span>{item.slice(7)}
+              { name: 'classifier_v2', acc: '87%' },
+              { name: 'churn_rf_v1', acc: '82%' },
+              { name: 'etl_pipeline', acc: '99%' },
+            ].map((m, i) => (
+              <div key={i} style={{
+                display: 'flex', justifyContent: 'space-between',
+                padding: '4px 8px',
+                borderTop: '1px solid rgba(255,255,255,0.04)',
+                fontFamily: 'Space Mono', fontSize: '8px',
+              }}>
+                <span style={{ color: '#8892a4' }}>{m.name}</span>
+                <span style={{ color: '#00ff88' }}>{m.acc}</span>
               </div>
             ))}
           </div>
-        </div>
-      </div>
-
-      {/* RIGHT: Model Metrics */}
-      <div style={{
-        position:'absolute', right:'20px', top:'50%',
-        transform:'translateY(-50%)', width:'200px',
-        background:'rgba(15,25,41,0.85)',
-        border:'1px solid rgba(245,158,11,0.2)',
-        borderRadius:'12px', padding:'16px', zIndex:10
-      }}>
-        <div style={{
-          color:'#f59e0b', fontSize:'10px',
-          letterSpacing:'0.15em', fontFamily:'Space Mono',
-          marginBottom:'12px'
-        }}>◈ MODEL METRICS</div>
-
-        {[
-          {label:'ACCURACY', value:'87.3%', trend:'↑', up:true},
-          {label:'PRECISION', value:'84.1%', trend:'↑', up:true},
-          {label:'RECALL', value:'89.2%', trend:'→', up:null},
-          {label:'F1-SCORE', value:'86.6%', trend:'↑', up:true},
-        ].map((m,i) => (
-          <div key={i} style={{
-            display:'flex', justifyContent:'space-between',
-            alignItems:'center', marginBottom:'10px'
-          }}>
-            <span style={{color:'#64748b', fontSize:'9px', fontFamily:'Space Mono'}}>{m.label}</span>
-            <span style={{
-              color:'white', fontSize:'13px',
-              fontFamily:'Space Mono', fontWeight:'bold'
+          {[
+            { label: 'ACCURACY', value: '87.3%', trend: '↑' },
+            { label: 'PRECISION', value: '84.1%', trend: '↑' },
+            { label: 'RECALL', value: '89.2%', trend: '→' },
+            { label: 'F1', value: '86.6%', trend: '↑' },
+          ].map((m, i) => (
+            <div key={i} style={{
+              display: 'flex', justifyContent: 'space-between',
+              marginBottom: '7px',
             }}>
-              {m.value}
-              <span style={{
-                color: m.up===true ? '#22c55e' : m.up===null ? '#06b6d4' : '#ef4444',
-                marginLeft:'4px', fontSize:'11px'
-              }}>{m.trend}</span>
-            </span>
-          </div>
-        ))}
-
-        {/* Sparkline SVG */}
-        <svg width="100%" height="30" style={{marginTop:'8px'}}>
-          <polyline
-            points="0,25 15,20 30,22 45,14 60,17 75,9 90,11 168,4"
-            fill="none" stroke="#f59e0b" strokeWidth="1.5"
-            strokeLinejoin="round" strokeLinecap="round"
-          />
-        </svg>
-        <div style={{
-          color:'#64748b', fontSize:'9px',
-          fontFamily:'Space Mono', textAlign:'center', marginTop:'4px'
-        }}>Training Loss</div>
-      </div>
-
-      {/* Main Node Graph */}
-      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '700px', height: '500px' }}>
-        <svg width="700" height="500" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', overflow: 'visible' }}>
-          {nodes.map(node => {
-            const pathId = `path-${node.id}`;
-            const pathD = `M ${node.x} ${node.y} L ${cx} ${cy}`;
-            return (
-              <g key={node.id}>
-                <path 
-                  id={pathId}
-                  d={pathD}
-                  stroke={node.color}
-                  strokeOpacity="0.6"
-                  strokeWidth="1.5"
-                  strokeDasharray="6 4"
-                  className="data-flow-line"
-                  style={{ animation: 'dashFlow 2s linear infinite' }}
-                />
-                {/* Data Packet */}
-                <circle r="3" fill="var(--accent-cyan)" style={{ filter: 'drop-shadow(0 0 4px var(--accent-cyan))' }}>
-                  <animateMotion dur="3s" repeatCount="indefinite">
-                    <mpath href={`#${pathId}`} />
-                  </animateMotion>
-                </circle>
-              </g>
-            );
-          })}
-        </svg>
-
-        {/* Center Node */}
-        <div style={{
-          position: 'absolute',
-          top: cy,
-          left: cx,
-          transform: 'translate(-50%, -50%)',
-          width: '200px',
-          height: '70px',
-          background: 'var(--card-bg)',
-          borderRadius: '35px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          color: 'white',
-          fontFamily: 'Space Mono, monospace',
-          fontWeight: 'bold',
-          zIndex: 2,
-        }}>
-          {/* Inner ring */}
-          <div style={{ position: 'absolute', width: '100%', height: '100%', border: '2px solid var(--accent-purple)', borderRadius: '35px', boxShadow: 'inset 0 0 15px rgba(124,58,237,0.5), 0 0 15px rgba(124,58,237,0.5)' }} />
-          {/* Outer rotating ring */}
-          <div className="outer-spin-ring" style={{ position: 'absolute', width: '220px', height: '90px', border: '1px dashed rgba(6,182,212,0.4)', borderRadius: '45px' }} />
-          
-          <div style={{ zIndex: 3 }}>Vetrivel A</div>
-          <div style={{ zIndex: 3, fontSize: '0.7rem', color: 'var(--accent-cyan)' }}>DATA SCIENCE</div>
-        </div>
-
-        {/* Satellite Nodes */}
-        {nodes.map(node => {
-          const isHovered = hoveredNode === node.id;
-          return (
-            <div 
-              key={node.id}
-              className="clickable"
-              onMouseEnter={() => setHoveredNode(node.id)}
-              onMouseLeave={() => setHoveredNode(null)}
-              onClick={() => navigate(node.id === 'Projects' ? 'Projects' : node.id)}
-              style={{
-                position: 'absolute',
-                top: node.y,
-                left: node.x,
-                transform: `translate(-50%, -50%) scale(${isHovered ? 1.05 : 1})`,
-                width: '120px',
-                height: '80px',
-                background: 'var(--card-bg)',
-                border: '1px solid var(--border)',
-                borderRadius: '12px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.3s',
-                boxShadow: isHovered ? `0 0 20px ${node.color}60` : 'none',
-                borderColor: isHovered ? node.color : 'var(--border)',
-                zIndex: 10
-              }}
-            >
-              {/* Type Badge */}
-              <div style={{ position: 'absolute', top: '-8px', right: '-8px', background: 'var(--bg-base)', border: `1px solid ${node.color}`, color: node.color, fontSize: '0.5rem', padding: '2px 4px', borderRadius: '4px', fontFamily: 'Space Mono, monospace' }}>
-                {node.typeBadge}
-              </div>
-
-              <div style={{ color: node.color }}>{node.icon}</div>
-              <div style={{ fontSize: '0.7rem', fontWeight: 'bold', color: 'white', margin: '4px 0' }}>{node.label}</div>
-
-              {/* Tooltip */}
-              {isHovered && (
-                <div style={{
-                  position: 'absolute',
-                  top: node.id === 'Projects' ? 'calc(100% + 8px)' : 'auto',
-                  bottom: node.id === 'Projects' ? 'auto' : '100%',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  marginBottom: node.id === 'Projects' ? '0' : '16px',
-                  background: 'var(--card-bg)',
-                  border: `1px solid ${node.color}`,
-                  borderRadius: '8px',
-                  padding: '12px',
-                  minWidth: '220px',
-                  zIndex: 50,
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.8)',
-                  textAlign: 'center'
-                }}>
-                  {node.tooltipLinks ? (
-                    node.tooltipLinks.map((link, i) => (
-                      <div 
-                        key={i}
-                        className="clickable"
-                        style={{ fontSize: '0.8rem', padding: '6px', color: 'var(--text-primary)', transition: 'color 0.2s' }}
-                        onMouseEnter={e => e.target.style.color = node.color}
-                        onMouseLeave={e => e.target.style.color = 'var(--text-primary)'}
-                        onClick={(e) => { e.stopPropagation(); navigate(link.url); }}
-                      >
-                        {link.text}
-                      </div>
-                    ))
-                  ) : (
-                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.65)', letterSpacing: '0.05em', lineHeight: '1.4' }}>
-                      {node.tooltipText}
-                    </div>
-                  )}
-                  {/* Tooltip arrow */}
-                  <div style={{ 
-                    position: 'absolute', 
-                    bottom: node.id === 'Projects' ? 'auto' : '-6px', 
-                    top: node.id === 'Projects' ? '-6px' : 'auto', 
-                    left: '50%', 
-                    transform: 'translateX(-50%) rotate(45deg)', 
-                    width: '10px', 
-                    height: '10px', 
-                    background: 'var(--card-bg)', 
-                    borderBottom: node.id === 'Projects' ? 'none' : `1px solid ${node.color}`, 
-                    borderRight: node.id === 'Projects' ? 'none' : `1px solid ${node.color}`,
-                    borderTop: node.id === 'Projects' ? `1px solid ${node.color}` : 'none',
-                    borderLeft: node.id === 'Projects' ? `1px solid ${node.color}` : 'none'
-                  }} />
-                </div>
-              )}
+              <span style={{ fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568' }}>
+                {m.label}
+              </span>
+              <span style={{ fontFamily: 'Space Mono', fontSize: '10px', color: '#e8eef5', fontWeight: '700' }}>
+                {m.value}
+                <span style={{ color: m.trend === '↑' ? '#00ff88' : '#00d4ff', marginLeft: '3px' }}>
+                  {m.trend}
+                </span>
+              </span>
             </div>
-          );
-        })}
-
-        <style dangerouslySetInnerHTML={{__html: `
-          @keyframes dashFlow {
-            from { stroke-dashoffset: 20; }
-            to { stroke-dashoffset: 0; }
-          }
-          @keyframes flowDash {
-            to { stroke-dashoffset: -24; }
-          }
-          @keyframes scrollUp {
-            from { transform: translateY(0); }
-            to { transform: translateY(-50%); }
-          }
-          .activity-scroll {
-            animation: scrollUp 8s linear infinite;
-          }
-          .data-flow-line {
-            animation: flowDash 1s linear infinite;
-          }
-          @keyframes spinRing {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-          }
-          .outer-spin-ring {
-            animation: spinRing 20s linear infinite;
-          }
-          @keyframes driftUp {
-            from { transform: translateY(0); }
-            to { transform: translateY(-100px); opacity: 0; }
-          }
-          .blink-dot {
-            display: inline-block;
-            width: 6px; height: 6px;
-            background-color: #10b981;
-            border-radius: 50%;
-            margin-right: 6px;
-            animation: blinker 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-          }
-          @keyframes blinker {
-            50% { opacity: 0.3; }
-          }
-        `}} />
+          ))}
+          <svg width="100%" height="28" style={{ marginTop: '8px' }}>
+            <polyline
+              points="0,22 20,18 40,19 60,12 80,14 110,7 140,9 161,4"
+              fill="none" stroke="#fbbf24" strokeWidth="1.5"
+              strokeLinejoin="round"
+            />
+            <polyline
+              points="0,22 20,18 40,19 60,12 80,14 110,7 140,9 161,4"
+              fill="url(#sparkGrad)"
+              opacity="0.15"
+            />
+            <defs>
+              <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#fbbf24" />
+                <stop offset="100%" stopColor="transparent" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <div style={{
+            fontFamily: 'Space Mono', fontSize: '8px',
+            color: '#4a5568', textAlign: 'center', marginTop: '2px',
+          }}>
+            training_loss.epoch[]
+          </div>
+        </div>
       </div>
     </div>
   );

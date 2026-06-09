@@ -75,7 +75,7 @@ export default function Experience({ navigate }) {
           <div style={{
             background: 'var(--card-bg)',
             border: '1px solid var(--border)',
-            borderLeft: '4px solid #7c3aed',
+            borderLeft: '4px solid #a855f7',
             borderRadius: '8px',
             overflow: 'hidden',
             marginBottom: '32px',
@@ -85,7 +85,7 @@ export default function Experience({ navigate }) {
             <div style={{ background: 'rgba(255,255,255,0.05)', padding: '12px 16px', display: 'flex', alignItems: 'center', borderBottom: '1px solid var(--border)' }}>
               <div style={{ display: 'flex', gap: '8px', flex: 1 }}>
                 <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }} />
-                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }} />
+                <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#fbbf24' }} />
                 <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#10b981' }} />
               </div>
               <div style={{ color: 'var(--text-muted)', fontFamily: 'Space Mono, monospace', fontSize: '0.85rem' }}>

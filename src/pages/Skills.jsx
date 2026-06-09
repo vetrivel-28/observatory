@@ -15,8 +15,8 @@ export default function Skills({ navigate }) {
       outcome: "87% Accuracy",
       tags: ["Python", "Scikit-Learn", "NLP", "Random Forests"],
       icon: Icons.brain,
-      color: "var(--accent-purple)",
-      bgGradient: "linear-gradient(135deg, #1a0533, #2d1b69)",
+      color: "#a855f7",
+      filename: "ml_skills.py",
       perf: 87
     },
     {
@@ -26,9 +26,9 @@ export default function Skills({ navigate }) {
       outcome: "500+ products <2 min",
       tags: ["PostgreSQL", "SQL", "Selenium", "BeautifulSoup"],
       icon: Icons.database,
-      color: "var(--accent-cyan)",
-      bgGradient: "linear-gradient(135deg, #012a1a, #024d3b)",
-      perf: 95
+      color: "#00d4ff",
+      filename: "data_eng.sql",
+      perf: 92
     },
     {
       id: 'Software',
@@ -37,9 +37,9 @@ export default function Skills({ navigate }) {
       outcome: "<4s Alert Delivery",
       tags: ["Python", "Flask", "TypeScript", "React"],
       icon: Icons.code,
-      color: "var(--accent-purple)",
-      bgGradient: "linear-gradient(135deg, #1a1a2e, #16213e)",
-      perf: 78
+      color: "#a855f7",
+      filename: "software_dev.ts",
+      perf: 76
     },
     {
       id: 'Analytics',
@@ -48,9 +48,9 @@ export default function Skills({ navigate }) {
       outcome: "Discovered 15% margins",
       tags: ["Pandas", "Matplotlib", "Plotly", "Streamlit"],
       icon: Icons.chart,
-      color: "var(--accent-amber)",
-      bgGradient: "linear-gradient(135deg, #2a1500, #4a2800)",
-      perf: 82
+      color: "#fbbf24",
+      filename: "analytics.ipynb",
+      perf: 80
     }
   ];
 
@@ -101,8 +101,8 @@ export default function Skills({ navigate }) {
               style={{
                 padding: '8px 16px',
                 background: activeTab === tab ? 'rgba(6,182,212,0.15)' : 'var(--card-bg)',
-                color: activeTab === tab ? '#06b6d4' : 'white',
-                border: activeTab === tab ? '1px solid #06b6d4' : '1px solid var(--border)',
+                color: activeTab === tab ? '#00d4ff' : 'white',
+                border: activeTab === tab ? '1px solid #00d4ff' : '1px solid var(--border)',
                 borderRadius: '20px',
                 fontSize: '0.9rem',
                 fontFamily: 'Space Mono, monospace',
@@ -160,25 +160,32 @@ export default function Skills({ navigate }) {
 
             {/* Top Section */}
             <div style={{
-              height: '30%',
-              background: skill.bgGradient,
-              padding: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              position: 'relative'
+              background: '#1a2332',
+              borderBottom: `1px solid ${skill.color}25`,
+              padding: '10px 16px',
+              display: 'flex', alignItems: 'center', gap: '8px',
             }}>
-              {skill.id === 'ML' && (
-                <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.08, pointerEvents: 'none' }}>
-                  <pattern id="circuit" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                    <path d="M0 10h5M15 10h5M10 0v5M10 15v5" stroke="white" strokeWidth="1"/>
-                    <circle cx="10" cy="10" r="2" fill="white"/>
-                  </pattern>
-                  <rect width="100%" height="100%" fill="url(#circuit)"/>
-                </svg>
-              )}
-              <div style={{ color: 'white', width: '32px', height: '32px', zIndex: 2 }}>{skill.icon}</div>
-              <div style={{ color: 'white', fontFamily: 'Space Mono, monospace', fontWeight: 'bold', fontSize: '1.2rem', zIndex: 2 }}>{skill.domain}</div>
+              {/* Traffic lights */}
+              <div style={{ display: 'flex', gap: '4px' }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#28c840' }} />
+              </div>
+              <span style={{ fontFamily: 'Space Mono', fontSize: '11px', color: '#4a5568', marginLeft: '4px' }}>
+                {skill.filename}
+              </span>
+              <span style={{ marginLeft: 'auto', fontFamily: 'Space Mono', fontSize: '11px', fontWeight: '700', color: skill.color }}>
+                {skill.domain}
+              </span>
+              {/* Proficiency bar */}
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: '6px',
+              }}>
+                <div style={{ width: '50px', height: '3px', background: 'rgba(255,255,255,0.08)', borderRadius: '2px' }}>
+                  <div style={{ height: '100%', width: `${skill.perf}%`, background: skill.color, borderRadius: '2px' }} />
+                </div>
+                <span style={{ fontFamily: 'Space Mono', fontSize: '9px', color: skill.color }}>{skill.perf}%</span>
+              </div>
             </div>
 
             {/* Middle Section */}
@@ -215,7 +222,7 @@ export default function Skills({ navigate }) {
       <div style={{ textAlign: 'center' }}>
         <h3 style={{ color: 'white', marginBottom: '40px', fontFamily: 'Space Mono, monospace' }}>Tech Stack Radar</h3>
         <div style={{ position: 'relative', width: '360px', height: '360px', margin: '0 auto' }}>
-          <svg width="360" height="360" viewBox="0 0 100 100" style={{ overflow: 'visible' }}>
+          <svg width="100%" height="auto" viewBox="-20 -20 140 140" style={{ overflow: 'visible' }}>
             {/* Radar background */}
             {[20, 40, 60, 80, 100].map(r => {
               const scaledR = r * 0.4; // max radius 40
@@ -255,7 +262,7 @@ export default function Skills({ navigate }) {
                 key={label}
                 x={x} y={y}
                 textAnchor="middle"
-                fill="#94a3b8"
+                fill="#8892a4"
                 fontSize="4.5"
                 fontFamily="Space Mono, monospace"
               >

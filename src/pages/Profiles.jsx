@@ -93,7 +93,7 @@ export default function Profiles({ navigate }) {
         }}>
           <div style={{ display: 'flex', gap: '8px' }}>
             <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }} />
-            <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }} />
+            <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#fbbf24' }} />
             <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#10b981' }} />
           </div>
           <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>vetrivel@portfolio:~/profiles$</div>
@@ -142,7 +142,7 @@ export default function Profiles({ navigate }) {
             justifyContent:'space-between',
             alignItems:'center'
           }}>
-            <span style={{color:'#64748b', fontSize:'10px', fontFamily:'Space Mono'}}>
+            <span style={{color:'#4a5568', fontSize:'10px', fontFamily:'Space Mono'}}>
               4/4 connections active
             </span>
             <span style={{

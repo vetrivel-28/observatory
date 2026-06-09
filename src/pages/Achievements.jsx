@@ -5,7 +5,7 @@ const achievements = [
     title: 'University Capstone Project Showcase',
     date: 'MAY 2025',
     badge: 'EXCELLENCE AWARD WINNER',
-    badgeColor: '#7c3aed',
+    badgeColor: '#a855f7', // Purple // Gold
     role: 'Lead Machine Learning Engineer',
     description: 'AI-driven accessibility tool translating sign language to audio using edge-deployed computer vision. Selected as top project out of 50+ engineering teams.',
     technologies: ['Python', 'TensorFlow Lite', 'MediaPipe', 'React Native'],
@@ -16,7 +16,7 @@ const achievements = [
     title: 'Kaggle Tabular Playground Series',
     date: 'AUG 2024',
     badge: 'TOP 5% FINISH',
-    badgeColor: '#06b6d4',
+    badgeColor: '#00d4ff',
     role: 'Data Analyst & Modeler',
     description: 'Analyzed complex anonymized dataset to predict multi-class probabilities. Engineered custom interaction features to boost LightGBM performance against 1,000+ competitors.',
     technologies: ['Pandas', 'Scikit-Learn', 'LightGBM', 'Optuna'],
@@ -27,7 +27,7 @@ const achievements = [
     title: 'ACM Student Chapter Hackathon',
     date: 'MAR 2023',
     badge: 'BEST UI/UX AWARD',
-    badgeColor: '#f59e0b',
+    badgeColor: '#a855f7', // Purple
     role: 'Full-Stack Developer',
     description: 'Built a peer-to-peer tutoring marketplace platform focusing on zero-friction onboarding flow and algorithmic matching based on subject competency.',
     technologies: ['Next.js', 'Tailwind CSS', 'Firebase', 'TypeScript'],
@@ -42,7 +42,7 @@ export default function Achievements({ navigate }) {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#080c14',
+      background: '#050911',
       padding: '60px 24px 80px',
       fontFamily: 'DM Sans, sans-serif',
     }}>
@@ -52,7 +52,7 @@ export default function Achievements({ navigate }) {
         style={{
           background: 'none',
           border: 'none',
-          color: '#94a3b8',
+          color: '#8892a4',
           fontSize: '14px',
           cursor: 'pointer',
           fontFamily: 'Space Mono, monospace',
@@ -68,14 +68,14 @@ export default function Achievements({ navigate }) {
       <h1 style={{
         fontFamily: 'Space Mono, monospace',
         fontSize: '2.5rem',
-        color: '#f1f5f9',
+        color: '#e8eef5',
         textAlign: 'center',
         marginBottom: '8px',
       }}>
         Hackathons & Awards
       </h1>
       <p style={{
-        color: '#64748b',
+        color: '#4a5568',
         textAlign: 'center',
         fontSize: '15px',
         marginBottom: '64px',
@@ -97,13 +97,13 @@ export default function Achievements({ navigate }) {
           top: 0,
           bottom: 0,
           width: '2px',
-          background: 'linear-gradient(180deg, #7c3aed 0%, #06b6d4 50%, #f59e0b 100%)',
+          background: 'linear-gradient(180deg, #a855f7 0%, #00d4ff 50%, #fbbf24 100%)',
           transform: 'translateX(-50%)',
           zIndex: 1,
         }} />
 
         {achievements.map((item, index) => {
-          const isRight = index % 2 === 0; // 0→right, 1→left, 2→right
+          const isRight = index % 2 !== 0; // Odd entries on right, Even on left as requested // 0→right, 1→left, 2→right
           const isExpanded = expanded === index;
 
           return (
@@ -192,7 +192,7 @@ export default function Achievements({ navigate }) {
                   fontFamily: 'Space Mono, monospace',
                   fontSize: '1rem',
                   fontWeight: '700',
-                  color: '#f1f5f9',
+                  color: '#e8eef5',
                   marginBottom: '10px',
                   lineHeight: '1.4',
                 }}>
@@ -217,7 +217,7 @@ export default function Achievements({ navigate }) {
 
                 {/* Role */}
                 <div style={{
-                  color: '#94a3b8',
+                  color: '#8892a4',
                   fontSize: '13px',
                   fontFamily: 'Space Mono, monospace',
                   marginBottom: '12px',
@@ -248,7 +248,7 @@ export default function Achievements({ navigate }) {
                       background: `${item.badgeColor}15`,
                       border: `1px solid ${item.badgeColor}30`,
                       borderRadius: '4px',
-                      color: '#e2e8f0',
+                      color: '#e8eef5',
                       fontSize: '11px',
                       fontFamily: 'Space Mono, monospace',
                     }}>
@@ -277,7 +277,7 @@ export default function Achievements({ navigate }) {
 
                 {isExpanded && (
                   <p style={{
-                    color: '#94a3b8',
+                    color: '#8892a4',
                     fontSize: '13px',
                     lineHeight: '1.6',
                     paddingLeft: '12px',

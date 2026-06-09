@@ -164,14 +164,14 @@ export default function Projects({ navigate }) {
                   border: '1px solid rgba(255,255,255,0.2)',
                   borderRadius: '6px',
                   background: 'transparent',
-                  color: '#94a3b8',
+                  color: '#8892a4',
                   fontSize: '13px',
                   fontFamily: 'Space Mono, monospace',
                   cursor: 'pointer',
                   transition: 'all 0.2s',
                 }}
                 onMouseEnter={e => { e.target.style.color = 'white'; e.target.style.borderColor = 'rgba(255,255,255,0.3)'; }}
-                onMouseLeave={e => { e.target.style.color = '#94a3b8'; e.target.style.borderColor = 'rgba(255,255,255,0.2)'; }}
+                onMouseLeave={e => { e.target.style.color = '#8892a4'; e.target.style.borderColor = 'rgba(255,255,255,0.2)'; }}
               >
                 ↗ Live Demo
               </button>
