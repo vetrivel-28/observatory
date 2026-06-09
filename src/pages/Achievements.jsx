@@ -36,7 +36,8 @@ const achievements = [
   },
 ];
 
-export default function Achievements({ navigate }) {
+export default function Achievements() {
+  const { navigate } = useContext(NavigationContext);
   const [expanded, setExpanded] = useState(null);
 
   return (

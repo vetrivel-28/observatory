@@ -1,50 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { NavigationContext } from '../App';
+import { projects } from '../data/projects';
 
-export default function Projects({ navigate }) {
+export default function Projects() {
+  const { navigate } = useContext(NavigationContext);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const projects = [
-    {
-      title: "Website Classifier",
-      badge: "MACHINE LEARNING",
-      metric: "87% Accuracy · 2s Response Time",
-      desc: "Developed a multi-class website content classifier using NLP and ensemble ML methods. Processes raw HTML, extracts TF-IDF features, and classifies pages into 8 categories with sub-2-second inference time.",
-      tech: ["Python", "Scikit-Learn", "NLP", "Random Forests", "TF-IDF", "BeautifulSoup"],
-      achievement: "Achieved 87% classification accuracy across 8 content categories, with real-time inference under 2 seconds per URL.",
-      color: "var(--accent-purple)",
-      delay: "0ms"
-    },
-    {
-      title: "Market Analysis ETL",
-      badge: "DATA ENGINEERING",
-      metric: "500+ products processed in <2 min",
-      desc: "Built a full ETL pipeline scraping 500+ product listings across e-commerce platforms, transforming raw HTML into structured PostgreSQL tables, and surfacing pricing intelligence through automated dashboards.",
-      tech: ["PostgreSQL", "SQL", "ETL Pipelines", "Selenium", "BeautifulSoup", "Pandas"],
-      achievement: "Discovered 15% pricing margin opportunities through automated competitive analysis across 3 platforms.",
-      color: "var(--accent-cyan)",
-      delay: "150ms"
-    },
-    {
-      title: "Women Safety SOS",
-      badge: "SOFTWARE DEVELOPMENT",
-      metric: "<4s Alert Delivery · Multi-channel",
-      desc: "Built a real-time emergency alert system with multi-channel notification fallback (SMS, email, WhatsApp). Features sub-4-second delivery SLA with TypeScript frontend and Flask backend REST APIs.",
-      tech: ["Python", "Flask", "TypeScript", "React", "REST APIs", "Twilio"],
-      achievement: "Achieved sub-4-second emergency alert delivery with 99.2% delivery rate across 3 notification channels.",
-      color: "var(--accent-amber)",
-      delay: "300ms"
-    }
-  ];
 
   return (
     <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '840px', margin: '0 auto', fontFamily: 'DM Sans, sans-serif' }}>
       <button 
-        className="clickable back-btn"
-        onClick={() => navigate('Observatory')}
+        className="clickable back-btn" style={{display: "none"}}
+        onClick={() => navigate('/observatory')}
         style={{
           background: 'transparent',
           border: 'none',
@@ -65,6 +36,8 @@ export default function Projects({ navigate }) {
         {projects.map((p, i) => (
           <div 
             key={i} 
+            className="clickable"
+            onClick={() => navigate('/observatory/projects/' + p.slug)}
             style={{
               width: '100%',
               background: 'rgba(15,25,41,0.9)',
@@ -74,7 +47,8 @@ export default function Projects({ navigate }) {
               padding: '32px',
               opacity: mounted ? 1 : 0,
               transform: mounted ? 'translateY(0)' : 'translateY(20px)',
-              transition: `all 0.6s ease ${p.delay}, transform 0.25s ease, box-shadow 0.25s ease`
+              transition: `all 0.6s ease ${p.delay}, transform 0.25s ease, box-shadow 0.25s ease`,
+              cursor: 'pointer'
             }}
             onMouseEnter={e => {
               e.currentTarget.style.transform = 'translateY(-3px)';

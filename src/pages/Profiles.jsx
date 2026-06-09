@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { NavigationContext } from '../App';
 
 const output = [
   { type: 'text', text: 'Connecting to GitHub...', delay: 200 },
@@ -16,7 +17,8 @@ const output = [
   { type: 'final', text: 'All systems connected.', delay: 200 }
 ];
 
-export default function Profiles({ navigate }) {
+export default function Profiles() {
+  const { navigate } = useContext(NavigationContext);
   const [lines, setLines] = useState([]);
   const [mounted, setMounted] = useState(false);
 
@@ -52,8 +54,8 @@ export default function Profiles({ navigate }) {
       margin: '0 auto' 
     }}>
       <button 
-        className="clickable back-btn"
-        onClick={() => navigate('Observatory')}
+        className="clickable back-btn" style={{display: "none"}}
+        onClick={() => navigate('/observatory')}
         style={{
           background: 'transparent',
           border: 'none',

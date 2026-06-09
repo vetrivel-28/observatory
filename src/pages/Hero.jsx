@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { NavigationContext } from '../App';
 
-export default function Hero({ navigate }) {
+export default function Hero() {
+  const { navigate } = useContext(NavigationContext);
   // Use useMemo to avoid dependency warnings if not defining roles outside
   const roles = ['Machine Learning', 'Data Engineer', 'Problem Solver', 'Python Developer'];
   const [roleIndex, setRoleIndex] = useState(0);
@@ -105,7 +107,7 @@ export default function Hero({ navigate }) {
       {/* CTA Buttons */}
       <div className="hero-cta-buttons" style={{ display: 'flex', gap: '16px', marginBottom: '52px', flexWrap: 'wrap', justifyContent: 'center' }}>
         <button
-          onClick={() => navigate('Observatory')}
+          onClick={() => navigate('/observatory')}
           style={{
             padding: '12px 28px',
             background: 'transparent',
@@ -274,7 +276,7 @@ export default function Hero({ navigate }) {
           Open to opportunities in Data Science, Machine Learning, and Engineering.
         </div>
         <button
-          onClick={() => navigate('Contact')}
+          onClick={() => navigate('/observatory/contact')}
           style={{
             padding: '11px 28px',
             background: 'rgba(168,85,247,0.15)',

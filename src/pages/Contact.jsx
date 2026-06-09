@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-export default function Contact({ navigate }) {
+export default function Contact() {
+  const { navigate } = useContext(NavigationContext);
   const [form, setForm] = useState({ email: '', subject: '', message: '' });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -27,8 +28,8 @@ export default function Contact({ navigate }) {
       fontFamily: 'Space Mono, monospace',
     }}>
       <button
-        className="clickable back-btn"
-        onClick={() => navigate('Observatory')}
+        className="clickable back-btn" style={{display: "none"}}
+        onClick={() => navigate('/observatory')}
         style={{
           position: 'absolute', top: '24px', left: '24px',
           background: 'none', border: 'none',

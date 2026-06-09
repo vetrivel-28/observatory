@@ -1,58 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { NavigationContext } from '../App';
+import { skills } from '../data/skills';
 import { Icons } from '../Icons';
 
-export default function Skills({ navigate }) {
+export default function Skills() {
+  const { navigate } = useContext(NavigationContext);
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState('All');
 
   useEffect(() => setMounted(true), []);
 
-  const skills = [
-    {
-      id: 'ML',
-      domain: "Machine Learning",
-      project: "Website Classifier",
-      outcome: "87% Accuracy",
-      tags: ["Python", "Scikit-Learn", "NLP", "Random Forests"],
-      icon: Icons.brain,
-      color: "#a855f7",
-      filename: "ml_skills.py",
-      perf: 87
-    },
-    {
-      id: 'Data Eng',
-      domain: "Data Engineering",
-      project: "Market Analysis ETL",
-      outcome: "500+ products <2 min",
-      tags: ["PostgreSQL", "SQL", "Selenium", "BeautifulSoup"],
-      icon: Icons.database,
-      color: "#00d4ff",
-      filename: "data_eng.sql",
-      perf: 92
-    },
-    {
-      id: 'Software',
-      domain: "Software Dev",
-      project: "Women Safety SOS",
-      outcome: "<4s Alert Delivery",
-      tags: ["Python", "Flask", "TypeScript", "React"],
-      icon: Icons.code,
-      color: "#a855f7",
-      filename: "software_dev.ts",
-      perf: 76
-    },
-    {
-      id: 'Analytics',
-      domain: "Analytics",
-      project: "Intelligence Dashboards",
-      outcome: "Discovered 15% margins",
-      tags: ["Pandas", "Matplotlib", "Plotly", "Streamlit"],
-      icon: Icons.chart,
-      color: "#fbbf24",
-      filename: "analytics.ipynb",
-      perf: 80
-    }
-  ];
 
   const visibleSkills = activeTab === 'All' ? skills : skills.filter(s => s.id === activeTab);
 
@@ -75,8 +32,8 @@ export default function Skills({ navigate }) {
   return (
     <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '900px', margin: '0 auto' }}>
       <button 
-        className="clickable back-btn"
-        onClick={() => navigate('Observatory')}
+        className="clickable back-btn" style={{display: "none"}}
+        onClick={() => navigate('/observatory')}
         style={{
           background: 'transparent',
           border: 'none',
@@ -126,6 +83,8 @@ export default function Skills({ navigate }) {
         {visibleSkills.map((skill) => (
           <div 
             key={skill.id}
+            className="clickable"
+            onClick={() => navigate('/observatory/skills/' + skill.slug)}
             style={{
               background: 'var(--card-bg)',
               border: '1px solid var(--border)',
@@ -135,7 +94,8 @@ export default function Skills({ navigate }) {
               overflow: 'hidden',
               display: 'flex',
               flexDirection: 'column',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              cursor: 'pointer'
             }}
             onMouseEnter={e => {
               e.currentTarget.style.transform = 'translateY(-4px)';
@@ -158,7 +118,7 @@ export default function Skills({ navigate }) {
               }} />
             </div>
 
-            {/* Top Section */}
+              {/* Top Section */}
             <div style={{
               background: '#1a2332',
               borderBottom: `1px solid ${skill.color}25`,
@@ -175,6 +135,7 @@ export default function Skills({ navigate }) {
                 {skill.filename}
               </span>
               <span style={{ marginLeft: 'auto', fontFamily: 'Space Mono', fontSize: '11px', fontWeight: '700', color: skill.color }}>
+                {React.createElement(Icons[skill.iconName] || 'span', { style: { marginRight: '8px', verticalAlign: 'middle' } })}
                 {skill.domain}
               </span>
               {/* Proficiency bar */}

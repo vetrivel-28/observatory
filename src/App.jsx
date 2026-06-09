@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './index.css';
 
 import Hero from './pages/Hero';
@@ -11,6 +12,9 @@ import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import TransitionOverlay from './components/Transitions';
 import useScrollAnimation from './hooks/useScrollAnimation';
+import ObservatoryLayout from './layouts/ObservatoryLayout';
+import ProjectDetail from './pages/ProjectDetail';
+import SkillDetail from './pages/SkillDetail';
 
 // --- Custom Cursor ---
 function CustomCursor() {
@@ -23,19 +27,20 @@ function CustomCursor() {
 
     const move = (e) => {
       mx = e.clientX; my = e.clientY;
-      dot.style.left = mx + 'px';
-      dot.style.top = my + 'px';
+      if(dot) { dot.style.left = mx + 'px'; dot.style.top = my + 'px'; }
     };
 
     const animate = () => {
-      tx += (mx - tx) * 0.15;
-      ty += (my - ty) * 0.15;
-      trail.style.left = tx + 'px';
-      trail.style.top = ty + 'px';
-      rx += (mx - rx) * 0.08;
-      ry += (my - ry) * 0.08;
-      ring.style.left = rx + 'px';
-      ring.style.top = ry + 'px';
+      if(trail && ring) {
+        tx += (mx - tx) * 0.15;
+        ty += (my - ty) * 0.15;
+        trail.style.left = tx + 'px';
+        trail.style.top = ty + 'px';
+        rx += (mx - rx) * 0.08;
+        ry += (my - ry) * 0.08;
+        ring.style.left = rx + 'px';
+        ring.style.top = ry + 'px';
+      }
       requestAnimationFrame(animate);
     };
 
@@ -65,18 +70,22 @@ function CustomCursor() {
     const addHover = () => {
       document.querySelectorAll('button,a,[role=button],[onClick]').forEach(el => {
         el.addEventListener('mouseenter', () => {
-          ring.style.width = '48px';
-          ring.style.height = '48px';
-          ring.style.borderColor = '#a855f7';
-          ring.style.boxShadow = '0 0 16px rgba(168,85,247,0.5)';
-          dot.style.background = '#a855f7';
+          if(ring && dot) {
+            ring.style.width = '48px';
+            ring.style.height = '48px';
+            ring.style.borderColor = '#a855f7';
+            ring.style.boxShadow = '0 0 16px rgba(168,85,247,0.5)';
+            dot.style.background = '#a855f7';
+          }
         });
         el.addEventListener('mouseleave', () => {
-          ring.style.width = '28px';
-          ring.style.height = '28px';
-          ring.style.borderColor = '#00d4ff';
-          ring.style.boxShadow = 'none';
-          dot.style.background = '#00d4ff';
+          if(ring && dot) {
+            ring.style.width = '28px';
+            ring.style.height = '28px';
+            ring.style.borderColor = '#00d4ff';
+            ring.style.boxShadow = 'none';
+            dot.style.background = '#00d4ff';
+          }
         });
       });
     };
@@ -128,6 +137,7 @@ function StarCanvas() {
   const canvasRef = useRef(null);
   useEffect(() => {
     const canvas = canvasRef.current;
+    if(!canvas) return;
     const ctx = canvas.getContext('2d');
     let width = window.innerWidth;
     let height = window.innerHeight;
@@ -175,46 +185,47 @@ function StarCanvas() {
   return <canvas id="star-canvas" ref={canvasRef} />;
 }
 
+// --- Custom Navigation Hook Context ---
+export const NavigationContext = React.createContext(null);
+
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('Home');
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [transitionTarget, setTransitionTarget] = useState('');
-  
+  const navigate = useNavigate();
+  const location = useLocation();
   const scrollPositions = useRef({});
 
   useScrollAnimation();
 
-  const navigate = (page) => {
-    if (isTransitioning || page === currentPage) return;
+  // Route-based transitions
+  const handleNavigate = (path) => {
+    if (isTransitioning || location.pathname === path) return;
     
-    // Save scroll position for the current page
-    scrollPositions.current[currentPage] = window.scrollY;
+    // Determine a readable target name from the path for the overlay
+    let targetName = 'observatory';
+    if(path.includes('projects')) targetName = 'projects';
+    if(path.includes('skills')) targetName = 'skills';
+    if(path.includes('experience')) targetName = 'experience';
+    if(path.includes('achievements')) targetName = 'achievements';
+    if(path.includes('profiles')) targetName = 'profiles';
+    if(path.includes('contact')) targetName = 'contact';
     
-    setTransitionTarget(page);
+    setTransitionTarget(targetName);
     setIsTransitioning(true);
     
-    // Change page at 600ms
+    // Wait for the transition out animation
     setTimeout(() => {
-      setCurrentPage(page);
-      // Restore scroll position or default to 0
-      window.scrollTo(0, scrollPositions.current[page] || 0);
+      navigate(path);
+      window.scrollTo(0, 0);
     }, 600);
     
-    // Hide overlay at 1200ms
     setTimeout(() => {
       setIsTransitioning(false);
     }, 1200);
   };
 
-  const getStyle = (pageName) => {
-    return {
-      display: currentPage === pageName ? 'block' : 'none',
-      width: '100%'
-    };
-  };
-
   return (
-    <>
+    <NavigationContext.Provider value={{ navigate: handleNavigate }}>
       <CustomCursor />
       <StarCanvas />
       
@@ -223,14 +234,21 @@ export default function App() {
         targetPage={transitionTarget}
       />
       
-      <div style={getStyle('Home')}><Hero navigate={navigate} /></div>
-      <div style={getStyle('Observatory')}><Observatory navigate={navigate} /></div>
-      <div style={getStyle('Skills')}><Skills navigate={navigate} /></div>
-      <div style={getStyle('Profiles')}><Profiles navigate={navigate} /></div>
-      <div style={getStyle('Achievements')}><Achievements navigate={navigate} /></div>
-      <div style={getStyle('Experience')}><Experience navigate={navigate} /></div>
-      <div style={getStyle('Projects')}><Projects navigate={navigate} /></div>
-      <div style={getStyle('Contact')}><Contact navigate={navigate} /></div>
-    </>
+      <Routes>
+        <Route path="/" element={<Hero />} />
+        
+        <Route path="/observatory" element={<ObservatoryLayout />}>
+          <Route index element={<Observatory />} />
+          <Route path="skills" element={<Skills />} />
+          <Route path="skills/:slug" element={<SkillDetail />} />
+          <Route path="profiles" element={<Profiles />} />
+          <Route path="achievements" element={<Achievements />} />
+          <Route path="experience" element={<Experience />} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="projects/:slug" element={<ProjectDetail />} />
+          <Route path="contact" element={<Contact />} />
+        </Route>
+      </Routes>
+    </NavigationContext.Provider>
   );
 }

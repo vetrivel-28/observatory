@@ -1,13 +1,14 @@
 import React from 'react';
 import { Icons } from '../Icons';
 
-export default function Experience({ navigate }) {
+export default function Experience() {
+  const { navigate } = useContext(NavigationContext);
   
   return (
     <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '1100px', margin: '0 auto', display: 'flex', flexDirection: 'column' }}>
       <button 
-        className="clickable back-btn"
-        onClick={() => navigate('Observatory')}
+        className="clickable back-btn" style={{display: "none"}}
+        onClick={() => navigate('/observatory')}
         style={{
           background: 'transparent',
           border: 'none',
