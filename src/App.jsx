@@ -22,6 +22,7 @@ const SkillDetail = React.lazy(() => import('./pages/SkillDetail'));
 const Resume = React.lazy(() => import('./pages/Resume'));
 
 import CommandPalette from './components/CommandPalette';
+import BottomNav from './components/BottomNav';
 
 // --- Custom Cursor ---
 function CustomCursor() {
@@ -166,49 +167,72 @@ function CustomCursor() {
 function StarCanvas() {
   const canvasRef = useRef(null);
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if(!canvas) return;
+    const canvas = document.getElementById('star-canvas');
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-
-    const stars = Array.from({ length: 75 }).map(() => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      r: Math.random() * 1.5 + 0.5,
-      opacity: Math.random(),
-      moving: Math.random() > 0.98,
-      speed: Math.random() * 0.5 + 0.1
-    }));
-
-    let animationId;
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-      stars.forEach(star => {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-        ctx.fill();
-        if (star.moving) {
-          star.x -= star.speed;
-          if (star.x < 0) star.x = width;
-        }
-      });
-      animationId = requestAnimationFrame(render);
-    };
-    render();
-
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
     const resize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
     window.addEventListener('resize', resize);
+
+    // Mix of dots + tiny data symbols
+    const SYMBOLS = ['.', '+', '×', '·'];
+    const particles = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 1.5 + 0.5,
+      opacity: Math.random() * 0.4 + 0.05,
+      speed: Math.random() * 0.15 + 0.02,
+      // 85% plain dots, 15% symbols
+      symbol: Math.random() > 0.85 ? SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)] : null,
+      // Color: mostly white, some cyan, some purple
+      color: Math.random() > 0.92 ? '#00d4ff' :
+             Math.random() > 0.88 ? '#a855f7' : '#ffffff',
+      drift: (Math.random() - 0.5) * 0.05,
+    }));
+
+    let animFrame;
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(p => {
+        ctx.globalAlpha = p.opacity;
+        ctx.fillStyle = p.color;
+        
+        if (p.symbol) {
+          ctx.font = `${p.size * 8}px Space Mono, monospace`;
+          ctx.fillText(p.symbol, p.x, p.y);
+        } else {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        
+        // Drift upward slowly
+        p.y -= p.speed;
+        p.x += p.drift;
+        
+        // Reset when off screen
+        if (p.y < -10) {
+          p.y = canvas.height + 10;
+          p.x = Math.random() * canvas.width;
+        }
+        if (p.x < -10) p.x = canvas.width + 10;
+        if (p.x > canvas.width + 10) p.x = -10;
+      });
+      
+      ctx.globalAlpha = 1;
+      animFrame = requestAnimationFrame(draw);
+    };
+    
+    draw();
     return () => {
-      cancelAnimationFrame(animationId);
+      cancelAnimationFrame(animFrame);
       window.removeEventListener('resize', resize);
     };
   }, []);
@@ -230,6 +254,9 @@ export default function App() {
   // Route-based transitions
   const handleNavigate = (path) => {
     if (isTransitioning || location.pathname === path) return;
+    
+    // Scroll to top before transition
+    window.scrollTo({ top: 0, behavior: 'instant' });
     
     const getBaseModule = (p) => {
       const parts = p.split('/').filter(Boolean);
@@ -282,6 +309,8 @@ export default function App() {
         isVisible={isTransitioning}
         targetPage={transitionTarget}
       />
+      
+      <BottomNav currentPage={location.pathname === '/' ? 'home' : location.pathname.split('/').pop() || 'observatory'} navigateTo={handleNavigate} />
       
       <ErrorBoundary>
         <Suspense fallback={

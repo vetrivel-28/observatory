@@ -9,10 +9,10 @@ export default function Breadcrumbs() {
 
   return (
     <div className="breadcrumbs" style={{
-      fontFamily: 'Space Mono', fontSize: '12px', color: '#64748b',
+      fontFamily: 'Space Mono', fontSize: '12px', color: '#4a5568',
       marginBottom: '32px', display: 'flex', gap: '8px', alignItems: 'center'
     }}>
-      <Link to="/" style={{ color: '#94a3b8', textDecoration: 'none' }} className="hover-lift">Home</Link>
+      <Link to="/" style={{ color: '#8892a4', textDecoration: 'none' }} className="hover-lift">Home</Link>
       {paths.map((path, index) => {
         currentLink += `/${path}`;
         // Format path: convert hyphens to spaces and capitalize
@@ -28,7 +28,7 @@ export default function Breadcrumbs() {
             {isLast ? (
               <span style={{ color: '#00d4ff' }}>{formattedPath}</span>
             ) : (
-              <Link to={currentLink} style={{ color: '#94a3b8', textDecoration: 'none' }} className="hover-lift">
+              <Link to={currentLink} style={{ color: '#8892a4', textDecoration: 'none' }} className="hover-lift">
                 {formattedPath}
               </Link>
             )}

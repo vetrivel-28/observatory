@@ -116,15 +116,73 @@ export default function Contact() {
         {/* Form body */}
         <div style={{ padding: '24px 28px' }}>
           {sent ? (
-            <div style={{ textAlign: 'center', padding: '20px 0' }}>
-              <div style={{ fontSize: '2rem', marginBottom: '12px' }}>✓</div>
-              <div style={{ color: '#00ff88', fontFamily: 'Space Mono', fontSize: '14px', marginBottom: '6px' }}>
-                MESSAGE TRANSMITTED
-              </div>
-              <div style={{ color: '#4a5568', fontSize: '12px' }}>
-                Opening your email client...
-              </div>
-            </div>
+  <div style={{
+    textAlign: 'center',
+    padding: '32px 20px',
+    animation: 'fadeIn 0.4s ease forwards',
+  }}>
+    {/* Animated checkmark */}
+    <div style={{
+      width: '56px', height: '56px',
+      borderRadius: '50%',
+      border: '2px solid #00ff88',
+      display: 'flex', alignItems: 'center',
+      justifyContent: 'center',
+      margin: '0 auto 20px',
+      animation: 'pulse 2s ease-in-out infinite',
+      boxShadow: '0 0 24px rgba(0,255,136,0.3)',
+    }}>
+      <span style={{ color: '#00ff88', fontSize: '24px' }}>✓</span>
+    </div>
+    
+    {/* Typewriter success lines */}
+    <div style={{
+      fontFamily: 'Space Mono', fontSize: '12px',
+      textAlign: 'left', display: 'inline-block',
+    }}>
+      {[
+        { text: '> Encrypting message...', color: '#4a5568', delay: 0 },
+        { text: '> Establishing secure tunnel...', color: '#4a5568', delay: 300 },
+        { text: '> Message delivered successfully ✓', color: '#00ff88', delay: 600 },
+        { text: '> Opening email client...', color: '#00d4ff', delay: 900 },
+      ].map((line, i) => (
+        <div key={i} style={{
+          marginBottom: '6px',
+          color: line.color,
+          opacity: 0,
+          animation: 'fadeIn 0.3s ease forwards',
+          animationDelay: `${line.delay}ms`,
+        }}>
+          {line.text}
+        </div>
+      ))}
+    </div>
+    
+    <button
+      onClick={() => setSent(false)}
+      style={{
+        marginTop: '20px',
+        padding: '8px 20px',
+        background: 'transparent',
+        border: '1px solid rgba(255,255,255,0.15)',
+        borderRadius: '5px',
+        color: '#4a5568',
+        fontFamily: 'Space Mono', fontSize: '11px',
+        cursor: 'pointer', transition: 'all 0.2s',
+        letterSpacing: '0.08em',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.borderColor = '#00d4ff';
+        e.currentTarget.style.color = '#00d4ff';
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
+        e.currentTarget.style.color = '#4a5568';
+      }}
+    >
+      &gt; send_another_message()
+    </button>
+  </div>
           ) : (
             <>
               {[

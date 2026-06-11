@@ -196,8 +196,8 @@ export default function Skills() {
 
       <div style={{ textAlign: 'center' }}>
         <h3 style={{ color: 'white', marginBottom: '40px', fontFamily: 'Space Mono, monospace' }}>Tech Stack Radar</h3>
-        <div style={{ position: 'relative', width: '360px', height: '360px', margin: '0 auto' }}>
-          <svg width="100%" height="auto" viewBox="-20 -20 140 140" style={{ overflow: 'visible' }}>
+        <div style={{ position: 'relative', width: '360px', height: '360px', margin: '0 auto', overflow: 'visible', padding: '40px 20px' }}>
+          <svg viewBox="-60 -60 220 220" style={{ maxWidth: '400px', display: 'block', margin: '0 auto', overflow: 'visible' }} width="100%" height="100%">
             {/* Radar background */}
             {[20, 40, 60, 80, 100].map(r => {
               const scaledR = r * 0.4; // max radius 40
@@ -224,21 +224,21 @@ export default function Skills() {
               <line key={i} x1="50" y1="50" x2={p.x2} y2={p.y2} stroke="var(--border)" strokeWidth="0.5" />
             ))}
             
-            {/* Labels */}
+            {/* Labels — move them further out from the hexagon */}
             {[
-              { label: 'Python', x: '50%', y: '5%' },
-              { label: 'SQL', x: '92%', y: '28%' },
-              { label: 'DataEng', x: '85%', y: '78%' },
-              { label: 'Visualization', x: '50%', y: '98%' },
-              { label: 'WebDev', x: '8%', y: '78%' },
-              { label: 'ML', x: '8%', y: '28%' },
+              { label: 'Python', x: 50, y: -25 },      // top
+              { label: 'SQL', x: 105, y: -5 },         // top-right
+              { label: 'DataEng', x: 105, y: 78 },      // bottom-right
+              { label: 'Visualization', x: 50, y: 105 }, // bottom
+              { label: 'WebDev', x: -5, y: 78 },       // bottom-left
+              { label: 'ML', x: -5, y: -5 },          // top-left
             ].map(({ label, x, y }) => (
               <text
                 key={label}
-                x={x} y={y}
+                x={`${x}%`} y={`${y}%`}
                 textAnchor="middle"
                 fill="#8892a4"
-                fontSize="4.5"
+                fontSize="11"
                 fontFamily="Space Mono, monospace"
               >
                 {label}

@@ -145,24 +145,86 @@ export default function Observatory() {
           }} />
         </div>
       ) : (
-        <div style={{
-          padding: '16px 24px',
-          background: '#0a1628',
-          border: '1px solid rgba(0,212,255,0.1)',
-          borderRadius: '8px',
-          marginBottom: '24px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '12px',
-          opacity: 0,
-          animation: 'fadeInUp 0.6s ease forwards',
-        }}>
-          <div>
-            <div style={{ fontSize: '11px', color: '#4a5568', marginBottom: '4px' }}>
-              {'> whoami'}
+        <>
+          {/* Breadcrumb Terminal Style */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontFamily: 'Space Mono, monospace',
+            fontSize: '11px',
+            padding: '8px 0',
+            marginBottom: '16px',
+          }}>
+            {/* Prompt symbol before breadcrumb */}
+            <span style={{ color: '#a855f7' }}>~/</span>
+            <span
+              onClick={() => navigate('/')}
+              style={{ color: '#4a5568', cursor: 'pointer', transition: 'color 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#00d4ff'}
+              onMouseLeave={e => e.currentTarget.style.color = '#4a5568'}
+            >
+              home
+            </span>
+            <span style={{ color: '#2d3748' }}>/</span>
+            <span style={{ color: '#00d4ff' }}>observatory</span>
+            <span style={{
+              marginLeft: '4px',
+              display: 'inline-block',
+              width: '7px', height: '13px',
+              background: '#00d4ff',
+              animation: 'blink 1s step-end infinite',
+              verticalAlign: 'middle',
+            }} />
+          </div>
+
+          <div style={{
+            background: '#0a1628',
+            border: '1px solid rgba(0,212,255,0.12)',
+            borderRadius: '10px',
+            overflow: 'hidden',
+            marginBottom: '20px',
+            opacity: 0,
+            animation: 'fadeInUp 0.6s ease forwards',
+          }}>
+            {/* Terminal title bar */}
+            <div style={{
+              background: '#111d2e',
+              borderBottom: '1px solid rgba(255,255,255,0.05)',
+              padding: '8px 16px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+            }}>
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f57' }} />
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#febc2e' }} />
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#28c840' }} />
+              <span style={{
+                fontFamily: 'Space Mono', fontSize: '11px',
+                color: '#4a5568', marginLeft: '8px', letterSpacing: '0.06em',
+              }}>
+                vetrivel@portfolio ~ whoami
+              </span>
+              <span style={{
+                marginLeft: 'auto',
+                display: 'inline-block', width: '8px', height: '14px',
+                background: '#00d4ff',
+                animation: 'blink 1s step-end infinite',
+              }} />
             </div>
+
+            <div style={{
+              padding: '16px 24px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '12px',
+            }}>
+              <div>
+                <div style={{ fontSize: '11px', color: '#4a5568', marginBottom: '4px' }}>
+                  {'> whoami'}
+                </div>
             <div style={{ fontSize: '18px', fontWeight: '700', color: '#e8eef5' }}>
               Vetrivel A
             </div>
@@ -200,9 +262,11 @@ export default function Observatory() {
                 </div>
               </div>
             ))}
+            </div>
           </div>
         </div>
-      )}
+      </>
+    )}
 
       {/* Recruiter / Quick Links Banner */}
       {booted && (
