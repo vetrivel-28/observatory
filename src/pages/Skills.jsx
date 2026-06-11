@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { NavigationContext } from '../App';
 import { skills } from '../data/skills';
 import { Icons } from '../Icons';
+import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 
 export default function Skills() {
   const { navigate } = useContext(NavigationContext);
@@ -31,18 +33,33 @@ export default function Skills() {
 
   return (
     <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '900px', margin: '0 auto' }}>
+      <SEO 
+        title="Skills | Vetrivel A" 
+        description="Technical expertise across Machine Learning, Data Engineering, NLP, Python, SQL, and Analytics."
+        type="website"
+      />
+      <Breadcrumb items={[
+        {label: 'Home', page: 'home'},
+        {label: 'Observatory', page: 'observatory'},
+        {label: 'Skills', page: null}
+      ]} />
       <button 
-        className="clickable back-btn" style={{display: "none"}}
+        className="clickable back-btn hover-lift"
         onClick={() => navigate('/observatory')}
         style={{
           background: 'transparent',
           border: 'none',
           color: 'var(--text-muted)',
           fontSize: '1rem',
-          marginBottom: '20px'
+          marginBottom: '20px',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontFamily: 'Space Mono'
         }}
       >
-        ← Back to Observatory
+        <span>←</span> Back to Observatory
       </button>
 
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
@@ -106,13 +123,13 @@ export default function Skills() {
               e.currentTarget.style.boxShadow = 'none';
             }}
           >
-            {/* Right edge performance bar */}
+            {/* Right edge accent line */}
             <div style={{ position: 'absolute', right: 0, top: 0, width: '4px', height: '100%', background: 'rgba(255,255,255,0.05)' }}>
               <div style={{ 
                 position: 'absolute', 
                 bottom: 0, 
                 width: '100%', 
-                height: mounted ? `${skill.perf}%` : '0%', 
+                height: mounted ? '100%' : '0%', 
                 background: skill.color,
                 transition: 'height 1s ease-out 0.2s'
               }} />
@@ -138,14 +155,11 @@ export default function Skills() {
                 {React.createElement(Icons[skill.iconName] || 'span', { style: { marginRight: '8px', verticalAlign: 'middle' } })}
                 {skill.domain}
               </span>
-              {/* Proficiency bar */}
+              {/* Proficiency level */}
               <div style={{
-                display: 'flex', alignItems: 'center', gap: '6px',
+                display: 'flex', alignItems: 'center',
               }}>
-                <div style={{ width: '50px', height: '3px', background: 'rgba(255,255,255,0.08)', borderRadius: '2px' }}>
-                  <div style={{ height: '100%', width: `${skill.perf}%`, background: skill.color, borderRadius: '2px' }} />
-                </div>
-                <span style={{ fontFamily: 'Space Mono', fontSize: '9px', color: skill.color }}>{skill.perf}%</span>
+                <span style={{ fontFamily: 'Space Mono', fontSize: '10px', color: skill.color, fontWeight: 'bold' }}>{skill.level}</span>
               </div>
             </div>
 

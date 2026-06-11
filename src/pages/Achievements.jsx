@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { NavigationContext } from '../App';
+import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 
 const achievements = [
   {
@@ -42,29 +44,35 @@ export default function Achievements() {
   const [expanded, setExpanded] = useState(null);
 
   return (
-    <div className="page-content" style={{
-      minHeight: '100vh',
-      background: '#050911',
-      padding: '60px 24px 80px',
-      fontFamily: 'DM Sans, sans-serif',
-    }}>
+    <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '840px', margin: '0 auto', fontFamily: 'DM Sans, sans-serif' }}>
+      <SEO 
+        title="Achievements & Awards | Vetrivel A" 
+        description="Academic and hackathon milestones, including top-tier rankings and technical awards."
+        type="website"
+      />
+      <Breadcrumb items={[
+        {label: 'Home', page: 'home'},
+        {label: 'Observatory', page: 'observatory'},
+        {label: 'Achievements', page: null}
+      ]} />
       {/* Back button - top left */}
-      <button
-        className="back-btn"
-        onClick={() => navigate('observatory')}
+      <button 
+        className="clickable back-btn hover-lift"
+        onClick={() => navigate('/observatory')}
         style={{
-          background: 'none',
+          background: 'transparent',
           border: 'none',
-          color: '#8892a4',
-          fontSize: '14px',
-          cursor: 'pointer',
-          fontFamily: 'Space Mono, monospace',
+          color: 'var(--text-muted)',
+          fontSize: '1rem',
           marginBottom: '40px',
-          display: 'block',
-          padding: 0,
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontFamily: 'Space Mono'
         }}
       >
-        ← Back to Observatory
+        <span>←</span> Back to Observatory
       </button>
 
       {/* Page title */}
@@ -117,7 +125,7 @@ export default function Achievements() {
                 position: 'relative',
                 display: 'flex',
                 justifyContent: isRight ? 'flex-end' : 'flex-start',
-                marginBottom: '72px',
+                marginBottom: '48px',
                 paddingLeft: isRight ? 0 : 0,
               }}
             >
@@ -136,13 +144,19 @@ export default function Achievements() {
                 {/* Date ABOVE icon */}
                 <div style={{
                   fontFamily: 'Space Mono, monospace',
-                  fontSize: '10px',
+                  fontSize: '11px',
                   fontWeight: '700',
-                  color: item.badgeColor,
-                  letterSpacing: '0.12em',
+                  color: '#e8eef5',
+                  letterSpacing: '0.15em',
                   whiteSpace: 'nowrap',
                   textAlign: 'center',
-                  marginBottom: '4px',
+                  marginBottom: '6px',
+                  textShadow: `0 0 12px ${item.badgeColor}`,
+                  background: `${item.badgeColor}25`,
+                  border: `1px solid ${item.badgeColor}50`,
+                  padding: '3px 10px',
+                  borderRadius: '4px',
+                  display: 'inline-block',
                 }}>
                   {item.date}
                 </div>

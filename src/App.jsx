@@ -32,8 +32,28 @@ function CustomCursor() {
 
     let mx = 0, my = 0, tx = 0, ty = 0, rx = 0, ry = 0;
 
+    // START HIDDEN — only show after first mouse move
+    if (dot) dot.style.opacity = '0';
+    if (trail) trail.style.opacity = '0';
+    if (ring) ring.style.opacity = '0';
+
+    let hasMovedOnce = false;
+
     const move = (e) => {
       mx = e.clientX; my = e.clientY;
+      
+      // Reveal cursor on first real mouse movement
+      if (!hasMovedOnce) {
+        hasMovedOnce = true;
+        if (dot) dot.style.opacity = '1';
+        if (trail) trail.style.opacity = '1';
+        if (ring) ring.style.opacity = '1';
+        // Add smooth transition for the reveal
+        if (dot) dot.style.transition = 'opacity 0.3s ease';
+        if (trail) trail.style.transition = 'opacity 0.3s ease';
+        if (ring) ring.style.transition = 'opacity 0.3s ease, width 0.2s, height 0.2s, border-color 0.2s';
+      }
+      
       if(dot) { dot.style.left = mx + 'px'; dot.style.top = my + 'px'; }
     };
 
@@ -114,6 +134,7 @@ function CustomCursor() {
         background: '#00d4ff', borderRadius: '50%',
         pointerEvents: 'none', zIndex: 99999,
         transform: 'translate(-50%,-50%)',
+        opacity: 0,
       }} />
 
       <div id="cur-trail" style={{
@@ -124,6 +145,7 @@ function CustomCursor() {
         pointerEvents: 'none', zIndex: 99998,
         transform: 'translate(-50%,-50%)',
         transition: 'width 0.2s, height 0.2s',
+        opacity: 0,
       }} />
 
       <div id="cur-ring" style={{
@@ -134,6 +156,7 @@ function CustomCursor() {
         pointerEvents: 'none', zIndex: 99997,
         transform: 'translate(-50%,-50%)',
         transition: 'width 0.2s, height 0.2s, border-color 0.2s, box-shadow 0.2s',
+        opacity: 0,
       }} />
     </>
   );
@@ -151,7 +174,7 @@ function StarCanvas() {
     canvas.width = width;
     canvas.height = height;
 
-    const stars = Array.from({ length: 150 }).map(() => ({
+    const stars = Array.from({ length: 75 }).map(() => ({
       x: Math.random() * width,
       y: Math.random() * height,
       r: Math.random() * 1.5 + 0.5,
@@ -208,6 +231,24 @@ export default function App() {
   const handleNavigate = (path) => {
     if (isTransitioning || location.pathname === path) return;
     
+    const getBaseModule = (p) => {
+      const parts = p.split('/').filter(Boolean);
+      if (parts.length >= 2 && parts[0] === 'observatory') return parts[1];
+      if (parts.length === 1 && parts[0] === 'observatory') return 'observatory-home';
+      return null;
+    };
+
+    const currentBase = getBaseModule(location.pathname);
+    const targetBase = getBaseModule(path);
+    
+    const isInternal = currentBase && targetBase && currentBase === targetBase;
+    
+    if (isInternal || path === '/' || path === '/resume') {
+      navigate(path);
+      window.scrollTo(0, 0);
+      return;
+    }
+
     // Determine a readable target name from the path for the overlay
     let targetName = 'observatory';
     if(path.includes('projects')) targetName = 'projects';

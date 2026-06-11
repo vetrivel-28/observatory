@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavigationContext } from '../App';
 import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 
 export default function Experience() {
   const { navigate } = useContext(NavigationContext);
@@ -12,9 +13,9 @@ export default function Experience() {
     {
       id: 1,
       role: "Data Science Intern",
-      company: "Tech Corp",
-      duration: "June 2023 - Present",
-      description: "Engineered scalable ETL pipelines using Python and PostgreSQL, processing 50K+ daily records. Deployed predictive models that reduced operational overhead by 12%. Collaborated with cross-functional teams to deliver Streamlit dashboards for real-time business intelligence.",
+      company: "Tech Solutions Inc.",
+      duration: "June 2024 - Present",
+      description: "Engineered scalable ETL pipelines using Python and PostgreSQL, processing 50,000+ daily records. Deployed predictive models that identified a 12% reduction in operational overhead. Designed and delivered Streamlit dashboards for real-time executive business intelligence.",
       tech: ["Python", "PostgreSQL", "Pandas", "Scikit-Learn", "Streamlit"],
       color: "var(--accent-cyan)",
       alignment: "left"
@@ -23,19 +24,19 @@ export default function Experience() {
       id: 2,
       role: "Machine Learning Researcher",
       company: "University AI Lab",
-      duration: "Jan 2023 - May 2023",
-      description: "Conducted research on optimizing TF-IDF vectorization for short-text classification. Implemented ensemble models achieving an 87% accuracy rate across 8 categories. Co-authored an internal paper detailing performance vs. inference speed trade-offs.",
+      duration: "Jan 2024 - May 2024",
+      description: "Researched and optimized NLP models for short-text classification. Implemented ensemble architectures achieving an 87% accuracy rate across 8 categories. Co-authored an internal paper detailing the performance versus inference speed trade-offs of TF-IDF vs BERT.",
       tech: ["NLP", "NLTK", "PyTorch", "BeautifulSoup"],
       color: "var(--accent-purple)",
       alignment: "right"
     },
     {
       id: 3,
-      role: "Software Developer (Freelance)",
-      company: "Various Clients",
-      duration: "2021 - 2022",
-      description: "Developed and deployed multiple full-stack web applications using React and Node.js. Built a PWA with offline capabilities for a local NGO. Integrated third-party APIs (Stripe, Twilio) to deliver end-to-end functionality.",
-      tech: ["React", "TypeScript", "Node.js", "Docker", "AWS"],
+      role: "Lead Software Engineer (Capstone)",
+      company: "University Engineering Dept",
+      duration: "Aug 2023 - Dec 2023",
+      description: "Led a team of 4 engineers to build a real-time emergency alert system with multi-channel notification fallback. Engineered the system to achieve sub-4-second delivery SLAs under simulated load of 1,000 concurrent triggers.",
+      tech: ["React", "TypeScript", "Node.js", "Redis", "Celery"],
       color: "var(--accent-amber)",
       alignment: "left"
     }
@@ -43,8 +44,32 @@ export default function Experience() {
 
   return (
     <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '1000px', margin: '0 auto', fontFamily: 'DM Sans, sans-serif' }}>
-      <SEO title="Experience Timeline" description="Professional experience timeline including roles in Data Science, Machine Learning, and Full-Stack Development." />
+      <SEO 
+        title="Experience Timeline | Vetrivel A" 
+        description="Professional experience timeline spanning Data Science, Machine Learning, and Full-Stack Development." 
+        type="website" 
+      />
       
+      <Breadcrumb items={[
+        {label: 'Home', page: 'home'},
+        {label: 'Observatory', page: 'observatory'},
+        {label: 'Experience', page: null}
+      ]} />
+      <button
+        onClick={() => navigate('/observatory')}
+        style={{
+          background: 'none', border: 'none',
+          color: '#4a5568', fontFamily: 'Space Mono', fontSize: '13px',
+          cursor: 'pointer', padding: '0', marginBottom: '24px',
+          display: 'flex', alignItems: 'center', gap: '6px',
+          transition: 'color 0.2s',
+        }}
+        onMouseEnter={e => e.currentTarget.style.color = '#00d4ff'}
+        onMouseLeave={e => e.currentTarget.style.color = '#4a5568'}
+      >
+        ← Back to Observatory
+      </button>
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '60px' }}>
         <div>
           <h1 className="page-title" style={{ fontSize: '3rem', color: 'white', fontWeight: 'bold', fontFamily: 'Space Mono', margin: '0 0 8px 0' }}>
@@ -56,7 +81,7 @@ export default function Experience() {
         </div>
       </div>
 
-      <div style={{ position: 'relative', padding: '20px 0' }}>
+      <div className="experience-container" style={{ position: 'relative', padding: '20px 0' }}>
         {/* Center Line */}
         <div className="experience-timeline-line" style={{
           position: 'absolute',
@@ -72,7 +97,7 @@ export default function Experience() {
         {experiences.map((exp, index) => (
           <div 
             key={exp.id}
-            className="experience-timeline-item"
+            className={`experience-timeline-item ${exp.alignment === 'left' ? 'item-left' : 'item-right'}`}
             style={{
               display: 'flex',
               justifyContent: exp.alignment === 'left' ? 'flex-start' : 'flex-end',
@@ -89,7 +114,8 @@ export default function Experience() {
             <div className="experience-timeline-dot" style={{
               position: 'absolute',
               left: '50%',
-              transform: 'translateX(-50%)',
+              transform: 'translate(-50%, -50%)',
+              top: '50%',
               width: '16px',
               height: '16px',
               borderRadius: '50%',
@@ -100,48 +126,59 @@ export default function Experience() {
             }} />
 
             {/* Content Card */}
-            <div 
-              className="glass-panel hover-lift experience-timeline-card"
-              style={{
-                width: '45%',
-                padding: '30px',
-                borderRadius: '12px',
-                borderTop: `4px solid ${exp.color}`,
-                textAlign: exp.alignment === 'left' ? 'right' : 'left'
-              }}
-            >
-              <div style={{ color: exp.color, fontFamily: 'Space Mono', fontWeight: 'bold', marginBottom: '8px' }}>
-                {exp.duration}
-              </div>
-              <h3 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '4px', fontFamily: 'Space Mono' }}>
-                {exp.role}
-              </h3>
-              <div style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '20px' }}>
-                {exp.company}
-              </div>
-              <p style={{ color: 'var(--text-primary)', lineHeight: '1.7', marginBottom: '20px', fontSize: '1.05rem', textAlign: 'left' }}>
-                {exp.description}
-              </p>
-              
-              <div style={{ 
-                display: 'flex', 
-                flexWrap: 'wrap', 
-                gap: '8px', 
-                justifyContent: exp.alignment === 'left' ? 'flex-end' : 'flex-start'
+            <div style={{
+              width: '45%',
+              background: '#0a1628',
+              border: '1px solid rgba(255,255,255,0.07)',
+              borderLeft: `4px solid ${exp.color}`,
+              borderRadius: '8px',
+              overflow: 'hidden',
+              marginBottom: '24px',
+              textAlign: 'left'
+            }}>
+              {/* Terminal title bar */}
+              <div style={{
+                background: '#111d2e',
+                borderBottom: '1px solid rgba(255,255,255,0.05)',
+                padding: '7px 14px',
+                display: 'flex', alignItems: 'center', gap: '6px',
               }}>
-                {exp.tech.map(t => (
-                  <span key={t} style={{
-                    background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    color: 'white',
-                    fontSize: '12px',
-                    borderRadius: '4px',
-                    padding: '4px 10px',
-                    fontFamily: 'Space Mono'
-                  }}>
-                    {t}
-                  </span>
-                ))}
+                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#28c840' }} />
+                <span style={{ fontFamily: 'Space Mono', fontSize: '10px', color: '#4a5568', marginLeft: '8px' }}>
+                  {exp.role.includes('Intern') ? 'intern_2024.py' : exp.role.includes('Research') ? 'research_2024.py' : 'lead_engineer_2023.ts'}
+                </span>
+                <span style={{
+                  marginLeft: 'auto', fontFamily: 'Space Mono', fontSize: '10px',
+                  color: '#fbbf24', letterSpacing: '0.1em',
+                }}>
+                  {exp.duration}
+                </span>
+              </div>
+              {/* Card content */}
+              <div style={{ padding: '20px 24px' }}>
+                <h3 style={{ fontFamily: 'Space Mono', fontSize: '1.1rem', fontWeight: '700', color: '#e8eef5', marginBottom: '4px' }}>
+                  {exp.role}
+                </h3>
+                <div style={{ fontFamily: 'Space Mono', fontSize: '12px', color: '#4a5568', marginBottom: '14px' }}>
+                  @ {exp.company}
+                </div>
+                <p style={{ fontFamily: 'DM Sans', color: '#8892a4', fontSize: '14px', lineHeight: '1.65', marginBottom: '16px' }}>
+                  {exp.description}
+                </p>
+                {/* Tech pills */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                  {exp.tech.map(tech => (
+                    <span key={tech} style={{
+                      fontFamily: 'Space Mono', fontSize: '10px', color: '#e2e8f0',
+                      background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+                      padding: '3px 8px', borderRadius: '4px',
+                    }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

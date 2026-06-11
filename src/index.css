@@ -219,8 +219,8 @@ input::placeholder, textarea::placeholder {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.2); }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
 @keyframes scrollUp {
@@ -271,8 +271,12 @@ input::placeholder, textarea::placeholder {
     max-width: 400px !important;
   }
   /* Experience vertical timeline fixes */
-  .experience-layout {
-    flex-direction: column !important;
+  .experience-container {
+    padding-left: 20px !important;
+  }
+  .experience-timeline-line {
+    left: 20px !important;
+    transform: none !important;
   }
   .experience-timeline-item {
     justify-content: flex-start !important;
@@ -283,12 +287,9 @@ input::placeholder, textarea::placeholder {
     text-align: left !important;
   }
   .experience-timeline-dot {
-    left: 0 !important;
-    transform: none !important;
-  }
-  .experience-timeline-line {
-    left: 7px !important;
-    transform: none !important;
+    left: 20px !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
   }
 
   /* Profiles — terminal full width */

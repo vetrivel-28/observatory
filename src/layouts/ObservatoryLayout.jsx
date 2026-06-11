@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
-import Breadcrumbs from '../components/Breadcrumbs';
+
 import { NavigationContext } from '../App';
 
 export default function ObservatoryLayout() {
@@ -61,7 +61,7 @@ export default function ObservatoryLayout() {
         flexDirection: 'column',
         paddingBottom: '24px',
       }}>
-        <Breadcrumbs />
+
         <Outlet />
       </div>
     </div>

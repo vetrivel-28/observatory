@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavigationContext } from '../App';
 import { projects } from '../data/projects';
+import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 
 export default function Projects() {
   const { navigate } = useContext(NavigationContext);
@@ -12,19 +14,34 @@ export default function Projects() {
 
 
   return (
-    <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '840px', margin: '0 auto', fontFamily: 'DM Sans, sans-serif' }}>
+    <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '1000px', margin: '0 auto', fontFamily: 'DM Sans, sans-serif' }}>
+      <SEO 
+        title="Projects | Vetrivel A" 
+        description="Machine Learning, NLP, Data Engineering, and Analytics projects with architecture details and measurable impact."
+        type="website"
+      />
+      <Breadcrumb items={[
+        {label: 'Home', page: 'home'},
+        {label: 'Observatory', page: 'observatory'},
+        {label: 'Projects', page: null}
+      ]} />
       <button 
-        className="clickable back-btn" style={{display: "none"}}
+        className="clickable back-btn hover-lift"
         onClick={() => navigate('/observatory')}
         style={{
           background: 'transparent',
           border: 'none',
           color: 'var(--text-muted)',
           fontSize: '1rem',
-          marginBottom: '20px'
+          marginBottom: '20px',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontFamily: 'Space Mono'
         }}
       >
-        ← Back to Observatory
+        <span>←</span> Back to Observatory
       </button>
 
       <div style={{ textAlign: 'center', marginBottom: '60px' }}>
@@ -110,42 +127,70 @@ export default function Projects() {
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '16px' }}>
-              <button 
-                className="clickable"
-                onClick={() => window.open("https://github.com/vetrivel-28", "_blank")}
+            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '16px' }}>
+              
+              {/* View Code */}
+              <button
+                onClick={() => window.open(p.githubUrl || 'https://github.com/vetrivel-28', '_blank')}
                 style={{
-                  padding: '9px 20px',
+                  padding: '8px 16px',
+                  background: 'transparent',
                   border: `1px solid ${p.color}`,
-                  borderRadius: '6px',
-                  background: 'transparent',
+                  borderRadius: '5px',
                   color: p.color,
-                  fontSize: '13px',
-                  fontFamily: 'Space Mono, monospace',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
+                  fontFamily: 'Space Mono', fontSize: '12px',
+                  cursor: 'pointer', transition: 'all 0.2s',
                 }}
-                onMouseEnter={e => e.target.style.background = 'rgba(124,58,237,0.1)'}
-                onMouseLeave={e => e.target.style.background = 'transparent'}
+                onMouseEnter={e => e.currentTarget.style.background = `${p.color}15`}
+                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
               >
-                &lt;&gt; View Code
+                &lt;/&gt; View Code
               </button>
-              <button 
-                className="clickable"
-                onClick={() => window.open("#", "_blank")}
+
+              {/* View Article — Medium */}
+              <button
+                onClick={() => window.open(p.mediumUrl || '#', '_blank')}
                 style={{
-                  padding: '9px 20px',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  borderRadius: '6px',
+                  padding: '8px 16px',
                   background: 'transparent',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '5px',
                   color: '#8892a4',
-                  fontSize: '13px',
-                  fontFamily: 'Space Mono, monospace',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
+                  fontFamily: 'Space Mono', fontSize: '12px',
+                  cursor: 'pointer', transition: 'all 0.2s',
                 }}
-                onMouseEnter={e => { e.target.style.color = 'white'; e.target.style.borderColor = 'rgba(255,255,255,0.3)'; }}
-                onMouseLeave={e => { e.target.style.color = '#8892a4'; e.target.style.borderColor = 'rgba(255,255,255,0.2)'; }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = '#fbbf24';
+                  e.currentTarget.style.color = '#fbbf24';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                  e.currentTarget.style.color = '#8892a4';
+                }}
+              >
+                ✍ View Article
+              </button>
+
+              {/* Live Demo */}
+              <button
+                onClick={() => window.open(p.demoUrl || '#', '_blank')}
+                style={{
+                  padding: '8px 16px',
+                  background: 'transparent',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  borderRadius: '5px',
+                  color: '#4a5568',
+                  fontFamily: 'Space Mono', fontSize: '12px',
+                  cursor: 'pointer', transition: 'all 0.2s',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
+                  e.currentTarget.style.color = '#8892a4';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
+                  e.currentTarget.style.color = '#4a5568';
+                }}
               >
                 ↗ Live Demo
               </button>

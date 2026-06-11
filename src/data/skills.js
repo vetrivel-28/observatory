@@ -9,7 +9,7 @@ export const skills = [
     iconName: "brain",
     color: "#a855f7",
     filename: "ml_skills.py",
-    perf: 87,
+    level: "Advanced",
     evidence: "Built and deployed a multi-class NLP text classification model that categorizes raw HTML content into 8 distinct industry categories.",
     learningJourney: "Started with basic linear regressions in scikit-learn. Progressed to understanding TF-IDF vectorization for text data. Explored ensemble methods (Random Forests) to improve variance. Currently exploring PyTorch for deep learning architectures.",
     projectsUsing: [
@@ -27,7 +27,7 @@ export const skills = [
     iconName: "database",
     color: "#00d4ff",
     filename: "data_eng.sql",
-    perf: 92,
+    level: "Intermediate",
     evidence: "Designed an automated ETL pipeline that scrapes distributed e-commerce platforms, sanitizes the data using Pandas, and loads it into a PostgreSQL relational database.",
     learningJourney: "Initially struggled with messy, unstructured web data. Learned to write robust XPath selectors and handle dynamic JS via Selenium. Mastered SQL for complex aggregations and joins to derive business value from the raw data.",
     projectsUsing: [
@@ -37,14 +37,14 @@ export const skills = [
   {
     slug: 'software-dev',
     id: 'Software',
-    domain: "Software Dev",
+    domain: "Software Engineering",
     project: "Women Safety SOS",
     outcome: "<4s Alert Delivery",
     tags: ["Python", "Flask", "TypeScript", "React", "Node.js", "Docker"],
     iconName: "code",
     color: "#a855f7",
     filename: "software_dev.ts",
-    perf: 76,
+    level: "Applied in Multiple Projects",
     evidence: "Developed a full-stack PWA with a React/TypeScript frontend and a Python/Flask REST API backend. Implemented asynchronous task queues using Celery.",
     learningJourney: "Transitioned from writing isolated scripts to building structured API architectures. Learned React to build interactive client-side interfaces. Gained experience in state management, component lifecycles, and responsive design.",
     projectsUsing: [
@@ -55,14 +55,14 @@ export const skills = [
   {
     slug: 'analytics',
     id: 'Analytics',
-    domain: "Analytics",
+    domain: "Data Analytics",
     project: "Intelligence Dashboards",
     outcome: "Discovered 15% margins",
     tags: ["Pandas", "Matplotlib", "Plotly", "Streamlit", "Tableau"],
     iconName: "chart",
     color: "#fbbf24",
     filename: "analytics.ipynb",
-    perf: 80,
+    level: "Applied in One Project",
     evidence: "Analyzed millions of rows of pricing data to discover a 15% pricing arbitrage opportunity across competitors. Built interactive Streamlit dashboards for stakeholders.",
     learningJourney: "Started with basic Excel pivot tables. Quickly moved to Pandas for programmatic data manipulation. Learned the principles of data visualization using Matplotlib and Plotly to effectively communicate complex statistical insights.",
     projectsUsing: [

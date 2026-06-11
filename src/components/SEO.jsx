@@ -1,54 +1,108 @@
-import { useEffect } from 'react';
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
-export default function SEO({ title, description, image = '/og-image.png' }) {
+export default function SEO({ title, description, type = 'website', image = '/og-image.png', canonicalPath, schemaData }) {
   const location = useLocation();
-  const canonicalUrl = `https://vetrivel-a.dev${location.pathname}`;
+  const path = canonicalPath || location.pathname;
+  const canonicalUrl = `https://vetrivel-a.dev${path}`;
+  
+  const formattedTitle = title || 'Vetrivel A | Data Scientist & ML Engineer';
+  const desc = description || 'Data Science student specializing in Machine Learning, NLP, Data Engineering, Analytics, and scalable data systems.';
 
-  useEffect(() => {
-    // Update Title
-    const formattedTitle = title ? `${title} | Vetrivel A` : 'Vetrivel A | Data Scientist & ML Engineer';
-    document.title = formattedTitle;
+  const isArticle = type === 'article';
+  const ogType = isArticle ? 'article' : 'website';
 
-    // Helper to update meta tags
-    const setMeta = (name, content, property = false) => {
-      const attr = property ? 'property' : 'name';
-      let element = document.querySelector(`meta[${attr}="${name}"]`);
-      if (!element) {
-        element = document.createElement('meta');
-        element.setAttribute(attr, name);
-        document.head.appendChild(element);
-      }
-      element.setAttribute('content', content);
+  let schema = {};
+
+  const personSchema = {
+    "@type": "Person",
+    "name": "Vetrivel A",
+    "url": "https://vetrivel-a.dev",
+    "jobTitle": "Data Scientist & ML Engineer",
+    "sameAs": [
+      "https://linkedin.com/in/vetrivel-a",
+      "https://github.com/vetrivel-28"
+    ]
+  };
+
+  if (type === 'website') {
+    schema = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "url": "https://vetrivel-a.dev",
+          "name": "Vetrivel A Portfolio",
+          "author": personSchema
+        },
+        {
+          "@context": "https://schema.org",
+          ...personSchema
+        }
+      ]
     };
+  } else if (type === 'profile') {
+    schema = {
+      "@context": "https://schema.org",
+      ...personSchema
+    };
+  } else if (type === 'project' && schemaData) {
+    schema = {
+      "@context": "https://schema.org",
+      "@type": ["CreativeWork", "SoftwareSourceCode"],
+      "name": schemaData.title || formattedTitle,
+      "description": schemaData.businessObjective || desc,
+      "author": personSchema,
+      "programmingLanguage": schemaData.tech ? schemaData.tech.join(', ') : undefined,
+      "codeRepository": schemaData.links?.repo,
+      "url": canonicalUrl
+    };
+  } else if (type === 'article' && schemaData) {
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": schemaData.title || formattedTitle,
+      "author": personSchema,
+      "datePublished": schemaData.date,
+      "description": desc,
+      "url": canonicalUrl
+    };
+  } else {
+    // Fallback
+    schema = {
+      "@context": "https://schema.org",
+      ...personSchema
+    };
+  }
 
-    // Update Meta Descriptions
-    const desc = description || 'Building machine learning systems, analytics workflows, and scalable data pipelines to transform raw information into business intelligence.';
-    setMeta('description', desc);
-
-    // Update Open Graph tags
-    setMeta('og:title', formattedTitle, true);
-    setMeta('og:description', desc, true);
-    setMeta('og:url', canonicalUrl, true);
-    setMeta('og:type', 'website', true);
-    setMeta('og:image', image, true);
-
-    // Update Twitter Cards
-    setMeta('twitter:card', 'summary_large_image');
-    setMeta('twitter:title', formattedTitle);
-    setMeta('twitter:description', desc);
-    setMeta('twitter:image', image);
-
-    // Canonical
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute('href', canonicalUrl);
-
-  }, [title, description, image, canonicalUrl]);
-
-  return null;
+  return (
+    <Helmet>
+      <title>{formattedTitle}</title>
+      <meta name="description" content={desc} />
+      <link rel="canonical" href={canonicalUrl} />
+      
+      {/* Open Graph */}
+      <meta property="og:type" content={ogType} />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:title" content={formattedTitle} />
+      <meta property="og:description" content={desc} />
+      <meta property="og:image" content={`https://vetrivel-a.dev${image}`} />
+      <meta property="og:site_name" content="Vetrivel A Portfolio" />
+      
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@vetrivel-a" />
+      <meta name="twitter:creator" content="@vetrivel-a" />
+      <meta name="twitter:url" content={canonicalUrl} />
+      <meta name="twitter:title" content={formattedTitle} />
+      <meta name="twitter:description" content={desc} />
+      <meta name="twitter:image" content={`https://vetrivel-a.dev${image}`} />
+      
+      {/* Schema.org */}
+      <script type="application/ld+json">
+        {JSON.stringify(schema)}
+      </script>
+    </Helmet>
+  );
 }

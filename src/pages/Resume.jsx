@@ -30,7 +30,11 @@ export default function Resume() {
       opacity: mounted ? 1 : 0,
       transition: 'opacity 0.5s ease'
     }}>
-      <SEO title="Resume | Recruiter Summary" description="Vetrivel A - Data Scientist & ML Engineer Resume. 30-second recruiter summary of skills, projects, and achievements." />
+      <SEO 
+        title="Resume | Recruiter Summary" 
+        description="Vetrivel A - Data Scientist & ML Engineer Resume. 30-second recruiter summary of skills, projects, and achievements." 
+        type="profile"
+      />
       
       <div className="glass-card" style={{
         maxWidth: '800px',

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavigationContext } from '../App';
+import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 
 const output = [
   { type: 'text', text: 'Connecting to GitHub...', delay: 200 },
@@ -46,29 +48,45 @@ export default function Profiles() {
   return (
     <div className="page-content fade-in" style={{ 
       minHeight: '100vh',
+      background: '#050911',
       display: 'flex',
       flexDirection: 'column',
+      alignItems: 'center',
       justifyContent: 'center',
-      padding: '80px 40px',
-      maxWidth: '720px', 
-      margin: '0 auto' 
+      padding: '80px 24px',
     }}>
-      <button 
-        className="clickable back-btn" style={{display: "none"}}
-        onClick={() => navigate('/observatory')}
-        style={{
-          background: 'transparent',
-          border: 'none',
-          color: 'var(--text-muted)',
-          fontSize: '1rem',
-          marginBottom: '24px',
-          alignSelf: 'flex-start',
-          display: 'block',
-          textAlign: 'left'
-        }}
-      >
-        ← Back to Observatory
-      </button>
+      <SEO 
+        title="Professional Profiles | Vetrivel A" 
+        description="Official links to GitHub, LinkedIn, LeetCode, and Medium profiles."
+        type="profile"
+      />
+
+      <div style={{ width: '100%', maxWidth: '760px', marginBottom: '0' }}>
+        <Breadcrumb items={[
+          {label: 'Home', page: 'home'},
+          {label: 'Observatory', page: 'observatory'},
+          {label: 'Profiles', page: null}
+        ]} />
+        <button 
+          className="clickable back-btn hover-lift"
+          onClick={() => navigate('/observatory')}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: 'var(--text-muted)',
+            fontSize: '1rem',
+            marginBottom: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            cursor: 'pointer',
+            fontFamily: 'Space Mono',
+            padding: '0'
+          }}
+        >
+          <span>←</span> Back to Observatory
+        </button>
+      </div>
 
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <h1 className="page-title" style={{ fontSize: '2.5rem', color: 'white', marginBottom: '10px' }}>Profiles</h1>
@@ -77,11 +95,14 @@ export default function Profiles() {
 
       {/* Terminal Window */}
       <div className="profiles-terminal" style={{
-        background: 'var(--card-bg)',
-        border: '1px solid var(--border)',
-        borderRadius: '8px',
+        width: '100%',
+        maxWidth: '760px',
+        background: '#0a1628',
+        border: '1px solid rgba(0,212,255,0.2)',
+        borderRadius: '10px',
         overflow: 'hidden',
-        boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+        boxShadow: '0 0 60px rgba(0,212,255,0.06)',
+        margin: '0 auto',
         fontFamily: 'Space Mono, monospace'
       }}>
         {/* Terminal Header */}

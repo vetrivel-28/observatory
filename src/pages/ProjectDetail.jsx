@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { projects } from '../data/projects';
 import { NavigationContext } from '../App';
 import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 import ReadingProgressBar from '../components/ReadingProgressBar';
 import ProjectMedia from '../components/ProjectMedia';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
@@ -27,7 +28,6 @@ export default function ProjectDetail() {
   const currentIndex = projects.findIndex(p => p.slug === slug);
   const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
   const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
-  const relatedProjects = projects.filter(p => p.slug !== slug).slice(0, 2);
 
   if (!project) {
     return (
@@ -52,8 +52,16 @@ export default function ProjectDetail() {
         title={project.title} 
         description={project.desc} 
         image={project.media?.[0]?.src}
+        type="project"
+        schemaData={project}
       />
       <ReadingProgressBar />
+      <Breadcrumb items={[
+        {label: 'Home', page: 'home'},
+        {label: 'Observatory', page: 'observatory'},
+        {label: 'Projects', page: 'projects'},
+        {label: project.title, page: null}
+      ]} />
 
       <button 
         className="clickable hover-lift"
@@ -111,33 +119,35 @@ export default function ProjectDetail() {
           <ProjectMedia src={project.media[0].src} caption={project.media[0].caption} alt={project.title} />
         )}
 
-        {/* Deep Dive Sections */}
+        {/* 13-Point Professional Engineering Case Study Framework */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', marginTop: '40px' }}>
           
           <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>Overview</h2>
-            <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.desc}</p>
+            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>1. Problem Statement</h2>
+            <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.problemStatement || project.desc}</p>
           </section>
 
           <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>Architecture</h2>
-            <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.architecture}</p>
+            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>2. Business Objective</h2>
+            <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.businessObjective}</p>
           </section>
 
           <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>Workflow</h2>
-            <div style={{ background: 'rgba(0,0,0,0.3)', padding: '20px', borderRadius: '8px', border: '1px solid var(--border)' }}>
-              {project.workflow.split('\n').map((step, i) => (
-                <div key={i} style={{ color: 'var(--text-primary)', marginBottom: '12px', fontFamily: 'Space Mono', fontSize: '0.95rem' }}>
-                  {step}
-                </div>
-              ))}
+            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>3. Dataset / Input Sources</h2>
+            <div style={{ background: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '8px', border: '1px solid var(--border)' }}>
+              <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.05rem', margin: 0 }}>{project.dataset}</p>
             </div>
           </section>
 
           <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>Tech Stack</h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>4. Solution Architecture</h2>
+            <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.architecture}</p>
+          </section>
+
+          <section>
+            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>5. Technology Selection Rationale</h2>
+            <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.techSelection}</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '16px' }}>
               {project.tech.map(t => (
                 <span key={t} className="hover-lift" style={{
                   background: 'rgba(124,58,237,0.15)',
@@ -153,7 +163,18 @@ export default function ProjectDetail() {
           </section>
 
           <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>Challenges & Lessons</h2>
+            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>6. Workflow Diagram</h2>
+            <div style={{ background: 'rgba(0,0,0,0.3)', padding: '24px', borderRadius: '8px', border: '1px solid var(--border)' }}>
+              {project.workflow.split('\n').map((step, i) => (
+                <div key={i} style={{ color: 'var(--text-primary)', marginBottom: '12px', fontFamily: 'Space Mono', fontSize: '0.95rem' }}>
+                  {step}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>7 & 8. Challenges Faced & Lessons Learned</h2>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }}>
               <div style={{ background: 'rgba(245, 158, 11, 0.05)', borderLeft: '3px solid var(--accent-amber)', padding: '20px', borderRadius: '0 8px 8px 0' }}>
                 <h3 style={{ color: 'var(--accent-amber)', fontSize: '1rem', marginBottom: '8px', fontFamily: 'Space Mono' }}>Challenges</h3>
@@ -168,35 +189,70 @@ export default function ProjectDetail() {
 
           <section>
             <div style={{ borderLeft: `3px solid var(--accent-cyan)`, background: 'rgba(0,212,255,0.05)', padding: '24px', borderRadius: '0 8px 8px 0' }}>
-              <h3 style={{ color: 'white', fontSize: '1.2rem', marginBottom: '12px', fontFamily: 'Space Mono' }}>Business Impact & Results</h3>
+              <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '8px' }}>9 & 10. Results & Measurable Impact</h2>
               <p style={{ color: 'var(--text-primary)', fontSize: '1.1rem', lineHeight: '1.7', marginBottom: '16px' }}>
                 {project.results}
               </p>
-              <div style={{ fontStyle: 'italic', color: 'var(--accent-cyan)', fontSize: '1rem', fontWeight: 'bold' }}>
-                " {project.achievement} "
+              <div style={{ fontStyle: 'italic', color: 'var(--accent-cyan)', fontSize: '1.1rem', fontWeight: 'bold' }}>
+                " {project.measurableImpact || project.achievement} "
               </div>
             </div>
           </section>
 
         </div>
 
-        <div style={{ marginTop: '40px', display: 'flex', gap: '16px' }}>
-          <button 
-            className="clickable hover-glow-purple"
-            onClick={() => {
-              trackEvent(AnalyticsEvents.GITHUB_CLICK, { project: project.slug });
-              window.open("https://github.com/vetrivel-28", "_blank");
-            }}
-            style={{
-              padding: '12px 24px', border: `1px solid ${project.color}`,
-              borderRadius: '6px', background: 'transparent',
-              color: project.color, fontSize: '14px',
-              fontFamily: 'Space Mono, monospace', cursor: 'pointer',
-              transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '8px'
-            }}
-          >
-            &lt;&gt; View Code Repository
-          </button>
+        {/* 11, 12, 13. Project Links */}
+        <div style={{ marginTop: '50px', display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+          {project.links?.repository && (
+            <button 
+              className="clickable hover-glow-purple"
+              onClick={() => {
+                trackEvent(AnalyticsEvents.GITHUB_CLICK, { project: project.slug });
+                window.open(project.links.repository, "_blank");
+              }}
+              style={{
+                padding: '12px 24px', border: `1px solid ${project.color}`,
+                borderRadius: '6px', background: 'transparent',
+                color: project.color, fontSize: '14px',
+                fontFamily: 'Space Mono, monospace', cursor: 'pointer',
+                transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '8px'
+              }}
+            >
+              &lt;&gt; View Code Repository
+            </button>
+          )}
+          
+          {project.links?.article && (
+            <button 
+              className="clickable hover-lift"
+              onClick={() => window.open(project.links.article, "_blank")}
+              style={{
+                padding: '12px 24px', border: `1px solid rgba(255,255,255,0.2)`,
+                borderRadius: '6px', background: 'rgba(255,255,255,0.05)',
+                color: '#e8eef5', fontSize: '14px',
+                fontFamily: 'Space Mono, monospace', cursor: 'pointer',
+                transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '8px'
+              }}
+            >
+              📝 View Article
+            </button>
+          )}
+
+          {project.links?.demo && (
+            <button 
+              className="clickable hover-lift"
+              onClick={() => window.open(project.links.demo, "_blank")}
+              style={{
+                padding: '12px 24px', border: `1px solid rgba(255,255,255,0.2)`,
+                borderRadius: '6px', background: 'transparent',
+                color: '#8892a4', fontSize: '14px',
+                fontFamily: 'Space Mono, monospace', cursor: 'pointer',
+                transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '8px'
+              }}
+            >
+              ↗ Live Demo
+            </button>
+          )}
         </div>
       </div>
 
@@ -209,6 +265,8 @@ export default function ProjectDetail() {
             <div 
               className="glass-card hover-lift clickable"
               onClick={() => navigate(`/observatory/projects/${prevProject.slug}`)}
+              role="button"
+              tabIndex={0}
               style={{ padding: '24px', cursor: 'pointer', textAlign: 'left' }}
             >
               <div style={{ color: 'var(--text-muted)', fontSize: '12px', fontFamily: 'Space Mono', marginBottom: '8px' }}>← Previous Project</div>

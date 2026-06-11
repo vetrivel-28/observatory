@@ -2,62 +2,79 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://vetrivel-a.dev/</loc>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://vetrivel-a.dev/resume</loc>
+    <loc>https://vetrivel-a.dev/observatory</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://vetrivel-a.dev/observatory</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://vetrivel-a.dev/observatory/projects</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vetrivel-a.dev/observatory/projects/website-classifier</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://vetrivel-a.dev/observatory/projects/product-market-analysis</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://vetrivel-a.dev/observatory/projects/women-safety-sos</loc>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://vetrivel-a.dev/observatory/skills</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://vetrivel-a.dev/observatory/skills/machine-learning</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://vetrivel-a.dev/observatory/skills/data-engineering</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://vetrivel-a.dev/observatory/skills/software-dev</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://vetrivel-a.dev/observatory/skills/analytics</loc>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://vetrivel-a.dev/observatory/experience</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://vetrivel-a.dev/observatory/achievements</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://vetrivel-a.dev/observatory/contact</loc>
+    <loc>https://vetrivel-a.dev/observatory/profiles</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vetrivel-a.dev/resume</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <!-- Dynamic Project Routes -->
+  <url>
+    <loc>https://vetrivel-a.dev/observatory/projects/website-classifier</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://vetrivel-a.dev/observatory/projects/product-market-analysis</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://vetrivel-a.dev/observatory/projects/women-safety-sos</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Dynamic Skill Routes -->
+  <url>
+    <loc>https://vetrivel-a.dev/observatory/skills/machine-learning</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://vetrivel-a.dev/observatory/skills/data-engineering</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://vetrivel-a.dev/observatory/skills/software-dev</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://vetrivel-a.dev/observatory/skills/analytics</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

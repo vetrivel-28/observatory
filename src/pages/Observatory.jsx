@@ -1,5 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { NavigationContext } from '../App';
+import { projects } from '../data/projects';
+import SEO from '../components/SEO';
 
 const SECTIONS = [
   {
@@ -16,8 +18,8 @@ const SECTIONS = [
   {
     key: 'skills',
     icon: '◈',
-    cmd: 'cat skills.json | grep proficiency',
-    output: 'ML 87%  ·  DataEng 92%  ·  Software 76%',
+    cmd: 'cat skills.json | grep level',
+    output: 'ML (Adv)  ·  DataEng (Int)  ·  Software (App)',
     chips: ['Python', 'SQL', 'Scikit-Learn', 'TensorFlow', 'React'],
     footerLabel: '4 domains  ·  radar chart inside',
     accent: '#00d4ff',
@@ -74,10 +76,16 @@ export default function Observatory() {
   const { navigate } = useContext(NavigationContext);
   const [hoveredKey, setHoveredKey] = useState(null);
   const [bootLines, setBootLines] = useState([]);
-  const [booted, setBooted] = useState(false);
+  const [booted, setBooted] = useState(() => !!sessionStorage.getItem('obsBooted'));
 
   // Boot sequence animation
   useEffect(() => {
+    const hasBooted = sessionStorage.getItem('obsBooted');
+    if (hasBooted) {
+      setBooted(true);
+      return;
+    }
+
     const lines = [
       '> Initializing data_observatory.exe...',
       '> Loading portfolio modules [██████████] 100%',
@@ -91,14 +99,24 @@ export default function Observatory() {
         i++;
       } else {
         clearInterval(interval);
-        setTimeout(() => setBooted(true), 400);
+        setTimeout(() => {
+          setBooted(true);
+          sessionStorage.setItem('obsBooted', 'true');
+        }, 300);
       }
-    }, 350);
+    }, 250);
     return () => clearInterval(interval);
   }, []);
 
+  const featuredProject = projects[0];
+
   return (
     <>
+      <SEO 
+        title="Observatory Dashboard | Vetrivel A" 
+        description="High-level overview of Vetrivel A's systems, metrics, and technical capabilities."
+        type="website"
+      />
       {/* Boot sequence OR header after boot */}
       {!booted ? (
         <div style={{
@@ -114,7 +132,7 @@ export default function Observatory() {
               fontSize: '12px',
               color: i === bootLines.length - 1 ? '#00d4ff' : '#4a5568',
               marginBottom: '6px',
-              animation: 'fadeIn 0.3s ease forwards',
+              animation: 'fadeIn 0.2s ease forwards',
             }}>
               {line}
             </div>
@@ -138,6 +156,8 @@ export default function Observatory() {
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: '12px',
+          opacity: 0,
+          animation: 'fadeInUp 0.6s ease forwards',
         }}>
           <div>
             <div style={{ fontSize: '11px', color: '#4a5568', marginBottom: '4px' }}>
@@ -154,7 +174,7 @@ export default function Observatory() {
             {[
               { val: '150+', label: 'LeetCode Solved', color: '#00d4ff', icon: '</>' },
               { val: '8.5', label: 'CGPA / 10.0', color: '#fbbf24', icon: '★' },
-              { val: '3', label: 'Projects Built', color: '#a855f7', icon: '⬡' },
+              { val: '3', label: 'Systems Deployed', color: '#a855f7', icon: '⬡' },
             ].map(s => (
               <div key={s.label} style={{
                 display: 'flex', alignItems: 'center', gap: '8px',
@@ -184,15 +204,70 @@ export default function Observatory() {
         </div>
       )}
 
+      {/* Recruiter / Quick Links Banner */}
+      {booted && (
+        <div style={{
+          display: 'flex',
+          gap: '20px',
+          marginBottom: '32px',
+          flexWrap: 'wrap',
+        }}>
+          {/* Featured Project Quick Card */}
+          <div 
+            className="glass-card hover-lift clickable"
+            onClick={() => navigate(`/observatory/projects/${featuredProject.slug}`)}
+            role="button"
+            tabIndex={0}
+            style={{ flex: '1 1 300px', padding: '20px', borderRadius: '8px', borderLeft: `4px solid ${featuredProject.color}`, opacity: 0, animation: 'fadeInUp 0.6s ease forwards', animationDelay: '0.1s' }}
+          >
+            <div style={{ color: 'var(--text-muted)', fontSize: '10px', fontFamily: 'Space Mono', textTransform: 'uppercase', marginBottom: '8px' }}>Featured Project</div>
+            <div style={{ color: 'white', fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '4px' }}>{featuredProject.title}</div>
+            <div style={{ color: featuredProject.color, fontSize: '0.9rem', fontFamily: 'Space Mono', marginBottom: '12px' }}>{featuredProject.metric}</div>
+            <div style={{ color: 'var(--text-primary)', fontSize: '0.9rem', lineHeight: '1.5' }}>{featuredProject.businessObjective}</div>
+          </div>
+
+          {/* Action Links */}
+          <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div 
+              className="glass-card hover-lift clickable"
+              onClick={() => navigate('/resume')}
+              role="button"
+              tabIndex={0}
+              style={{ flex: 1, padding: '20px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: 0, animation: 'fadeInUp 0.6s ease forwards', animationDelay: '0.15s' }}
+            >
+              <div>
+                <div style={{ color: 'white', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px' }}>View Resume</div>
+                <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Download full PDF curriculum vitae</div>
+              </div>
+              <span style={{ fontSize: '1.5rem' }}>📄</span>
+            </div>
+            
+            <div 
+              className="glass-card hover-lift clickable"
+              onClick={() => window.open('https://medium.com/@vetrivel-a/enterprise-website-classifier', '_blank')}
+              role="button"
+              tabIndex={0}
+              style={{ flex: 1, padding: '20px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: 0, animation: 'fadeInUp 0.6s ease forwards', animationDelay: '0.2s' }}
+            >
+              <div>
+                <div style={{ color: 'white', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px' }}>Latest Article</div>
+                <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Building a high-performance URL classifier with Random Forests</div>
+              </div>
+              <span style={{ fontSize: '1.5rem' }}>📝</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── Section cards — responsive grid ── */}
       {booted && (
         <div className="obs-grid" style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '20px',
-          marginBottom: '20px',
+          marginBottom: '40px',
         }}>
-          {SECTIONS.map((section) => {
+          {SECTIONS.map((section, index) => {
             const isHovered = hoveredKey === section.key;
             return (
               <div
@@ -200,6 +275,8 @@ export default function Observatory() {
                 onClick={() => navigate(`/observatory/${section.key}`)}
                 onMouseEnter={() => setHoveredKey(section.key)}
                 onMouseLeave={() => setHoveredKey(null)}
+                role="button"
+                tabIndex={0}
                 style={{
                   position: 'relative',
                   background: '#0a1628',
@@ -214,6 +291,9 @@ export default function Observatory() {
                   display: 'flex',
                   flexDirection: 'column',
                   minHeight: '180px',
+                  opacity: 0,
+                  animation: 'fadeInUp 0.6s ease forwards',
+                  animationDelay: `${0.25 + (index * 0.1)}s`
                 }}
               >
 

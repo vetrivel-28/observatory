@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavigationContext } from '../App';
+import SEO from '../components/SEO';
+import { projects } from '../data/projects';
 
 export default function Hero() {
   const { navigate } = useContext(NavigationContext);
-  // Use useMemo to avoid dependency warnings if not defining roles outside
-  const roles = ['Machine Learning', 'Data Engineer', 'Problem Solver', 'Python Developer'];
+  // Recruiter-focused roles
+  const roles = ['Machine Learning Engineer', 'Data Engineer', 'AI Solutions Architect', 'Data Scientist'];
   const [roleIndex, setRoleIndex] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -37,22 +39,45 @@ export default function Hero() {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
+      padding: '80px 20px 40px',
       fontFamily: 'Space Mono, monospace',
       position: 'relative',
       overflow: 'hidden',
-      padding: '20px'
     }}>
+      <SEO 
+        title="Vetrivel A | Data Science & Machine Learning Portfolio" 
+        description="Data Science student specializing in Machine Learning, NLP, Data Engineering, Analytics, and scalable systems."
+        type="website"
+      />
       
       {/* Top label */}
       <div style={{
-        fontSize: '10px', color: '#00d4ff',
-        letterSpacing: '0.35em', marginBottom: '20px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '8px',
+        background: 'rgba(0,255,136,0.08)',
+        border: '1px solid rgba(0,255,136,0.3)',
+        borderRadius: '20px',
+        padding: '6px 16px',
+        marginBottom: '20px',
       }}>
-        DATA SCIENCE STUDENT
+        <div style={{
+          width: '7px', height: '7px', borderRadius: '50%',
+          background: '#00ff88',
+          animation: 'pulse 2s ease-in-out infinite',
+        }} />
+        <span style={{
+          fontFamily: 'Space Mono, monospace',
+          fontSize: '10px',
+          color: '#00ff88',
+          letterSpacing: '0.2em',
+          fontWeight: '700',
+        }}>
+          AVAILABLE FOR HIRE
+        </span>
       </div>
 
-      {/* Name — big terminal style */}
+      {/* Name */}
       <h1 style={{
         fontSize: 'clamp(2.2rem, 6vw, 5rem)',
         fontWeight: '700',
@@ -91,25 +116,25 @@ export default function Hero() {
 
       {/* Bio */}
       <p style={{
-        maxWidth: '100%',
+        maxWidth: '600px',
         padding: '0 8px',
         textAlign: 'center',
         color: '#8892a4',
-        fontSize: '14px',
+        fontSize: '15px',
         lineHeight: '1.7',
-        marginBottom: '36px',
+        marginBottom: '40px',
         fontFamily: 'DM Sans, sans-serif',
       }}>
-        Building machine learning systems, analytics workflows, and scalable
-        data pipelines to transform raw information into business intelligence.
+        Delivering end-to-end machine learning systems and scalable data pipelines.
+        Proven ability to translate complex data into measurable business impact.
       </p>
 
-      {/* CTA Buttons */}
-      <div className="hero-cta-buttons" style={{ display: 'flex', gap: '16px', marginBottom: '52px', flexWrap: 'wrap', justifyContent: 'center' }}>
+      {/* 1-Click Access Buttons for Recruiters */}
+      <div className="hero-cta-buttons" style={{ display: 'flex', gap: '12px', marginBottom: '52px', flexWrap: 'wrap', justifyContent: 'center' }}>
         <button
-          onClick={() => navigate('/observatory')}
+          onClick={() => navigate('/resume')}
           style={{
-            padding: '12px 28px',
+            padding: '11px 28px',
             background: 'transparent',
             border: '1px solid #00d4ff',
             borderRadius: '6px',
@@ -117,69 +142,75 @@ export default function Hero() {
             fontFamily: 'Space Mono, monospace',
             fontSize: '13px',
             cursor: 'pointer',
+            letterSpacing: '0.06em',
             transition: 'all 0.25s ease',
-            letterSpacing: '0.05em',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
           }}
           onMouseEnter={e => {
             e.currentTarget.style.background = 'rgba(0,212,255,0.1)';
-            e.currentTarget.style.boxShadow = '0 0 20px rgba(0,212,255,0.25)';
+            e.currentTarget.style.boxShadow = '0 0 20px rgba(0,212,255,0.2)';
           }}
           onMouseLeave={e => {
             e.currentTarget.style.background = 'transparent';
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          → Explore Observatory
+          ⬡ View Resume
         </button>
         <button
-          onClick={() => navigate('/resume')}
+          onClick={() => window.open('https://linkedin.com/in/vetrivel-a', '_blank')}
           style={{
-            padding: '12px 28px',
+            padding: '11px 28px',
             background: 'transparent',
-            border: '1px solid rgba(255,255,255,0.15)',
+            border: '1px solid #a855f7',
             borderRadius: '6px',
-            color: '#8892a4',
+            color: '#a855f7',
             fontFamily: 'Space Mono, monospace',
             fontSize: '13px',
             cursor: 'pointer',
+            letterSpacing: '0.06em',
             transition: 'all 0.25s ease',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
           }}
           onMouseEnter={e => {
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
-            e.currentTarget.style.color = '#e8eef5';
+            e.currentTarget.style.background = 'rgba(168,85,247,0.1)';
+            e.currentTarget.style.boxShadow = '0 0 20px rgba(168,85,247,0.2)';
           }}
           onMouseLeave={e => {
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
-            e.currentTarget.style.color = '#8892a4';
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          ⬡ Resume
+          ⟁ LinkedIn Profile
         </button>
       </div>
 
-      {/* Stats bar — terminal cards */}
+      {/* Stats bar */}
       <div className="hero-stats" style={{
         display: 'flex', gap: '20px',
-        justifyContent: 'center', marginBottom: '52px',
+        justifyContent: 'center', marginBottom: '60px',
         flexWrap: 'wrap'
       }}>
         {[
           { value: '150+', label: 'LEETCODE_SOLVED', accent: '#00d4ff', viz: 'bars' },
           { value: '8.5', label: 'CGPA_SCORE', accent: '#fbbf24', viz: 'ring' },
-          { value: '3', label: 'PROJECTS_BUILT', accent: '#a855f7', viz: 'dots' },
+          { value: '3', label: 'SYSTEMS_DEPLOYED', accent: '#a855f7', viz: 'dots' },
         ].map((stat, i) => (
           <div key={i} style={{
             background: '#0a1628',
             border: `1px solid ${stat.accent}25`,
             borderRadius: '8px',
             overflow: 'hidden',
-            minWidth: '130px',
+            minWidth: '140px',
             transition: 'box-shadow 0.25s',
           }}
           onMouseEnter={e => e.currentTarget.style.boxShadow = `0 0 20px ${stat.accent}20`}
           onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
           >
-            {/* Stat card title bar */}
             <div style={{
               background: '#1a2332',
               borderBottom: `1px solid ${stat.accent}20`,
@@ -191,53 +222,6 @@ export default function Hero() {
               <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#28c840' }} />
             </div>
             <div style={{ padding: '14px 16px', textAlign: 'center' }}>
-              {/* Visualization per stat */}
-              {stat.viz === 'bars' && (
-                <div style={{
-                  display: 'flex', gap: '2px',
-                  alignItems: 'flex-end', justifyContent: 'center',
-                  height: '24px', marginBottom: '8px',
-                }}>
-                  {[40, 60, 80, 100, 70].map((h, j) => (
-                    <div key={j} style={{
-                      width: '5px', height: `${h}%`,
-                      background: stat.accent,
-                      borderRadius: '1px',
-                      animation: `barGrow 0.5s ease forwards`,
-                      animationDelay: `${j * 80}ms`,
-                      transformOrigin: 'bottom',
-                    }} />
-                  ))}
-                </div>
-              )}
-              {stat.viz === 'ring' && (
-                <svg width="32" height="32" style={{ display: 'block', margin: '0 auto 8px' }}>
-                  <circle cx="16" cy="16" r="12" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3" />
-                  <circle cx="16" cy="16" r="12" fill="none"
-                    stroke={stat.accent} strokeWidth="3"
-                    strokeDasharray={`${(8.5/10)*75.4} 75.4`}
-                    strokeLinecap="round"
-                    transform="rotate(-90 16 16)"
-                    style={{ transition: 'stroke-dasharray 1s ease' }}
-                  />
-                </svg>
-              )}
-              {stat.viz === 'dots' && (
-                <div style={{
-                  display: 'flex', gap: '4px',
-                  justifyContent: 'center', marginBottom: '8px',
-                }}>
-                  {[0,1,2].map(j => (
-                    <div key={j} style={{
-                      width: '10px', height: '10px',
-                      background: stat.accent,
-                      clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)',
-                      animation: `hexGlow 0.4s ease forwards`,
-                      animationDelay: `${j * 150}ms`,
-                    }} />
-                  ))}
-                </div>
-              )}
               <div style={{
                 fontFamily: 'Space Mono', fontSize: '1.5rem',
                 fontWeight: '700', color: '#e8eef5', marginBottom: '4px',
@@ -255,105 +239,137 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Bottom CTA — terminal theme */}
-      <div className="hero-cta-card" style={{
-        textAlign: 'center',
-        background: '#0a1628',
-        border: '1px solid rgba(0,212,255,0.1)',
-        borderRadius: '12px',
-        padding: '28px 48px',
-        maxWidth: '500px',
-      }}>
+      <button
+        onClick={() => navigate('/observatory')}
+        style={{
+          padding: '12px 32px',
+          background: 'transparent',
+          border: '1px solid rgba(255,255,255,0.2)',
+          borderRadius: '6px',
+          color: '#8892a4',
+          fontFamily: 'Space Mono, monospace',
+          fontSize: '13px',
+          cursor: 'pointer',
+          letterSpacing: '0.08em',
+          transition: 'all 0.25s ease',
+          marginBottom: '60px',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.borderColor = '#00d4ff';
+          e.currentTarget.style.color = '#00d4ff';
+          e.currentTarget.style.boxShadow = '0 0 16px rgba(0,212,255,0.15)';
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+          e.currentTarget.style.color = '#8892a4';
+          e.currentTarget.style.boxShadow = 'none';
+        }}
+      >
+        → Open Technical Observatory
+      </button>
+
+      {/* Featured Project Section */}
+      <div style={{ maxWidth: '760px', margin: '48px auto 0', width: '100%', padding: '0 20px' }}>
+        
+        {/* Label */}
         <div style={{
-          fontFamily: 'Space Mono', fontSize: '1.2rem',
-          fontWeight: '700', color: '#e8eef5', marginBottom: '8px',
+          fontFamily: 'Space Mono', fontSize: '9px',
+          color: '#4a5568', letterSpacing: '0.25em',
+          textAlign: 'center', marginBottom: '16px',
+          textTransform: 'uppercase',
         }}>
-          Available for Internships and Data Science Opportunities
+          FEATURED_PROJECT
         </div>
-        <div style={{
-          fontFamily: 'DM Sans, sans-serif', fontSize: '14px',
-          color: '#8892a4', marginBottom: '20px',
-        }}>
-          Actively seeking roles where I can build scalable ML models and data pipelines.
-        </div>
-        <button
-          onClick={() => navigate('/resume')}
+
+        {/* Terminal card */}
+        <div
           style={{
-            padding: '11px 28px',
-            background: 'var(--accent-cyan)',
-            border: 'none',
-            borderRadius: '6px',
-            color: '#000',
-            fontWeight: 'bold',
-            fontFamily: 'Space Mono, monospace',
-            fontSize: '13px',
-            cursor: 'pointer',
-            transition: 'all 0.25s',
-            marginBottom: '20px',
-            width: '100%',
+            background: '#0a1628',
+            border: '1px solid rgba(255,255,255,0.07)',
+            borderLeft: '4px solid #a855f7',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            transition: 'box-shadow 0.25s',
           }}
-          className="hover-lift"
+          onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 40px rgba(168,85,247,0.12)'}
+          onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
         >
-          📄 View / Download Resume
-        </button>
-        {/* Contact boxes */}
-        <div className="hero-contact-boxes" style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <div
-            onClick={() => window.open('https://wa.me/91XXXXXXXXXX', '_blank')}
-            style={{
-              flex: 1, padding: '10px',
-              background: 'rgba(0,255,136,0.08)',
-              border: '1px solid rgba(0,255,136,0.25)',
-              borderRadius: '8px', cursor: 'pointer',
-              transition: 'all 0.2s',
-              display: 'flex', alignItems: 'center',
-              justifyContent: 'center', gap: '8px',
-              minWidth: '140px',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background = 'rgba(0,255,136,0.15)';
-              e.currentTarget.style.borderColor = 'rgba(0,255,136,0.5)';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background = 'rgba(0,255,136,0.08)';
-              e.currentTarget.style.borderColor = 'rgba(0,255,136,0.25)';
-            }}
-          >
-            <span style={{ fontSize: '14px' }}>📱</span>
-            <div style={{ textAlign: 'left' }}>
-              <div style={{ fontFamily: 'Space Mono', fontSize: '11px', color: '#00ff88', fontWeight: '700' }}>WhatsApp</div>
-              <div style={{ fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568' }}>Chat directly</div>
-            </div>
+          {/* macOS title bar */}
+          <div style={{
+            background: '#111d2e',
+            borderBottom: '1px solid rgba(255,255,255,0.05)',
+            padding: '7px 14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+          }}>
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5f57' }} />
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#febc2e' }} />
+            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#28c840' }} />
+            <span style={{
+              fontFamily: 'Space Mono', fontSize: '10px',
+              color: '#4a5568', marginLeft: '8px',
+            }}>
+              enterprise_website_classifier.py
+            </span>
+            <span style={{
+              marginLeft: 'auto',
+              fontFamily: 'Space Mono', fontSize: '9px',
+              color: '#a855f7',
+              background: 'rgba(168,85,247,0.12)',
+              border: '1px solid rgba(168,85,247,0.3)',
+              padding: '1px 8px', borderRadius: '3px',
+              letterSpacing: '0.08em',
+            }}>
+              MACHINE LEARNING
+            </span>
           </div>
-          <div
-            onClick={() => window.open('https://linkedin.com/in/vetrivel-a', '_blank')}
-            style={{
-              flex: 1, padding: '10px',
-              background: 'rgba(0,212,255,0.08)',
-              border: '1px solid rgba(0,212,255,0.25)',
-              borderRadius: '8px', cursor: 'pointer',
-              transition: 'all 0.2s',
-              display: 'flex', alignItems: 'center',
-              justifyContent: 'center', gap: '8px',
-              minWidth: '140px',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.background = 'rgba(0,212,255,0.15)';
-              e.currentTarget.style.borderColor = 'rgba(0,212,255,0.5)';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.background = 'rgba(0,212,255,0.08)';
-              e.currentTarget.style.borderColor = 'rgba(0,212,255,0.25)';
-            }}
-          >
-            <span style={{ fontSize: '14px' }}>💼</span>
-            <div style={{ textAlign: 'left' }}>
-              <div style={{ fontFamily: 'Space Mono', fontSize: '11px', color: '#00d4ff', fontWeight: '700' }}>LinkedIn</div>
-              <div style={{ fontFamily: 'Space Mono', fontSize: '9px', color: '#4a5568' }}>Let's connect</div>
+
+          {/* Body */}
+          <div style={{ padding: '20px 24px' }}>
+            <h3 style={{
+              fontFamily: 'Space Mono', fontSize: '1.1rem',
+              fontWeight: '700', color: '#e8eef5',
+              marginBottom: '6px',
+            }}>
+              Enterprise Website Classifier
+            </h3>
+            <div style={{
+              fontFamily: 'Space Mono', fontSize: '13px',
+              color: '#00d4ff', fontWeight: '700',
+              marginBottom: '12px',
+            }}>
+              → 87% Accuracy · 2s Response Time
             </div>
+            <p style={{
+              fontFamily: 'DM Sans, sans-serif',
+              color: '#8892a4', fontSize: '14px',
+              lineHeight: '1.65', marginBottom: '16px',
+            }}>
+              Automates URL categorization pipeline to reduce manual tagging
+              hours by 95% while maintaining accuracy above 85% with SLA of
+              under 2 seconds per request.
+            </p>
+            <button
+              onClick={() => navigate('/observatory/projects')}
+              style={{
+                padding: '8px 18px',
+                background: 'transparent',
+                border: '1px solid rgba(168,85,247,0.5)',
+                borderRadius: '5px',
+                color: '#a855f7',
+                fontFamily: 'Space Mono', fontSize: '12px',
+                cursor: 'pointer', transition: 'all 0.2s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(168,85,247,0.1)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+            >
+              View All Projects →
+            </button>
           </div>
         </div>
       </div>
+
     </div>
   );
 }

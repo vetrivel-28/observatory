@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { NavigationContext } from '../App';
+import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 
 export default function Contact() {
   const { navigate } = useContext(NavigationContext);
@@ -28,20 +30,37 @@ export default function Contact() {
       padding: '60px 24px',
       fontFamily: 'Space Mono, monospace',
     }}>
-      <button
-        className="clickable back-btn" style={{display: "none"}}
-        onClick={() => navigate('/observatory')}
-        style={{
-          position: 'absolute', top: '24px', left: '24px',
-          background: 'none', border: 'none',
-          color: '#4a5568', fontFamily: 'Space Mono', fontSize: '13px',
-          cursor: 'pointer', transition: 'color 0.2s',
-        }}
-        onMouseEnter={e => e.currentTarget.style.color = '#00d4ff'}
-        onMouseLeave={e => e.currentTarget.style.color = '#4a5568'}
-      >
-        ← Back to Observatory
-      </button>
+      <SEO 
+        title="Contact | Vetrivel A" 
+        description="Initiate a secure transmission to my inbox."
+        type="website"
+      />
+
+      <div style={{ width: '100%', maxWidth: '640px', marginBottom: '24px' }}>
+        <Breadcrumb items={[
+          {label: 'Home', page: 'home'},
+          {label: 'Observatory', page: 'observatory'},
+          {label: 'Contact', page: null}
+        ]} />
+        <button 
+          className="clickable back-btn hover-lift"
+          onClick={() => navigate('/observatory')}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: 'var(--text-muted)',
+            fontSize: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            cursor: 'pointer',
+            fontFamily: 'Space Mono',
+            padding: '0'
+          }}
+        >
+          <span>←</span> Back to Observatory
+        </button>
+      </div>
 
       <div style={{
         fontFamily: 'Space Mono', fontSize: '10px',
