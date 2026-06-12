@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 export default function SEO({ title, description, type = 'website', image = '/og-image.png', canonicalPath, schemaData }) {
   const location = useLocation();
   const path = canonicalPath || location.pathname;
-  const canonicalUrl = `https://vetrivel-a.dev${path}`;
+  const canonicalUrl = `https://vetrivel-28.vercel.app${path}`;
   
   const formattedTitle = title || 'Vetrivel A | Data Scientist & ML Engineer';
   const desc = description || 'Data Science student specializing in Machine Learning, NLP, Data Engineering, Analytics, and scalable data systems.';
@@ -18,10 +18,10 @@ export default function SEO({ title, description, type = 'website', image = '/og
   const personSchema = {
     "@type": "Person",
     "name": "Vetrivel A",
-    "url": "https://vetrivel-a.dev",
+    "url": "https://vetrivel-28.vercel.app",
     "jobTitle": "Data Scientist & ML Engineer",
     "sameAs": [
-      "https://linkedin.com/in/vetrivel-a",
+      "https://www.linkedin.com/in/vetrivel28",
       "https://github.com/vetrivel-28"
     ]
   };
@@ -32,7 +32,7 @@ export default function SEO({ title, description, type = 'website', image = '/og
       "@graph": [
         {
           "@type": "WebSite",
-          "url": "https://vetrivel-a.dev",
+          "url": "https://vetrivel-28.vercel.app",
           "name": "Vetrivel A Portfolio",
           "author": personSchema
         },
@@ -87,7 +87,7 @@ export default function SEO({ title, description, type = 'website', image = '/og
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={formattedTitle} />
       <meta property="og:description" content={desc} />
-      <meta property="og:image" content={`https://vetrivel-a.dev${image}`} />
+      <meta property="og:image" content={`https://vetrivel-28.vercel.app${image}`} />
       <meta property="og:site_name" content="Vetrivel A Portfolio" />
       
       {/* Twitter */}
@@ -97,7 +97,7 @@ export default function SEO({ title, description, type = 'website', image = '/og
       <meta name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={formattedTitle} />
       <meta name="twitter:description" content={desc} />
-      <meta name="twitter:image" content={`https://vetrivel-a.dev${image}`} />
+      <meta name="twitter:image" content={`https://vetrivel-28.vercel.app${image}`} />
       
       {/* Schema.org */}
       <script type="application/ld+json">

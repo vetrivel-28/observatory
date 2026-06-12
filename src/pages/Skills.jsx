@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { NavigationContext } from '../App';
 import { skills } from '../data/skills';
-import { Icons } from '../Icons';
 import SEO from '../components/SEO';
 import Breadcrumb from '../components/Breadcrumb';
 

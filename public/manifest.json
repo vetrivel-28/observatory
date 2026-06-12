@@ -1,0 +1,15 @@
+{
+  "short_name": "Vetrivel",
+  "name": "Vetrivel A | Data Scientist & ML Engineer",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#050911",
+  "display": "standalone",
+  "theme_color": "#050911"
+}

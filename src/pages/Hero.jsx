@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavigationContext } from '../App';
 import SEO from '../components/SEO';
-import { projects } from '../data/projects';
 
 export default function Hero() {
   const { navigate } = useContext(NavigationContext);
@@ -160,7 +159,7 @@ export default function Hero() {
           View Resume →
         </button>
         <button
-          onClick={() => window.open('https://linkedin.com/in/vetrivel-a', '_blank')}
+          onClick={() => window.open('https://www.linkedin.com/in/vetrivel28', '_blank')}
           style={{
             padding: '11px 28px',
             background: 'transparent',
@@ -186,6 +185,35 @@ export default function Hero() {
           }}
         >
           LinkedIn Profile →
+        </button>
+        {/* TODO: Replace YOURNUMBER with your actual WhatsApp number */}
+        <button
+          onClick={() => window.open('https://wa.me/91YOURNUMBER', '_blank')}
+          style={{
+            padding: '11px 28px',
+            background: 'transparent',
+            border: '1px solid #00ff88',
+            borderRadius: '6px',
+            color: '#00ff88',
+            fontFamily: 'Space Mono, monospace',
+            fontSize: '13px',
+            cursor: 'pointer',
+            letterSpacing: '0.06em',
+            transition: 'all 0.25s ease',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = 'rgba(0,255,136,0.1)';
+            e.currentTarget.style.boxShadow = '0 0 20px rgba(0,255,136,0.2)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
+        >
+          WhatsApp Chat →
         </button>
       </div>
 

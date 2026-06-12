@@ -8,12 +8,13 @@ const output = [
   { type: 'link', text: '✓ github.com/vetrivel-28 [OPEN SOURCE · REPOSITORIES]', url: 'https://github.com/vetrivel-28', delay: 300 },
   { type: 'text', text: '', delay: 0 },
   { type: 'text', text: 'Connecting to LinkedIn...', delay: 200 },
-  { type: 'link', text: '✓ linkedin.com/in/vetrivel-a [PROFESSIONAL · NETWORK]', url: 'https://linkedin.com/in/vetrivel-a', delay: 300 },
+  { type: 'link', text: '✓ linkedin.com/in/vetrivel28 [PROFESSIONAL · NETWORK]', url: 'https://www.linkedin.com/in/vetrivel28', delay: 300 },
   { type: 'text', text: '', delay: 0 },
   { type: 'text', text: 'Connecting to LeetCode...', delay: 200 },
-  { type: 'link', text: '✓ leetcode.com/vetrivel-a [150+ PROBLEMS · ALGORITHMS]', url: 'https://leetcode.com/vetrivel-a', delay: 300 },
+  { type: 'link', text: '✓ leetcode.com/u/vetri_028 [150+ PROBLEMS · ALGORITHMS]', url: 'https://leetcode.com/u/vetri_028/', delay: 300 },
   { type: 'text', text: '', delay: 0 },
   { type: 'text', text: 'Loading Resume...', delay: 200 },
+  // TODO: Add resume.pdf to the /public directory to make this download work
   { type: 'link', text: '✓ resume.pdf [DOWNLOAD · PDF]', url: '/resume.pdf', delay: 300 },
   { type: 'text', text: '', delay: 0 },
   { type: 'final', text: 'All systems connected.', delay: 200 }

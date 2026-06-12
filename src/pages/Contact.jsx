@@ -15,7 +15,7 @@ export default function Contact() {
     setTimeout(() => {
       setSending(false);
       setSent(true);
-      window.location.href = `mailto:vetrivel@email.com?subject=${encodeURIComponent(form.subject)}&body=${encodeURIComponent(form.message)}`;
+      window.location.href = `mailto:vetri282006@gmail.com?subject=${encodeURIComponent(form.subject)}&body=${encodeURIComponent(form.message)}`;
     }, 1500);
   };
 
@@ -303,8 +303,8 @@ export default function Contact() {
         <div style={{ padding: '16px 20px' }}>
           {[
             { cmd: 'ssh github.com/vetrivel-28', url: 'https://github.com/vetrivel-28', color: '#e8eef5' },
-            { cmd: 'ssh linkedin.com/in/vetrivel-a', url: 'https://linkedin.com/in/vetrivel-a', color: '#00d4ff' },
-            { cmd: 'curl leetcode.com/vetrivel-a', url: 'https://leetcode.com/vetrivel-a', color: '#fbbf24' },
+            { cmd: 'ssh linkedin.com/in/vetrivel28', url: 'https://www.linkedin.com/in/vetrivel28', color: '#00d4ff' },
+            { cmd: 'curl leetcode.com/u/vetri_028', url: 'https://leetcode.com/u/vetri_028/', color: '#fbbf24' },
           ].map((item, i) => (
             <div
               key={i}
