@@ -157,7 +157,7 @@ export default function Hero() {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          ⬡ View Resume
+          View Resume →
         </button>
         <button
           onClick={() => window.open('https://linkedin.com/in/vetrivel-a', '_blank')}
@@ -185,7 +185,7 @@ export default function Hero() {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          ⟁ LinkedIn Profile
+          LinkedIn Profile →
         </button>
       </div>
 
@@ -203,34 +203,36 @@ export default function Hero() {
           <div key={i} style={{
             background: '#0a1628',
             border: `1px solid ${stat.accent}25`,
+            borderTop: `2px solid ${stat.accent}`,
             borderRadius: '8px',
             overflow: 'hidden',
-            minWidth: '140px',
-            transition: 'box-shadow 0.25s',
+            minWidth: '130px',
+            transition: 'box-shadow 0.25s ease',
           }}
           onMouseEnter={e => e.currentTarget.style.boxShadow = `0 0 20px ${stat.accent}20`}
           onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
           >
             <div style={{
-              background: '#1a2332',
-              borderBottom: `1px solid ${stat.accent}20`,
-              padding: '4px 10px',
-              display: 'flex', alignItems: 'center', gap: '4px',
+              background: '#111d2e',
+              padding: '5px 10px',
+              display: 'flex', gap: '4px',
+              borderBottom: `1px solid ${stat.accent}15`,
             }}>
               <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#ff5f57' }} />
               <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#febc2e' }} />
               <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#28c840' }} />
             </div>
-            <div style={{ padding: '14px 16px', textAlign: 'center' }}>
+            <div style={{ padding: '16px', textAlign: 'center' }}>
               <div style={{
-                fontFamily: 'Space Mono', fontSize: '1.5rem',
-                fontWeight: '700', color: '#e8eef5', marginBottom: '4px',
+                fontFamily: 'Space Mono', fontSize: '2rem',
+                fontWeight: '700', color: '#e8eef5',
+                marginBottom: '6px', lineHeight: 1,
               }}>
                 {stat.value}
               </div>
               <div style={{
                 fontFamily: 'Space Mono', fontSize: '8px',
-                color: stat.accent, letterSpacing: '0.12em',
+                color: stat.accent, letterSpacing: '0.15em',
               }}>
                 {stat.label}
               </div>

@@ -396,3 +396,10 @@ input::placeholder, textarea::placeholder {
 @media (max-width: 560px) {
   .obs-grid { grid-template-columns: 1fr !important; }
 }
+
+#cur-dot, #cur-trail, #cur-ring {
+  opacity: 0 !important;
+}
+#cur-dot.visible, #cur-trail.visible, #cur-ring.visible {
+  opacity: 1 !important;
+}

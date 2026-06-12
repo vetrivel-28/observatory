@@ -31,31 +31,22 @@ function CustomCursor() {
     const trail = document.getElementById('cur-trail');
     const ring = document.getElementById('cur-ring');
 
-    let mx = 0, my = 0, tx = 0, ty = 0, rx = 0, ry = 0;
-
-    // START HIDDEN — only show after first mouse move
-    if (dot) dot.style.opacity = '0';
-    if (trail) trail.style.opacity = '0';
-    if (ring) ring.style.opacity = '0';
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+    let tx = mx, ty = my, rx = mx, ry = my;
 
     let hasMovedOnce = false;
 
     const move = (e) => {
       mx = e.clientX; my = e.clientY;
       
-      // Reveal cursor on first real mouse movement
+      if(dot) { dot.style.left = mx + 'px'; dot.style.top = my + 'px'; }
+      
       if (!hasMovedOnce) {
         hasMovedOnce = true;
-        if (dot) dot.style.opacity = '1';
-        if (trail) trail.style.opacity = '1';
-        if (ring) ring.style.opacity = '1';
-        // Add smooth transition for the reveal
-        if (dot) dot.style.transition = 'opacity 0.3s ease';
-        if (trail) trail.style.transition = 'opacity 0.3s ease';
-        if (ring) ring.style.transition = 'opacity 0.3s ease, width 0.2s, height 0.2s, border-color 0.2s';
+        if (dot) dot.classList.add('visible');
+        if (trail) trail.classList.add('visible');
+        if (ring) ring.classList.add('visible');
       }
-      
-      if(dot) { dot.style.left = mx + 'px'; dot.style.top = my + 'px'; }
     };
 
     const animate = () => {
@@ -134,19 +125,22 @@ function CustomCursor() {
         position: 'fixed', width: '4px', height: '4px',
         background: '#00d4ff', borderRadius: '50%',
         pointerEvents: 'none', zIndex: 99999,
+        left: '50%', top: '50%',
         transform: 'translate(-50%,-50%)',
         opacity: 0,
+        transition: 'opacity 0.3s ease, background 0.2s',
       }} />
 
       <div id="cur-trail" style={{
         position: 'fixed', width: '8px', height: '8px',
         background: 'transparent',
-        border: '1px solid rgba(0,212,255,0.5)',
+        border: '1px solid rgba(0,212,255,0.4)',
         borderRadius: '50%',
         pointerEvents: 'none', zIndex: 99998,
+        left: '50%', top: '50%',
         transform: 'translate(-50%,-50%)',
-        transition: 'width 0.2s, height 0.2s',
         opacity: 0,
+        transition: 'opacity 0.3s ease, width 0.2s, height 0.2s',
       }} />
 
       <div id="cur-ring" style={{
@@ -155,9 +149,10 @@ function CustomCursor() {
         border: '1px solid #00d4ff',
         borderRadius: '50%',
         pointerEvents: 'none', zIndex: 99997,
+        left: '50%', top: '50%',
         transform: 'translate(-50%,-50%)',
-        transition: 'width 0.2s, height 0.2s, border-color 0.2s, box-shadow 0.2s',
         opacity: 0,
+        transition: 'opacity 0.3s ease, width 0.2s, height 0.2s, border-color 0.2s',
       }} />
     </>
   );

@@ -78,10 +78,12 @@ export default function Achievements() {
       {/* Page title */}
       <h1 className="page-title" style={{
         fontFamily: 'Space Mono, monospace',
-        fontSize: '2.5rem',
+        fontSize: 'clamp(1.8rem, 4vw, 2.6rem)',
+        fontWeight: '700',
         color: '#e8eef5',
         textAlign: 'center',
         marginBottom: '8px',
+        letterSpacing: '-0.01em',
       }}>
         Hackathons & Awards
       </h1>
@@ -124,9 +126,8 @@ export default function Achievements() {
               style={{
                 position: 'relative',
                 display: 'flex',
-                justifyContent: isRight ? 'flex-end' : 'flex-start',
+                justifyContent: 'space-between',
                 marginBottom: '48px',
-                paddingLeft: isRight ? 0 : 0,
               }}
             >
               {/* ── Timeline node (sits exactly on center line) ── */}
@@ -179,10 +180,30 @@ export default function Achievements() {
               </div>
 
               {/* ── Card ── */}
+              {isRight && <div style={{
+                width: 'calc(50% - 48px)',
+                display: 'flex',
+                alignItems: 'flex-start',
+                paddingTop: '28px',
+                paddingRight: '24px',
+                justifyContent: 'flex-end',
+              }}>
+                <div style={{
+                  fontFamily: 'Space Mono', fontSize: '10px',
+                  color: '#1a2332',
+                  letterSpacing: '0.1em',
+                  writingMode: 'vertical-rl',
+                  textOrientation: 'mixed',
+                  userSelect: 'none',
+                }}>
+                  {item.date} · {item.role}
+                </div>
+              </div>}
+
               <div
                 className="achievement-card"
                 style={{
-                  width: 'calc(50% - 72px)',
+                  width: 'calc(50% - 48px)',
                   background: 'rgba(15, 25, 41, 0.95)',
                   border: `1px solid ${item.badgeColor}30`,
                   borderLeft: isRight
@@ -307,6 +328,26 @@ export default function Achievements() {
                   </p>
                 )}
               </div>
+
+              {!isRight && <div style={{
+                width: 'calc(50% - 48px)',
+                display: 'flex',
+                alignItems: 'flex-start',
+                paddingTop: '28px',
+                paddingLeft: '24px',
+                justifyContent: 'flex-start',
+              }}>
+                <div style={{
+                  fontFamily: 'Space Mono', fontSize: '10px',
+                  color: '#1a2332',
+                  letterSpacing: '0.1em',
+                  writingMode: 'vertical-rl',
+                  textOrientation: 'mixed',
+                  userSelect: 'none',
+                }}>
+                  {item.date} · {item.role}
+                </div>
+              </div>}
             </div>
           );
         })}

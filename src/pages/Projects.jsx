@@ -45,11 +45,11 @@ export default function Projects() {
       </button>
 
       <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-        <h1 className="page-title" style={{ fontSize: '2.5rem', color: 'white', marginBottom: '10px', fontFamily: 'Space Mono, monospace' }}>Projects</h1>
+        <h1 className="page-title" style={{ fontFamily: 'Space Mono, monospace', fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: '700', color: '#e8eef5', textAlign: 'center', marginBottom: '8px', letterSpacing: '-0.01em' }}>Projects</h1>
         <p style={{ color: 'var(--text-muted)' }}>3 production-grade systems built from concept to deployment.</p>
       </div>
 
-      <div className="projects-container" style={{ maxWidth: '820px', margin: '40px auto 0', padding: '0 24px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
+      <div className="projects-container" style={{ maxWidth: '820px', margin: '0 auto', padding: '0 24px', width: '100%', display: 'flex', flexDirection: 'column', gap: '32px' }}>
         {projects.map((p, i) => (
           <div 
             key={i} 
@@ -61,7 +61,7 @@ export default function Projects() {
               border: '1px solid var(--border)',
               borderLeft: `5px solid ${p.color}`,
               borderRadius: '8px',
-              padding: '32px',
+              overflow: 'hidden',
               opacity: mounted ? 1 : 0,
               transform: mounted ? 'translateY(0)' : 'translateY(20px)',
               transition: `all 0.6s ease ${p.delay}, transform 0.25s ease, box-shadow 0.25s ease`,
@@ -76,6 +76,38 @@ export default function Projects() {
               e.currentTarget.style.boxShadow = 'none';
             }}
           >
+            {/* Terminal title bar */}
+            <div style={{
+              background: '#111d2e',
+              borderBottom: '1px solid rgba(255,255,255,0.05)',
+              padding: '7px 14px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              marginBottom: '0',
+            }}>
+              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5f57' }} />
+              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#febc2e' }} />
+              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#28c840' }} />
+              <span style={{
+                fontFamily: 'Space Mono', fontSize: '10px',
+                color: '#4a5568', marginLeft: '8px',
+              }}>
+                {p.filename}
+              </span>
+              <span style={{
+                marginLeft: 'auto',
+                fontFamily: 'Space Mono', fontSize: '9px',
+                color: p.color,
+                background: `${p.color}15`,
+                border: `1px solid ${p.color}30`,
+                padding: '1px 8px', borderRadius: '3px',
+                letterSpacing: '0.08em',
+              }}>
+                {p.badge}
+              </span>
+            </div>
+            <div style={{ padding: '32px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '16px' }}>
               <div style={{ fontSize: '1.4rem', color: 'white', fontWeight: 'bold', fontFamily: 'Space Mono, monospace' }}>
                 {p.title}
@@ -168,7 +200,7 @@ export default function Projects() {
                   e.currentTarget.style.color = '#8892a4';
                 }}
               >
-                ✍ View Article
+                → View Article
               </button>
 
               {/* Live Demo */}
@@ -194,6 +226,7 @@ export default function Projects() {
               >
                 ↗ Live Demo
               </button>
+            </div>
             </div>
           </div>
         ))}

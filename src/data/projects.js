@@ -9,6 +9,7 @@ export const projects = [
     tech: ["Python", "Scikit-Learn", "FastAPI", "Random Forests", "TF-IDF", "BeautifulSoup"],
     achievement: "Processed 10,000+ domains with 87% accuracy and sub-2-second latency.",
     color: "#a855f7",
+    filename: 'enterprise_classifier.py',
     delay: "0ms",
     mediumUrl: "https://medium.com/@vetrivel-a/enterprise-website-classifier",
     
@@ -51,6 +52,7 @@ export const projects = [
     tech: ["PostgreSQL", "SQL", "Selenium", "Pandas", "AWS S3", "Docker"],
     achievement: "Discovered 15% pricing margin opportunities through automated competitive analysis.",
     color: "#00d4ff",
+    filename: 'market_etl.py',
     delay: "150ms",
     mediumUrl: "https://medium.com/@vetrivel-a/market-intelligence-etl",
     
@@ -93,6 +95,7 @@ export const projects = [
     tech: ["Python", "Flask", "TypeScript", "React", "Redis", "Celery", "Twilio"],
     achievement: "Achieved sub-4-second emergency alert delivery with 99.2% delivery rate.",
     color: "#fbbf24",
+    filename: 'women_safety.py',
     delay: "300ms",
     mediumUrl: "https://medium.com/@vetrivel-a/women-safety-sos",
 

@@ -70,9 +70,9 @@ export default function Contact() {
       </div>
 
       <h1 className="page-title" style={{
-        fontFamily: 'Space Mono', fontSize: '2.4rem',
+        fontFamily: 'Space Mono, monospace', fontSize: 'clamp(1.8rem, 4vw, 2.6rem)',
         fontWeight: '700', color: '#e8eef5',
-        marginBottom: '8px', textAlign: 'center',
+        marginBottom: '8px', textAlign: 'center', letterSpacing: '-0.01em'
       }}>
         Contact
       </h1>
@@ -248,8 +248,8 @@ export default function Contact() {
                 style={{
                   width: '100%',
                   padding: '12px',
-                  background: sending ? 'rgba(0,212,255,0.05)' : 'rgba(0,212,255,0.1)',
-                  border: '1px solid rgba(0,212,255,0.4)',
+                  background: 'transparent',
+                  border: '1px solid rgba(0,212,255,0.5)',
                   borderRadius: '6px',
                   color: '#00d4ff',
                   fontFamily: 'Space Mono, monospace',
@@ -257,9 +257,20 @@ export default function Contact() {
                   cursor: sending ? 'wait' : 'pointer',
                   letterSpacing: '0.1em',
                   transition: 'all 0.2s',
+                  marginTop: '4px',
                 }}
-                onMouseEnter={e => !sending && (e.currentTarget.style.background = 'rgba(0,212,255,0.18)')}
-                onMouseLeave={e => e.currentTarget.style.background = 'rgba(0,212,255,0.1)'}
+                onMouseEnter={e => {
+                  if (!sending) {
+                    e.currentTarget.style.background = 'rgba(0,212,255,0.08)';
+                    e.currentTarget.style.borderColor = '#00d4ff';
+                    e.currentTarget.style.boxShadow = '0 0 16px rgba(0,212,255,0.15)';
+                  }
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.borderColor = 'rgba(0,212,255,0.5)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
               >
                 {sending ? '> TRANSMITTING...' : '> [SEND MESSAGE ↵]'}
               </button>

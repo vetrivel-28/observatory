@@ -63,7 +63,7 @@ export default function Skills() {
       </button>
 
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 className="page-title" style={{ fontSize: '2.5rem', color: 'white', marginBottom: '20px' }}>Applied Skills</h1>
+        <h1 className="page-title" style={{ fontFamily: 'Space Mono, monospace', fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: '700', color: '#e8eef5', textAlign: 'center', marginBottom: '8px', letterSpacing: '-0.01em' }}>Applied Skills</h1>
         
         {/* Switcher Pills */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
@@ -135,31 +135,67 @@ export default function Skills() {
               }} />
             </div>
 
-              {/* Top Section */}
             <div style={{
-              background: '#1a2332',
-              borderBottom: `1px solid ${skill.color}25`,
-              padding: '10px 16px',
-              display: 'flex', alignItems: 'center', gap: '8px',
+              background: '#111d2e',
+              borderBottom: `1px solid ${skill.color}20`,
+              padding: '8px 14px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
             }}>
               {/* Traffic lights */}
-              <div style={{ display: 'flex', gap: '4px' }}>
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5f57' }} />
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#febc2e' }} />
-                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#28c840' }} />
+              <div style={{ display: 'flex', gap: '4px', flexShrink: 0 }}>
+                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#ff5f57' }} />
+                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#febc2e' }} />
+                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#28c840' }} />
               </div>
-              <span style={{ fontFamily: 'Space Mono', fontSize: '11px', color: '#4a5568', marginLeft: '4px' }}>
+              
+              {/* Filename */}
+              <span style={{
+                fontFamily: 'Space Mono', fontSize: '10px',
+                color: '#4a5568', marginLeft: '4px',
+                overflow: 'hidden', textOverflow: 'ellipsis',
+                flexShrink: 1,
+              }}>
                 {skill.filename}
               </span>
-              <span style={{ marginLeft: 'auto', fontFamily: 'Space Mono', fontSize: '11px', fontWeight: '700', color: skill.color }}>
-                {React.createElement(Icons[skill.iconName] || 'span', { style: { marginRight: '8px', verticalAlign: 'middle' } })}
+              
+              {/* Domain name — RIGHT side, accent color, NO proficiency label */}
+              <span style={{
+                marginLeft: 'auto',
+                fontFamily: 'Space Mono', fontSize: '10px',
+                fontWeight: '700', color: skill.color,
+                flexShrink: 0,
+              }}>
                 {skill.domain}
               </span>
-              {/* Proficiency level */}
+              
+              {/* Proficiency bar — compact, no text label */}
               <div style={{
-                display: 'flex', alignItems: 'center',
+                display: 'flex', alignItems: 'center', gap: '4px',
+                flexShrink: 0,
               }}>
-                <span style={{ fontFamily: 'Space Mono', fontSize: '10px', color: skill.color, fontWeight: 'bold' }}>{skill.level}</span>
+                <div style={{
+                  width: '40px', height: '3px',
+                  background: 'rgba(255,255,255,0.08)',
+                  borderRadius: '2px',
+                  overflow: 'hidden',
+                }}>
+                  <div style={{
+                    height: '100%',
+                    width: `${skill.level === 'Advanced' ? 95 : skill.level === 'Intermediate' ? 75 : 85}%`,
+                    background: skill.color,
+                    borderRadius: '2px',
+                  }} />
+                </div>
+                <span style={{
+                  fontFamily: 'Space Mono', fontSize: '9px',
+                  color: skill.color, flexShrink: 0,
+                }}>
+                  {skill.level === 'Advanced' ? 95 : skill.level === 'Intermediate' ? 75 : 85}%
+                </span>
               </div>
             </div>
 

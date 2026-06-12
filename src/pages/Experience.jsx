@@ -72,8 +72,8 @@ export default function Experience() {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '60px' }}>
         <div>
-          <h1 className="page-title" style={{ fontSize: '3rem', color: 'white', fontWeight: 'bold', fontFamily: 'Space Mono', margin: '0 0 8px 0' }}>
-            Experience.
+          <h1 className="page-title" style={{ fontFamily: 'Space Mono, monospace', fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: '700', color: '#e8eef5', textAlign: 'center', marginBottom: '8px', letterSpacing: '-0.01em' }}>
+            Experience
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontFamily: 'Space Mono' }}>
             My professional journey and technical roles.
@@ -81,104 +81,82 @@ export default function Experience() {
         </div>
       </div>
 
-      <div className="experience-container" style={{ position: 'relative', padding: '20px 0' }}>
-        {/* Center Line */}
-        <div className="experience-timeline-line" style={{
-          position: 'absolute',
-          left: '50%',
-          top: 0,
-          bottom: 0,
-          width: '2px',
-          background: 'rgba(255,255,255,0.1)',
-          transform: 'translateX(-50%)',
-          zIndex: 0
-        }} />
-
+      <div style={{
+        maxWidth: '760px',
+        margin: '0 auto',
+        padding: '0 24px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+      }}>
         {experiences.map((exp, index) => (
-          <div 
-            key={exp.id}
-            className={`experience-timeline-item ${exp.alignment === 'left' ? 'item-left' : 'item-right'}`}
-            style={{
-              display: 'flex',
-              justifyContent: exp.alignment === 'left' ? 'flex-start' : 'flex-end',
-              alignItems: 'center',
-              width: '100%',
-              marginBottom: '60px',
-              position: 'relative',
-              opacity: mounted ? 1 : 0,
-              transform: mounted ? 'translateY(0)' : 'translateY(30px)',
-              transition: `all 0.6s ease ${index * 200}ms`
-            }}
+          <div key={index} style={{
+            width: '100%',
+            background: '#0a1628',
+            border: '1px solid rgba(255,255,255,0.07)',
+            borderLeft: `4px solid ${exp.color || '#00d4ff'}`,
+            borderRadius: '8px',
+            overflow: 'hidden',
+            transition: 'box-shadow 0.25s ease',
+          }}
+          onMouseEnter={e => e.currentTarget.style.boxShadow = `0 8px 32px rgba(0,212,255,0.1)`}
+          onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
           >
-            {/* Timeline Dot */}
-            <div className="experience-timeline-dot" style={{
-              position: 'absolute',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              top: '50%',
-              width: '16px',
-              height: '16px',
-              borderRadius: '50%',
-              background: exp.color,
-              border: '4px solid var(--bg-primary)',
-              zIndex: 1,
-              boxShadow: `0 0 15px ${exp.color}`
-            }} />
-
-            {/* Content Card */}
+            {/* Terminal title bar */}
             <div style={{
-              width: '45%',
-              background: '#0a1628',
-              border: '1px solid rgba(255,255,255,0.07)',
-              borderLeft: `4px solid ${exp.color}`,
-              borderRadius: '8px',
-              overflow: 'hidden',
-              marginBottom: '24px',
-              textAlign: 'left'
+              background: '#111d2e',
+              borderBottom: '1px solid rgba(255,255,255,0.05)',
+              padding: '7px 14px',
+              display: 'flex', alignItems: 'center', gap: '6px',
             }}>
-              {/* Terminal title bar */}
-              <div style={{
-                background: '#111d2e',
-                borderBottom: '1px solid rgba(255,255,255,0.05)',
-                padding: '7px 14px',
-                display: 'flex', alignItems: 'center', gap: '6px',
+              <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#ff5f57' }} />
+              <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#febc2e' }} />
+              <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#28c840' }} />
+              <span style={{ fontFamily: 'Space Mono', fontSize: '10px', color: '#4a5568', marginLeft: '8px' }}>
+                {exp.role.includes('Intern') ? 'intern_2024.py' : exp.role.includes('Research') ? 'research_2024.py' : 'lead_engineer_2023.ts'}
+              </span>
+              <span style={{
+                marginLeft: 'auto',
+                fontFamily: 'Space Mono', fontSize: '10px',
+                color: '#fbbf24', letterSpacing: '0.08em',
               }}>
-                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#ff5f57' }} />
-                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#febc2e' }} />
-                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#28c840' }} />
-                <span style={{ fontFamily: 'Space Mono', fontSize: '10px', color: '#4a5568', marginLeft: '8px' }}>
-                  {exp.role.includes('Intern') ? 'intern_2024.py' : exp.role.includes('Research') ? 'research_2024.py' : 'lead_engineer_2023.ts'}
-                </span>
-                <span style={{
-                  marginLeft: 'auto', fontFamily: 'Space Mono', fontSize: '10px',
-                  color: '#fbbf24', letterSpacing: '0.1em',
-                }}>
-                  {exp.duration}
-                </span>
+                {exp.duration}
+              </span>
+            </div>
+            
+            {/* Content */}
+            <div style={{ padding: '20px 24px' }}>
+              <h3 style={{
+                fontFamily: 'Space Mono', fontSize: '1.1rem',
+                fontWeight: '700', color: '#e8eef5', marginBottom: '4px',
+              }}>
+                {exp.role}
+              </h3>
+              <div style={{
+                fontFamily: 'Space Mono', fontSize: '12px',
+                color: '#4a5568', marginBottom: '14px',
+              }}>
+                @ {exp.company}
               </div>
-              {/* Card content */}
-              <div style={{ padding: '20px 24px' }}>
-                <h3 style={{ fontFamily: 'Space Mono', fontSize: '1.1rem', fontWeight: '700', color: '#e8eef5', marginBottom: '4px' }}>
-                  {exp.role}
-                </h3>
-                <div style={{ fontFamily: 'Space Mono', fontSize: '12px', color: '#4a5568', marginBottom: '14px' }}>
-                  @ {exp.company}
-                </div>
-                <p style={{ fontFamily: 'DM Sans', color: '#8892a4', fontSize: '14px', lineHeight: '1.65', marginBottom: '16px' }}>
-                  {exp.description}
-                </p>
-                {/* Tech pills */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                  {exp.tech.map(tech => (
-                    <span key={tech} style={{
-                      fontFamily: 'Space Mono', fontSize: '10px', color: '#e2e8f0',
-                      background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-                      padding: '3px 8px', borderRadius: '4px',
-                    }}>
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+              <p style={{
+                fontFamily: 'DM Sans, sans-serif',
+                color: '#8892a4', fontSize: '14px',
+                lineHeight: '1.65', marginBottom: '16px',
+              }}>
+                {exp.description}
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                {exp.tech.map(tech => (
+                  <span key={tech} style={{
+                    fontFamily: 'Space Mono', fontSize: '10px',
+                    color: '#e2e8f0',
+                    background: 'rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    padding: '3px 8px', borderRadius: '4px',
+                  }}>
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

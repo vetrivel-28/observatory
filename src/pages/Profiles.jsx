@@ -53,7 +53,8 @@ export default function Profiles() {
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '80px 24px',
+      padding: '60px 24px',
+      gap: '0',
     }}>
       <SEO 
         title="Professional Profiles | Vetrivel A" 
@@ -89,7 +90,7 @@ export default function Profiles() {
       </div>
 
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-        <h1 className="page-title" style={{ fontSize: '2.5rem', color: 'white', marginBottom: '10px' }}>Profiles</h1>
+        <h1 className="page-title" style={{ fontFamily: 'Space Mono, monospace', fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: '700', color: '#e8eef5', textAlign: 'center', marginBottom: '8px', letterSpacing: '-0.01em' }}>Profiles</h1>
         <p style={{ color: 'var(--text-muted)' }}>Connect across the ecosystem.</p>
       </div>
 
