@@ -231,7 +231,8 @@ export default function Skills() {
 
       <div style={{ textAlign: 'center' }}>
         <h3 style={{ color: 'white', marginBottom: '40px', fontFamily: 'Space Mono, monospace' }}>Tech Stack Radar</h3>
-        <div style={{ position: 'relative', width: '360px', height: '360px', margin: '0 auto', overflow: 'visible', padding: '40px 20px' }}>
+        
+        <div className="desktop-radar-chart" style={{ position: 'relative', width: '360px', height: '360px', margin: '0 auto', overflow: 'visible', padding: '40px 20px' }}>
           <svg viewBox="-60 -60 220 220" style={{ maxWidth: '400px', display: 'block', margin: '0 auto', overflow: 'visible' }} width="100%" height="100%">
             {/* Radar background */}
             {[20, 40, 60, 80, 100].map(r => {
@@ -315,8 +316,27 @@ export default function Skills() {
             })()}
           </svg>
         </div>
-        <div style={{ marginTop: '20px', color: 'var(--text-muted)', fontSize: '0.8rem', fontFamily: 'Space Mono, monospace', animation: 'pulse 2s infinite' }}>
-          ↓ SCROLL FOR TECH STACK RADAR
+
+        {/* Mobile Skill Bars (Hidden on Desktop) */}
+        <div className="mobile-skill-bars" style={{ textAlign: 'left', maxWidth: '400px', margin: '0 auto', padding: '0 20px', display: 'none' }}>
+          {[
+            { label: 'Python', percent: 90 },
+            { label: 'ML', percent: 85 },
+            { label: 'SQL', percent: 80 },
+            { label: 'DataEng', percent: 75 },
+            { label: 'Visualization', percent: 70 },
+            { label: 'WebDev', percent: 60 },
+          ].map((item, idx) => (
+            <div key={item.label} style={{ marginBottom: '16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', fontFamily: 'Space Mono', fontSize: '12px', color: '#e8eef5' }}>
+                <span>{item.label}</span>
+                <span style={{ color: 'var(--accent-cyan)' }}>{item.percent}%</span>
+              </div>
+              <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden' }}>
+                <div style={{ width: mounted ? `${item.percent}%` : '0%', height: '100%', background: 'var(--accent-cyan)', borderRadius: '3px', transition: `width 1s ease-out ${0.2 + idx * 0.1}s` }} />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

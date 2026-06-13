@@ -104,7 +104,7 @@ export default function Achievements() {
       }}>
 
         {/* Center vertical line */}
-        <div style={{
+        <div className="timeline-line" style={{
           position: 'absolute',
           left: '50%',
           top: 0,
@@ -131,7 +131,7 @@ export default function Achievements() {
               }}
             >
               {/* ── Timeline node (sits exactly on center line) ── */}
-              <div style={{
+              <div className="timeline-node" style={{
                 position: 'absolute',
                 left: '50%',
                 top: '16px',
@@ -180,7 +180,7 @@ export default function Achievements() {
               </div>
 
               {/* ── Card ── */}
-              {isRight && <div style={{
+              {isRight && <div className="timeline-spacer" style={{
                 width: 'calc(50% - 48px)',
                 display: 'flex',
                 alignItems: 'flex-start',
@@ -262,6 +262,7 @@ export default function Achievements() {
                   fontFamily: 'Space Mono, monospace',
                   marginBottom: '12px',
                 }}>
+                  <span className="mobile-date" style={{ display: 'none', color: item.badgeColor, marginRight: '8px', fontWeight: 'bold' }}>{item.date} • </span>
                   {item.role}
                 </div>
 
@@ -329,7 +330,7 @@ export default function Achievements() {
                 )}
               </div>
 
-              {!isRight && <div style={{
+              {!isRight && <div className="timeline-spacer" style={{
                 width: 'calc(50% - 48px)',
                 display: 'flex',
                 alignItems: 'flex-start',

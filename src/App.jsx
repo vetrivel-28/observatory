@@ -177,11 +177,14 @@ function StarCanvas() {
 
     // Mix of dots + tiny data symbols
     const SYMBOLS = ['.', '+', '×', '·'];
-    const particles = Array.from({ length: 120 }, () => ({
+    const isMobile = window.innerWidth <= 768;
+    const particleCount = isMobile ? 36 : 120; // 70% reduction on mobile
+    
+    const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      size: Math.random() * 1.5 + 0.5,
-      opacity: Math.random() * 0.4 + 0.05,
+      size: Math.random() * (isMobile ? 1.0 : 1.5) + 0.5,
+      opacity: Math.random() * (isMobile ? 0.2 : 0.4) + 0.05,
       speed: Math.random() * 0.15 + 0.02,
       // 85% plain dots, 15% symbols
       symbol: Math.random() > 0.85 ? SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)] : null,

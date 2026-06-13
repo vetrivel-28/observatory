@@ -32,7 +32,7 @@ export default function Hero() {
   }, [typedText, isDeleting, roleIndex]);
 
   return (
-    <div style={{
+    <div className="hero-container" style={{
       minHeight: '100vh',
       background: '#050911',
       display: 'flex',
@@ -50,7 +50,7 @@ export default function Hero() {
       />
       
       {/* Top label */}
-      <div style={{
+      <div className="hero-label" style={{
         display: 'inline-flex',
         alignItems: 'center',
         gap: '8px',
@@ -77,7 +77,7 @@ export default function Hero() {
       </div>
 
       {/* Name */}
-      <h1 style={{
+      <h1 className="hero-name" style={{
         fontSize: 'clamp(2.2rem, 6vw, 5rem)',
         fontWeight: '700',
         color: '#e8eef5',
@@ -90,7 +90,7 @@ export default function Hero() {
       </h1>
 
       {/* Typewriter role */}
-      <div style={{
+      <div className="hero-role" style={{
         fontSize: 'clamp(1.1rem, 3vw, 1.6rem)',
         color: '#a855f7',
         marginBottom: '16px',
@@ -101,7 +101,7 @@ export default function Hero() {
       </div>
 
       {/* Terminal command line */}
-      <div style={{
+      <div className="hero-terminal" style={{
         fontSize: '12px', color: '#4a5568',
         marginBottom: '36px',
         textAlign: 'center'
@@ -114,7 +114,7 @@ export default function Hero() {
       </div>
 
       {/* Bio */}
-      <p style={{
+      <p className="hero-bio" style={{
         maxWidth: '600px',
         padding: '0 8px',
         textAlign: 'center',
@@ -270,6 +270,7 @@ export default function Hero() {
       </div>
 
       <button
+        className="hero-obs-btn"
         onClick={() => navigate('/observatory')}
         style={{
           padding: '12px 32px',
@@ -299,7 +300,7 @@ export default function Hero() {
       </button>
 
       {/* Featured Project Section */}
-      <div style={{ maxWidth: '760px', margin: '48px auto 0', width: '100%', padding: '0 20px' }}>
+      <div className="hero-featured" style={{ maxWidth: '760px', margin: '48px auto 0', width: '100%', padding: '0 20px' }}>
         
         {/* Label */}
         <div style={{

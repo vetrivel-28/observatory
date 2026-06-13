@@ -8,6 +8,49 @@ import ReadingProgressBar from '../components/ReadingProgressBar';
 import ProjectMedia from '../components/ProjectMedia';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
+function AccordionSection({ title, children }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  if (!isMobile) {
+    return (
+      <section>
+        <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>{title}</h2>
+        {children}
+      </section>
+    );
+  }
+
+  return (
+    <section className="mobile-accordion-section" style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', overflow: 'hidden' }}>
+      <button
+        className="touch-target"
+        onClick={() => setIsOpen(!isOpen)}
+        style={{
+          width: '100%', padding: '16px', background: 'transparent', border: 'none',
+          color: 'white', fontSize: '1.1rem', fontFamily: 'Space Mono', textAlign: 'left',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          margin: 0
+        }}
+      >
+        <span>{title}</span>
+        <span style={{ color: 'var(--accent-cyan)' }}>{isOpen ? '−' : '+'}</span>
+      </button>
+      {isOpen && (
+        <div style={{ padding: '0 16px 16px' }}>
+          {children}
+        </div>
+      )}
+    </section>
+  );
+}
+
 export default function ProjectDetail() {
   const { slug } = useParams();
   const { navigate } = useContext(NavigationContext);
@@ -122,30 +165,25 @@ export default function ProjectDetail() {
         {/* 13-Point Professional Engineering Case Study Framework */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', marginTop: '40px' }}>
           
-          <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>1. Problem Statement</h2>
+          <AccordionSection title="1. Problem Statement">
             <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.problemStatement || project.desc}</p>
-          </section>
+          </AccordionSection>
 
-          <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>2. Business Objective</h2>
+          <AccordionSection title="2. Business Objective">
             <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.businessObjective}</p>
-          </section>
+          </AccordionSection>
 
-          <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>3. Dataset / Input Sources</h2>
+          <AccordionSection title="3. Dataset / Input Sources">
             <div style={{ background: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '8px', border: '1px solid var(--border)' }}>
               <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.05rem', margin: 0 }}>{project.dataset}</p>
             </div>
-          </section>
+          </AccordionSection>
 
-          <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>4. Solution Architecture</h2>
+          <AccordionSection title="4. Solution Architecture">
             <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.architecture}</p>
-          </section>
+          </AccordionSection>
 
-          <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>5. Technology Selection Rationale</h2>
+          <AccordionSection title="5. Technology Selection Rationale">
             <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.techSelection}</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '16px' }}>
               {project.tech.map(t => (
@@ -160,10 +198,9 @@ export default function ProjectDetail() {
                 </span>
               ))}
             </div>
-          </section>
+          </AccordionSection>
 
-          <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>6. Workflow Diagram</h2>
+          <AccordionSection title="6. Workflow Diagram">
             <div style={{ background: 'rgba(0,0,0,0.3)', padding: '24px', borderRadius: '8px', border: '1px solid var(--border)' }}>
               {project.workflow.split('\n').map((step, i) => (
                 <div key={i} style={{ color: 'var(--text-primary)', marginBottom: '12px', fontFamily: 'Space Mono', fontSize: '0.95rem' }}>
@@ -171,10 +208,9 @@ export default function ProjectDetail() {
                 </div>
               ))}
             </div>
-          </section>
+          </AccordionSection>
 
-          <section>
-            <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid var(--border)', paddingBottom: '8px' }}>7 & 8. Challenges Faced & Lessons Learned</h2>
+          <AccordionSection title="7 & 8. Challenges Faced & Lessons Learned">
             <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }}>
               <div style={{ background: 'rgba(245, 158, 11, 0.05)', borderLeft: '3px solid var(--accent-amber)', padding: '20px', borderRadius: '0 8px 8px 0' }}>
                 <h3 style={{ color: 'var(--accent-amber)', fontSize: '1rem', marginBottom: '8px', fontFamily: 'Space Mono' }}>Challenges</h3>
@@ -185,11 +221,10 @@ export default function ProjectDetail() {
                 <p style={{ color: 'var(--text-primary)', lineHeight: '1.6' }}>{project.lessonsLearned}</p>
               </div>
             </div>
-          </section>
+          </AccordionSection>
 
-          <section>
+          <AccordionSection title="9 & 10. Results & Measurable Impact">
             <div style={{ borderLeft: `3px solid var(--accent-cyan)`, background: 'rgba(0,212,255,0.05)', padding: '24px', borderRadius: '0 8px 8px 0' }}>
-              <h2 style={{ color: 'white', fontSize: '1.5rem', marginBottom: '16px', fontFamily: 'Space Mono', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '8px' }}>9 & 10. Results & Measurable Impact</h2>
               <p style={{ color: 'var(--text-primary)', fontSize: '1.1rem', lineHeight: '1.7', marginBottom: '16px' }}>
                 {project.results}
               </p>
@@ -197,7 +232,7 @@ export default function ProjectDetail() {
                 " {project.measurableImpact || project.achievement} "
               </div>
             </div>
-          </section>
+          </AccordionSection>
 
         </div>
 

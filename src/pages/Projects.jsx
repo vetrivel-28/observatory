@@ -107,7 +107,7 @@ export default function Projects() {
                 {p.badge}
               </span>
             </div>
-            <div style={{ padding: '32px' }}>
+            <div className="project-card-body" style={{ padding: '32px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '16px' }}>
               <div style={{ fontSize: '1.4rem', color: 'white', fontWeight: 'bold', fontFamily: 'Space Mono, monospace' }}>
                 {p.title}
@@ -131,11 +131,11 @@ export default function Projects() {
               {p.metric}
             </div>
 
-            <p style={{ color: 'var(--text-primary)', lineHeight: '1.6', marginBottom: '24px' }}>
+            <p className="project-desc" style={{ color: 'var(--text-primary)', lineHeight: '1.6', marginBottom: '24px' }}>
               {p.desc}
             </p>
 
-            <div style={{ marginBottom: '24px' }}>
+            <div className="project-tech" style={{ marginBottom: '24px' }}>
               <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Core Technologies</div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {p.tech.map(t => (
@@ -153,7 +153,7 @@ export default function Projects() {
               </div>
             </div>
 
-            <div style={{ borderLeft: `3px solid var(--accent-cyan)`, paddingLeft: '16px', marginBottom: '24px' }}>
+            <div className="project-achievement" style={{ borderLeft: `3px solid var(--accent-cyan)`, paddingLeft: '16px', marginBottom: '24px' }}>
               <div style={{ fontStyle: 'italic', color: 'var(--text-primary)', fontSize: '0.95rem', lineHeight: '1.5' }}>
                 {p.achievement}
               </div>

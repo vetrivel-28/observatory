@@ -12,7 +12,7 @@ export default function BottomNav({ currentPage, navigateTo }) {
   return (
     <>
       {/* Spacer so content isn't hidden behind nav */}
-      <div style={{ height: '64px', display: 'none' }} className="mobile-spacer" />
+      <div style={{ height: '56px', display: 'none' }} className="mobile-spacer" />
       
       <nav style={{
         position: 'fixed',
@@ -23,7 +23,7 @@ export default function BottomNav({ currentPage, navigateTo }) {
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
-        padding: '8px 0 max(8px, env(safe-area-inset-bottom))',
+        padding: '4px 0 max(4px, env(safe-area-inset-bottom))',
         zIndex: 1000,
         display: 'none',  // hidden on desktop
       }} className="mobile-bottom-nav">
@@ -38,10 +38,12 @@ export default function BottomNav({ currentPage, navigateTo }) {
                 background: 'none', border: 'none',
                 display: 'flex', flexDirection: 'column',
                 alignItems: 'center', gap: '3px',
-                padding: '4px 12px',
+                padding: '2px 12px',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 flex: 1,
+                minHeight: '44px',
+                justifyContent: 'center',
               }}
             >
               <span style={{

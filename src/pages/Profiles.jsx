@@ -125,11 +125,11 @@ export default function Profiles() {
         </div>
 
         {/* Terminal Body */}
-        <div style={{ padding: '24px', minHeight: '300px' }}>
+        <div className="profiles-terminal-body" style={{ padding: '24px', minHeight: '300px' }}>
           {lines.map((line, i) => {
             if (!line) return null;
             return (
-              <div key={i} style={{ marginBottom: line.text === '' ? '12px' : '8px' }}>
+              <div key={i} className={`profile-line ${line.text === '' ? 'empty-line' : ''}`} style={{ marginBottom: line.text === '' ? '12px' : '8px' }}>
                 {line.type === 'link' ? (
                   <span 
                     className="clickable profile-link"
