@@ -1,16 +1,112 @@
-# React + Vite
+# Vetrivel Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive developer portfolio built with React and Vite, showcasing my skills, projects, achievements, and contact information.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Responsive design for desktop, tablet, and mobile devices
+- Modern UI with smooth animations
+- SEO-optimized metadata and structured data
+- Dedicated sections for:
+  - About Me
+  - Skills
+  - Projects
+  - Achievements
+  - Contact
+- Fast performance powered by Vite
+- Clean and scalable component architecture
+- Automatic deployment with Vercel
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech Stack
+
+- React
+- Vite
+- JavaScript
+- HTML5
+- CSS3
+- React Router DOM
+- Vercel
+
+## Project Structure
+
+```text
+src/
+├── components/
+├── pages/
+├── assets/
+├── hooks/
+├── utils/
+├── App.jsx
+└── main.jsx
+```
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/vetrivel-28/observatory.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd observatory
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+Preview production build locally:
+
+```bash
+npm run preview
+```
+
+## Deployment
+
+This project is deployed using Vercel.
+
+Every push to the main branch automatically triggers a new deployment.
+
+## Screenshots
+
+Add screenshots of your portfolio here.
+
+```text
+screenshots/
+├── home.png
+├── projects.png
+├── skills.png
+└── contact.png
+```
+
+## Contact
+
+**Vetrivel A**
+
+- GitHub: https://github.com/vetrivel-28
+- Portfolio: 
+
+## License
+
+This project is licensed under the MIT License.
