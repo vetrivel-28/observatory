@@ -327,6 +327,64 @@ export default function Contact() {
           ))}
         </div>
       </div>
+
+      {/* Contact Information section */}
+      <div className="contact-form terminal-card" style={{
+        width: '100%', maxWidth: '640px',
+        background: '#0a1628',
+        border: '1px solid rgba(255,255,255,0.06)',
+        borderRadius: '10px',
+        overflow: 'hidden',
+        marginTop: '24px',
+      }}>
+        <div style={{
+          background: '#1a2332',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          padding: '8px 16px',
+          display: 'flex', alignItems: 'center', gap: '6px',
+        }}>
+          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ff5f57' }} />
+          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#febc2e' }} />
+          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#28c840' }} />
+          <span style={{ fontFamily: 'Space Mono', fontSize: '10px', color: '#4a5568', marginLeft: '8px' }}>
+            vetrivel@portfolio:~/contact-info$
+          </span>
+        </div>
+        <div className="section-content" style={{ padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+            <span style={{ fontSize: '1.4rem' }}>📧</span>
+            <div>
+              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: '12px', color: '#8892a4', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</div>
+              <a 
+                href="mailto:vetri282006@gmail.com" 
+                style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '15px', color: '#e8eef5', textDecoration: 'none', transition: 'color 0.2s', fontWeight: '500' }} 
+                onMouseEnter={e => e.currentTarget.style.color = '#00d4ff'} 
+                onMouseLeave={e => e.currentTarget.style.color = '#e8eef5'}
+              >
+                vetri282006@gmail.com
+              </a>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+            <span style={{ fontSize: '1.4rem' }}>📱</span>
+            <div>
+              <div style={{ fontFamily: 'Space Mono, monospace', fontSize: '12px', color: '#8892a4', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone</div>
+              <a 
+                href="tel:+919042203447" 
+                style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '15px', color: '#e8eef5', textDecoration: 'none', transition: 'color 0.2s', fontWeight: '500' }} 
+                onMouseEnter={e => e.currentTarget.style.color = '#00d4ff'} 
+                onMouseLeave={e => e.currentTarget.style.color = '#e8eef5'}
+              >
+                +91 9042203447
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   );
 }

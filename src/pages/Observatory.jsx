@@ -5,7 +5,20 @@ import SEO from '../components/SEO';
 
 const SECTIONS = [
   {
+    key: 'profiles',
+    title: 'About',
+    icon: '⟁',
+    cmd: 'cat about.md',
+    output: 'System Overview & Identity',
+    chips: ['Identity', 'Links', 'Background'],
+    footerLabel: 'View connected profiles',
+    accent: '#a855f7',
+    tag: '[sys]',
+    filename: 'about.md',
+  },
+  {
     key: 'projects',
+    title: 'Projects',
     icon: '⬡',
     cmd: 'ls ~/projects/',
     output: '3 production systems deployed',
@@ -17,6 +30,7 @@ const SECTIONS = [
   },
   {
     key: 'skills',
+    title: 'Skills',
     icon: '◈',
     cmd: 'cat skills.json | grep level',
     output: 'ML (Adv)  ·  DataEng (Int)  ·  Software (App)',
@@ -27,18 +41,8 @@ const SECTIONS = [
     filename: 'skills.model',
   },
   {
-    key: 'achievements',
-    icon: '◆',
-    cmd: 'SELECT * FROM hackathons ORDER BY year DESC',
-    output: 'Excellence Award  ·  Top 5%  ·  Best UI/UX',
-    chips: ['2025', '2024', '2023'],
-    footerLabel: '3 awards  ·  timeline view',
-    accent: '#fbbf24',
-    tag: '[output]',
-    filename: 'hackathons.json',
-  },
-  {
     key: 'experience',
+    title: 'Experience',
     icon: '▣',
     cmd: 'git log --oneline ~/career',
     output: 'Data Science Intern @ Tech Solutions',
@@ -49,18 +53,20 @@ const SECTIONS = [
     filename: 'experience.db',
   },
   {
-    key: 'profiles',
-    icon: '⟁',
-    cmd: 'ssh --list-connections',
-    output: '4/4 profiles connected & verified',
-    chips: ['GitHub', 'LinkedIn', 'LeetCode', 'Resume'],
-    footerLabel: '150+ problems  ·  all links live',
-    accent: '#a855f7',
-    tag: '[api]',
-    filename: 'profiles.api',
+    key: 'achievements',
+    title: 'Achievements',
+    icon: '◆',
+    cmd: 'SELECT * FROM hackathons ORDER BY year DESC',
+    output: 'Excellence Award  ·  Top 5%  ·  Best UI/UX',
+    chips: ['2025', '2024', '2023'],
+    footerLabel: '3 awards  ·  timeline view',
+    accent: '#fbbf24',
+    tag: '[output]',
+    filename: 'hackathons.json',
   },
   {
     key: 'contact',
+    title: 'Contact',
     icon: '⌘',
     cmd: 'curl -X POST /api/contact',
     output: 'Ready to receive transmissions',
@@ -232,7 +238,7 @@ export default function Observatory() {
               DATA SCIENTIST & ML ENGINEER
             </div>
           </div>
-          <div className="obs-stats-row" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+          <div className="obs-stats-row" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
             {[
               { val: '150+', label: 'LeetCode Solved', color: '#00d4ff', icon: '</>' },
               { val: '8.5', label: 'CGPA / 10.0', color: '#fbbf24', icon: '★' },
@@ -262,66 +268,39 @@ export default function Observatory() {
                 </div>
               </div>
             ))}
+            
+            {/* Compact Resume CTA Button */}
+            <button
+              onClick={() => navigate('/resume')}
+              className="hover-lift interactive-card"
+              style={{
+                display: 'flex', alignItems: 'center', gap: '8px',
+                background: 'rgba(0, 212, 255, 0.1)',
+                border: '1px solid rgba(0, 212, 255, 0.3)',
+                padding: '10px 18px', borderRadius: '6px',
+                color: '#00d4ff', fontFamily: 'Space Mono, monospace',
+                fontSize: '12px', fontWeight: 'bold', cursor: 'pointer',
+                transition: 'all 0.2s', marginLeft: 'auto'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = 'rgba(0, 212, 255, 0.2)';
+                e.currentTarget.style.boxShadow = '0 0 12px rgba(0, 212, 255, 0.2)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = 'rgba(0, 212, 255, 0.1)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            >
+              <span>📄</span>
+              View Resume
+            </button>
             </div>
           </div>
         </div>
       </>
     )}
 
-      {/* Recruiter / Quick Links Banner */}
-      {booted && (
-        <div style={{
-          display: 'flex',
-          gap: '20px',
-          marginBottom: '32px',
-          flexWrap: 'wrap',
-        }}>
-          {/* Featured Project Quick Card */}
-          <div 
-            className="glass-card hover-lift clickable"
-            onClick={() => navigate(`/observatory/projects/${featuredProject.slug}`)}
-            role="button"
-            tabIndex={0}
-            style={{ flex: '1 1 300px', padding: '20px', borderRadius: '8px', borderLeft: `4px solid ${featuredProject.color}`, opacity: 0, animation: 'fadeInUp 0.6s ease forwards', animationDelay: '0.1s' }}
-          >
-            <div style={{ color: 'var(--text-muted)', fontSize: '10px', fontFamily: 'Space Mono', textTransform: 'uppercase', marginBottom: '8px' }}>Featured Project</div>
-            <div style={{ color: 'white', fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '4px' }}>{featuredProject.title}</div>
-            <div style={{ color: featuredProject.color, fontSize: '0.9rem', fontFamily: 'Space Mono', marginBottom: '12px' }}>{featuredProject.metric}</div>
-            <div style={{ color: 'var(--text-primary)', fontSize: '0.9rem', lineHeight: '1.5' }}>{featuredProject.businessObjective}</div>
-          </div>
-
-          {/* Action Links */}
-          <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <div 
-              className="glass-card hover-lift clickable"
-              onClick={() => navigate('/resume')}
-              role="button"
-              tabIndex={0}
-              style={{ flex: 1, padding: '20px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: 0, animation: 'fadeInUp 0.6s ease forwards', animationDelay: '0.15s' }}
-            >
-              <div>
-                <div style={{ color: 'white', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px' }}>View Resume</div>
-                <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Download full PDF curriculum vitae</div>
-              </div>
-              <span style={{ fontSize: '1.5rem' }}>📄</span>
-            </div>
-            
-            <div 
-              className="glass-card hover-lift clickable"
-              onClick={() => window.open('https://medium.com/@vetrivel-a/enterprise-website-classifier', '_blank')}
-              role="button"
-              tabIndex={0}
-              style={{ flex: 1, padding: '20px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', opacity: 0, animation: 'fadeInUp 0.6s ease forwards', animationDelay: '0.2s' }}
-            >
-              <div>
-                <div style={{ color: 'white', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px' }}>Latest Article</div>
-                <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Building a high-performance URL classifier with Random Forests</div>
-              </div>
-              <span style={{ fontSize: '1.5rem' }}>📝</span>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Promotional Cards Banner Removed */}
 
       {/* ── Section cards — responsive grid ── */}
       {booted && (
@@ -432,7 +411,7 @@ export default function Observatory() {
                       color: section.accent,
                       letterSpacing: '0.08em',
                     }}>
-                      {section.key.toUpperCase()}
+                      {section.title ? section.title.toUpperCase() : section.key.toUpperCase()}
                     </span>
                   </div>
 
