@@ -43,7 +43,7 @@ export default function Experience() {
   ];
 
   return (
-    <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '1000px', margin: '0 auto', fontFamily: 'DM Sans, sans-serif' }}>
+    <div className="page-content fade-in page-container" style={{ padding: '40px 20px', maxWidth: '1000px', margin: '0 auto', fontFamily: 'DM Sans, sans-serif' }}>
       <SEO 
         title="Experience Timeline | Vetrivel A" 
         description="Professional experience timeline spanning Data Science, Machine Learning, and Full-Stack Development." 
@@ -75,7 +75,7 @@ export default function Experience() {
           <h1 className="page-title" style={{ fontFamily: 'Space Mono, monospace', fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: '700', color: '#e8eef5', textAlign: 'center', marginBottom: '8px', letterSpacing: '-0.01em' }}>
             Experience
           </h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontFamily: 'Space Mono' }}>
+          <p className="page-subtitle" style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontFamily: 'Space Mono' }}>
             My professional journey and technical roles.
           </p>
         </div>
@@ -90,7 +90,7 @@ export default function Experience() {
         gap: '24px',
       }}>
         {experiences.map((exp, index) => (
-          <div key={index} style={{
+          <div key={index} className="terminal-card" style={{
             width: '100%',
             background: '#0a1628',
             border: '1px solid rgba(255,255,255,0.07)',
@@ -125,8 +125,8 @@ export default function Experience() {
             </div>
             
             {/* Content */}
-            <div style={{ padding: '20px 24px' }}>
-              <h3 style={{
+            <div className="section-content" style={{ padding: '20px 24px' }}>
+              <h3 className="card-heading" style={{
                 fontFamily: 'Space Mono', fontSize: '1.1rem',
                 fontWeight: '700', color: '#e8eef5', marginBottom: '4px',
               }}>
@@ -138,7 +138,7 @@ export default function Experience() {
               }}>
                 @ {exp.company}
               </div>
-              <p style={{
+              <p className="body-text" style={{
                 fontFamily: 'DM Sans, sans-serif',
                 color: '#8892a4', fontSize: '14px',
                 lineHeight: '1.65', marginBottom: '16px',
@@ -147,7 +147,7 @@ export default function Experience() {
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {exp.tech.map(tech => (
-                  <span key={tech} style={{
+                  <span key={tech} className="tag-pill" style={{
                     fontFamily: 'Space Mono', fontSize: '10px',
                     color: '#e2e8f0',
                     background: 'rgba(255,255,255,0.05)',

@@ -44,7 +44,7 @@ export default function Achievements() {
   const [expanded, setExpanded] = useState(null);
 
   return (
-    <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '840px', margin: '0 auto', fontFamily: 'DM Sans, sans-serif' }}>
+    <div className="page-content fade-in page-container" style={{ padding: '40px 20px', maxWidth: '840px', margin: '0 auto', fontFamily: 'DM Sans, sans-serif' }}>
       <SEO 
         title="Achievements & Awards | Vetrivel A" 
         description="Academic and hackathon milestones, including top-tier rankings and technical awards."
@@ -104,7 +104,7 @@ export default function Achievements() {
       }}>
 
         {/* Center vertical line */}
-        <div className="timeline-line" style={{
+        <div className="timeline-line timeline-center-line" style={{
           position: 'absolute',
           left: '50%',
           top: 0,
@@ -179,8 +179,7 @@ export default function Achievements() {
                 </div>
               </div>
 
-              {/* ── Card ── */}
-              {isRight && <div className="timeline-spacer" style={{
+              {isRight && <div className="timeline-spacer timeline-watermark" style={{
                 width: 'calc(50% - 48px)',
                 display: 'flex',
                 alignItems: 'flex-start',
@@ -228,7 +227,7 @@ export default function Achievements() {
                 }}
               >
                 {/* Title */}
-                <h3 style={{
+                <h3 className="card-heading" style={{
                   fontFamily: 'Space Mono, monospace',
                   fontSize: '1rem',
                   fontWeight: '700',
@@ -267,7 +266,7 @@ export default function Achievements() {
                 </div>
 
                 {/* Description — NO date here */}
-                <p style={{
+                <p className="body-text" style={{
                   color: '#cbd5e1',
                   fontSize: '14px',
                   lineHeight: '1.65',
@@ -284,7 +283,7 @@ export default function Achievements() {
                   marginBottom: '14px',
                 }}>
                   {item.technologies.map(tech => (
-                    <span key={tech} style={{
+                    <span key={tech} className="tag-pill" style={{
                       padding: '3px 8px',
                       background: `${item.badgeColor}15`,
                       border: `1px solid ${item.badgeColor}30`,
@@ -330,7 +329,7 @@ export default function Achievements() {
                 )}
               </div>
 
-              {!isRight && <div className="timeline-spacer" style={{
+              {!isRight && <div className="timeline-spacer timeline-watermark" style={{
                 width: 'calc(50% - 48px)',
                 display: 'flex',
                 alignItems: 'flex-start',

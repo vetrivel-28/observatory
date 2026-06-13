@@ -31,7 +31,7 @@ export default function Skills() {
   }, []);
 
   return (
-    <div className="page-content fade-in" style={{ padding: '40px 20px', maxWidth: '900px', margin: '0 auto' }}>
+    <div className="page-content fade-in page-container" style={{ padding: '40px 20px', maxWidth: '900px', margin: '0 auto' }}>
       <SEO 
         title="Skills | Vetrivel A" 
         description="Technical expertise across Machine Learning, Data Engineering, NLP, Python, SQL, and Analytics."
@@ -232,8 +232,8 @@ export default function Skills() {
       <div style={{ textAlign: 'center' }}>
         <h3 style={{ color: 'white', marginBottom: '40px', fontFamily: 'Space Mono, monospace' }}>Tech Stack Radar</h3>
         
-        <div className="desktop-radar-chart" style={{ position: 'relative', width: '360px', height: '360px', margin: '0 auto', overflow: 'visible', padding: '40px 20px' }}>
-          <svg viewBox="-60 -60 220 220" style={{ maxWidth: '400px', display: 'block', margin: '0 auto', overflow: 'visible' }} width="100%" height="100%">
+        <div className="desktop-radar-chart radar-container" style={{ position: 'relative', width: '360px', height: '360px', margin: '0 auto', overflow: 'visible', padding: '40px 20px' }}>
+          <svg className="radar-svg" viewBox="-60 -60 220 220" style={{ maxWidth: '400px', display: 'block', margin: '0 auto', overflow: 'visible' }} width="100%" height="100%">
             {/* Radar background */}
             {[20, 40, 60, 80, 100].map(r => {
               const scaledR = r * 0.4; // max radius 40
@@ -271,6 +271,7 @@ export default function Skills() {
             ].map(({ label, x, y }) => (
               <text
                 key={label}
+                className="radar-label"
                 x={`${x}%`} y={`${y}%`}
                 textAnchor="middle"
                 fill="#8892a4"

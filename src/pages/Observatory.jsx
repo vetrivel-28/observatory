@@ -178,7 +178,7 @@ export default function Observatory() {
             }} />
           </div>
 
-          <div style={{
+          <div className="terminal-card" style={{
             background: '#0a1628',
             border: '1px solid rgba(0,212,255,0.12)',
             borderRadius: '10px',
@@ -213,7 +213,7 @@ export default function Observatory() {
               }} />
             </div>
 
-            <div style={{
+            <div className="obs-header obs-header-row" style={{
               padding: '16px 24px',
               display: 'flex',
               alignItems: 'center',
@@ -232,13 +232,13 @@ export default function Observatory() {
               DATA SCIENTIST & ML ENGINEER
             </div>
           </div>
-          <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+          <div className="obs-stats-row" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
             {[
               { val: '150+', label: 'LeetCode Solved', color: '#00d4ff', icon: '</>' },
               { val: '8.5', label: 'CGPA / 10.0', color: '#fbbf24', icon: '★' },
               { val: '3', label: 'Systems Deployed', color: '#a855f7', icon: '⬡' },
             ].map(s => (
-              <div key={s.label} style={{
+              <div key={s.label} className="obs-stat-item" style={{
                 display: 'flex', alignItems: 'center', gap: '8px',
                 background: 'rgba(255,255,255,0.03)',
                 border: `1px solid ${s.color}20`,
@@ -246,13 +246,13 @@ export default function Observatory() {
               }}>
                 <span style={{ color: s.color, fontSize: '13px' }}>{s.icon}</span>
                 <div>
-                  <div style={{
+                  <div className="obs-stat-value" style={{
                     fontFamily: 'Space Mono', fontSize: '16px',
                     fontWeight: '700', color: s.color, lineHeight: 1,
                   }}>
                     {s.val}
                   </div>
-                  <div style={{
+                  <div className="obs-stat-label" style={{
                     fontFamily: 'Space Mono', fontSize: '8px',
                     color: '#4a5568', letterSpacing: '0.1em',
                     marginTop: '2px',

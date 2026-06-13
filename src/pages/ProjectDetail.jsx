@@ -85,7 +85,7 @@ export default function ProjectDetail() {
   }
 
   return (
-    <div className="fade-in" style={{
+    <div className="fade-in page-container" style={{
       opacity: mounted ? 1 : 0,
       transform: mounted ? 'translateY(0)' : 'translateY(20px)',
       transition: 'all 0.5s ease',
@@ -120,18 +120,18 @@ export default function ProjectDetail() {
         <span>←</span> Back to Projects
       </button>
 
-      <div className="glass-panel" style={{
+      <div className="glass-panel terminal-card" style={{
         borderTop: `5px solid ${project.color}`,
         borderRadius: '12px', padding: '40px',
         marginBottom: '40px'
       }}>
         {/* Header Section */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px', marginBottom: '24px' }}>
+        <div className="section-content" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px', marginBottom: '24px' }}>
           <div>
-            <h1 style={{ fontSize: '3rem', color: 'white', fontWeight: 'bold', fontFamily: 'Space Mono, monospace', margin: '0 0 12px 0', lineHeight: 1.2 }}>
+            <h1 className="page-title" style={{ fontSize: '3rem', color: 'white', fontWeight: 'bold', fontFamily: 'Space Mono, monospace', margin: '0 0 12px 0', lineHeight: 1.2 }}>
               {project.title}
             </h1>
-            <div style={{ color: 'var(--accent-cyan)', fontWeight: 'bold', fontSize: '1.2rem' }}>
+            <div className="metric-text" style={{ color: 'var(--accent-cyan)', fontWeight: 'bold', fontSize: '1.2rem' }}>
               {project.metric}
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function ProjectDetail() {
 
         {/* Case Study Scoring Badges */}
         {project.scores && (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '40px', padding: '16px', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <div className="section-content" style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '40px', padding: '16px', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
             {Object.entries(project.scores).map(([key, value]) => (
               <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 <span style={{ fontSize: '10px', color: 'var(--text-muted)', textTransform: 'uppercase', fontFamily: 'Space Mono' }}>{key}</span>
@@ -166,25 +166,25 @@ export default function ProjectDetail() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', marginTop: '40px' }}>
           
           <AccordionSection title="1. Problem Statement">
-            <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.problemStatement || project.desc}</p>
+            <p className="body-text" style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.problemStatement || project.desc}</p>
           </AccordionSection>
 
           <AccordionSection title="2. Business Objective">
-            <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.businessObjective}</p>
+            <p className="body-text" style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.businessObjective}</p>
           </AccordionSection>
 
           <AccordionSection title="3. Dataset / Input Sources">
             <div style={{ background: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '8px', border: '1px solid var(--border)' }}>
-              <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.05rem', margin: 0 }}>{project.dataset}</p>
+              <p className="body-text" style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.05rem', margin: 0 }}>{project.dataset}</p>
             </div>
           </AccordionSection>
 
           <AccordionSection title="4. Solution Architecture">
-            <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.architecture}</p>
+            <p className="body-text" style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.architecture}</p>
           </AccordionSection>
 
           <AccordionSection title="5. Technology Selection Rationale">
-            <p style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.techSelection}</p>
+            <p className="body-text" style={{ color: 'var(--text-primary)', lineHeight: '1.8', fontSize: '1.1rem' }}>{project.techSelection}</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '16px' }}>
               {project.tech.map(t => (
                 <span key={t} className="hover-lift" style={{
@@ -213,19 +213,19 @@ export default function ProjectDetail() {
           <AccordionSection title="7 & 8. Challenges Faced & Lessons Learned">
             <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }}>
               <div style={{ background: 'rgba(245, 158, 11, 0.05)', borderLeft: '3px solid var(--accent-amber)', padding: '20px', borderRadius: '0 8px 8px 0' }}>
-                <h3 style={{ color: 'var(--accent-amber)', fontSize: '1rem', marginBottom: '8px', fontFamily: 'Space Mono' }}>Challenges</h3>
-                <p style={{ color: 'var(--text-primary)', lineHeight: '1.6' }}>{project.challenges}</p>
+                <h3 className="card-heading" style={{ color: 'var(--accent-amber)', fontSize: '1rem', marginBottom: '8px', fontFamily: 'Space Mono' }}>Challenges</h3>
+                <p className="body-text" style={{ color: 'var(--text-primary)', lineHeight: '1.6' }}>{project.challenges}</p>
               </div>
               <div style={{ background: 'rgba(16, 185, 129, 0.05)', borderLeft: '3px solid var(--accent-green)', padding: '20px', borderRadius: '0 8px 8px 0' }}>
-                <h3 style={{ color: 'var(--accent-green)', fontSize: '1rem', marginBottom: '8px', fontFamily: 'Space Mono' }}>Lessons Learned</h3>
-                <p style={{ color: 'var(--text-primary)', lineHeight: '1.6' }}>{project.lessonsLearned}</p>
+                <h3 className="card-heading" style={{ color: 'var(--accent-green)', fontSize: '1rem', marginBottom: '8px', fontFamily: 'Space Mono' }}>Lessons Learned</h3>
+                <p className="body-text" style={{ color: 'var(--text-primary)', lineHeight: '1.6' }}>{project.lessonsLearned}</p>
               </div>
             </div>
           </AccordionSection>
 
           <AccordionSection title="9 & 10. Results & Measurable Impact">
             <div style={{ borderLeft: `3px solid var(--accent-cyan)`, background: 'rgba(0,212,255,0.05)', padding: '24px', borderRadius: '0 8px 8px 0' }}>
-              <p style={{ color: 'var(--text-primary)', fontSize: '1.1rem', lineHeight: '1.7', marginBottom: '16px' }}>
+              <p className="body-text" style={{ color: 'var(--text-primary)', fontSize: '1.1rem', lineHeight: '1.7', marginBottom: '16px' }}>
                 {project.results}
               </p>
               <div style={{ fontStyle: 'italic', color: 'var(--accent-cyan)', fontSize: '1.1rem', fontWeight: 'bold' }}>
@@ -298,7 +298,7 @@ export default function ProjectDetail() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
           {prevProject && (
             <div 
-              className="glass-card hover-lift clickable"
+              className="glass-card terminal-card hover-lift clickable"
               onClick={() => navigate(`/observatory/projects/${prevProject.slug}`)}
               role="button"
               tabIndex={0}
@@ -310,7 +310,7 @@ export default function ProjectDetail() {
           )}
           {nextProject && (
             <div 
-              className="glass-card hover-lift clickable"
+              className="glass-card terminal-card hover-lift clickable"
               onClick={() => navigate(`/observatory/projects/${nextProject.slug}`)}
               style={{ padding: '24px', cursor: 'pointer', textAlign: 'right' }}
             >

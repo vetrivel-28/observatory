@@ -47,14 +47,14 @@ export default function Profiles() {
   }, []);
 
   return (
-    <div className="page-content fade-in" style={{ 
+    <div className="page-content fade-in page-container profiles-page" style={{ 
       minHeight: '100vh',
       background: '#050911',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '60px 24px',
+      padding: 'clamp(16px, 4vw, 80px) clamp(12px, 3vw, 24px)',
       gap: '0',
     }}>
       <SEO 
@@ -96,7 +96,7 @@ export default function Profiles() {
       </div>
 
       {/* Terminal Window */}
-      <div className="profiles-terminal" style={{
+      <div className="profiles-terminal terminal-card" style={{
         width: '100%',
         maxWidth: '760px',
         background: '#0a1628',
@@ -125,14 +125,14 @@ export default function Profiles() {
         </div>
 
         {/* Terminal Body */}
-        <div className="profiles-terminal-body" style={{ padding: '24px', minHeight: '300px' }}>
+        <div className="profiles-terminal-body terminal-body" style={{ padding: '24px', minHeight: '300px' }}>
           {lines.map((line, i) => {
             if (!line) return null;
             return (
               <div key={i} className={`profile-line ${line.text === '' ? 'empty-line' : ''}`} style={{ marginBottom: line.text === '' ? '12px' : '8px' }}>
                 {line.type === 'link' ? (
                   <span 
-                    className="clickable profile-link"
+                    className="clickable profile-link connected-line"
                     onClick={() => window.open(line.url, "_blank")}
                     style={{
                       color: 'var(--accent-cyan)',
@@ -147,7 +147,7 @@ export default function Profiles() {
                     {line.text}
                   </span>
                 ) : (
-                  <span style={{ 
+                  <span className="connect-line" style={{ 
                     color: line.type === 'final' ? 'var(--accent-cyan)' : 'var(--text-muted)',
                     fontStyle: line.type === 'final' ? 'italic' : 'normal'
                   }}>

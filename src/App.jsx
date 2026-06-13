@@ -27,6 +27,13 @@ import BottomNav from './components/BottomNav';
 // --- Custom Cursor ---
 function CustomCursor() {
   useEffect(() => {
+    // Don't run cursor on touch/mobile devices
+    const isTouchDevice = 'ontouchstart' in window || 
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia('(hover: none)').matches;
+    
+    if (isTouchDevice) return;  // EXIT EARLY — no cursor on mobile
+
     const dot = document.getElementById('cur-dot');
     const trail = document.getElementById('cur-trail');
     const ring = document.getElementById('cur-ring');

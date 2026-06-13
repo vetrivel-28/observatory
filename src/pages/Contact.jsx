@@ -20,7 +20,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="page-content fade-in" style={{
+    <div className="page-content fade-in page-container" style={{
       minHeight: '100vh',
       background: '#050911',
       display: 'flex',
@@ -77,7 +77,7 @@ export default function Contact() {
         Contact
       </h1>
 
-      <p style={{
+      <p className="body-text" style={{
         fontFamily: 'DM Sans, sans-serif',
         color: '#4a5568', fontSize: '15px',
         marginBottom: '40px', textAlign: 'center',
@@ -86,7 +86,7 @@ export default function Contact() {
       </p>
 
       {/* Terminal form window */}
-      <div className="contact-form" style={{
+      <div className="contact-form terminal-card" style={{
         width: '100%', maxWidth: '640px',
         background: '#0a1628',
         border: '1px solid rgba(0,212,255,0.2)',
@@ -114,7 +114,7 @@ export default function Contact() {
         </div>
 
         {/* Form body */}
-        <div style={{ padding: '24px 28px' }}>
+        <div className="section-content" style={{ padding: '24px 28px' }}>
           {sent ? (
   <div style={{
     textAlign: 'center',
@@ -280,7 +280,7 @@ export default function Contact() {
       </div>
 
       {/* SSH quick-links panel */}
-      <div className="contact-form" style={{
+      <div className="contact-form terminal-card" style={{
         width: '100%', maxWidth: '640px',
         background: '#0a1628',
         border: '1px solid rgba(255,255,255,0.06)',
@@ -300,7 +300,7 @@ export default function Contact() {
             vetrivel@portfolio:~/socials$
           </span>
         </div>
-        <div style={{ padding: '16px 20px' }}>
+        <div className="section-content" style={{ padding: '16px 20px' }}>
           {[
             { cmd: 'ssh github.com/vetrivel-28', url: 'https://github.com/vetrivel-28', color: '#e8eef5' },
             { cmd: 'ssh linkedin.com/in/vetrivel28', url: 'https://www.linkedin.com/in/vetrivel28', color: '#00d4ff' },

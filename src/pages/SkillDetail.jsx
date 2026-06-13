@@ -36,7 +36,7 @@ export default function SkillDetail() {
   }
 
   return (
-    <div className="fade-in" style={{
+    <div className="fade-in page-container" style={{
       opacity: mounted ? 1 : 0,
       transform: mounted ? 'translateY(0)' : 'translateY(20px)',
       transition: 'all 0.5s ease',

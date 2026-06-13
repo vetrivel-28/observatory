@@ -19,7 +19,7 @@ export default function Resume() {
   };
 
   return (
-    <div className="fade-in" style={{
+    <div className="fade-in page-container" style={{
       minHeight: '100vh',
       background: 'var(--bg-primary)',
       color: 'var(--text-primary)',
@@ -36,7 +36,7 @@ export default function Resume() {
         type="profile"
       />
       
-      <div className="glass-card" style={{
+      <div className="glass-card terminal-card" style={{
         maxWidth: '800px',
         width: '100%',
         padding: '40px',
@@ -47,10 +47,10 @@ export default function Resume() {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px', borderBottom: '1px solid var(--border)', paddingBottom: '32px', marginBottom: '32px' }}>
           <div>
-            <h1 style={{ fontSize: '2.5rem', color: 'white', fontWeight: 'bold', fontFamily: 'Space Mono', margin: '0 0 8px 0' }}>
+            <h1 className="page-title" style={{ fontSize: '2.5rem', color: 'white', fontWeight: 'bold', fontFamily: 'Space Mono', margin: '0 0 8px 0' }}>
               Vetrivel A
             </h1>
-            <h2 style={{ fontSize: '1.2rem', color: 'var(--accent-cyan)', margin: '0 0 16px 0', fontFamily: 'Space Mono' }}>
+            <h2 className="page-subtitle" style={{ fontSize: '1.2rem', color: 'var(--accent-cyan)', margin: '0 0 16px 0', fontFamily: 'Space Mono' }}>
               Data Scientist & ML Engineer
             </h2>
             <div style={{ display: 'flex', gap: '16px', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
@@ -76,7 +76,7 @@ export default function Resume() {
         {/* 30-second summary */}
         <div style={{ background: 'rgba(6, 182, 212, 0.05)', borderLeft: '4px solid var(--accent-cyan)', padding: '24px', borderRadius: '0 8px 8px 0', marginBottom: '40px' }}>
           <h3 style={{ color: 'white', fontSize: '1.1rem', marginBottom: '12px', fontFamily: 'Space Mono' }}>30-Second Summary</h3>
-          <p style={{ lineHeight: '1.6', fontSize: '1.05rem' }}>
+          <p className="body-text" style={{ lineHeight: '1.6', fontSize: '1.05rem' }}>
             A driven Data Scientist and Machine Learning Engineer specializing in building scalable ML systems and ETL pipelines. Proven track record of delivering high-impact projects like sub-4-second multi-channel emergency alerts and 87% accuracy content classifiers. Strong foundation in Python, SQL, and Full-Stack deployment architectures.
           </p>
         </div>

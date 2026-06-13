@@ -7,7 +7,7 @@ export default function ObservatoryLayout() {
   const { navigate } = useContext(NavigationContext);
 
   return (
-    <div className="page-content" style={{
+    <div className="page-content page-container" style={{
       width: '100%',
       minHeight: '100vh',
       background: '#050911',
