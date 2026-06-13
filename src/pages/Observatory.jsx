@@ -272,7 +272,7 @@ export default function Observatory() {
             {/* Compact Resume CTA Button */}
             <button
               onClick={() => navigate('/resume')}
-              className="hover-lift interactive-card"
+              className="hover-lift interactive-card obs-resume-btn"
               style={{
                 display: 'flex', alignItems: 'center', gap: '8px',
                 background: 'rgba(0, 212, 255, 0.1)',

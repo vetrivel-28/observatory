@@ -263,6 +263,17 @@ export default function App() {
     // Scroll to top before transition
     window.scrollTo({ top: 0, behavior: 'instant' });
     
+    const isHome = location.pathname === '/';
+    const isTargetHub = path === '/observatory';
+    
+    // Home -> Hub (Observatory): Use only Connector/Boot transition (no SQL transition)
+    if (isHome && isTargetHub) {
+      sessionStorage.removeItem('obsBooted'); // Force boot sequence to play
+      navigate(path);
+      window.scrollTo(0, 0);
+      return;
+    }
+    
     const getBaseModule = (p) => {
       const parts = p.split('/').filter(Boolean);
       if (parts.length >= 2 && parts[0] === 'observatory') return parts[1];
@@ -297,11 +308,11 @@ export default function App() {
     setTimeout(() => {
       navigate(path);
       window.scrollTo(0, 0);
-    }, 600);
+    }, 400); // Optimized for mobile (reduced from 600ms)
     
     setTimeout(() => {
       setIsTransitioning(false);
-    }, 1200);
+    }, 1000); // Optimized for mobile (reduced from 1200ms)
   };
 
   return (
